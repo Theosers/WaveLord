@@ -1,0 +1,204 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+  background: radial-gradient(circle, rgba(2, 0, 36, 0.8) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 213, 255, 0.3) 100%),  url('../assets/final_background.png');
+  
+  background-position: top;
+  font-family: "Lobster", sans-serif;
+
+}
+
+
+
+.loginPage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.body-Container {
+  min-width: 686px;
+  height: 725px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.login-image-container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 255, 204, 0.207), rgba(0, 0, 0, 0.51)), url('../assets/login_Page.png');
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 5px solid rgb(231, 144, 24);
+  border-top-left-radius: 20%;
+  position: relative;
+
+  h1 {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(231, 144, 24);
+
+    -webkit-text-stroke-width:1px;
+    -webkit-text-stroke-color: #ab6708;
+    letter-spacing: 0.5rem;
+    font-size: 3rem;
+    text-align: center;
+    position: absolute;
+    top: 10%;
+     
+  }
+  
+
+}
+.loginForm {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.57);
+  border: 5px solid rgb(231, 144, 24);
+  border-left: none;
+  border-bottom-right-radius: 20%;
+  
+  .admin-login {
+    
+    width: 100%;
+    height: 300px;
+    background: #eddbce;
+    background: linear-gradient(0deg, rgba(237, 219, 206,1) 0%, rgb(255, 255, 255) 100%);
+    color: black;
+    text-decoration:underline;
+    font-size: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 0.2rem;
+    font-weight: bold;
+    position: relative;
+    border-bottom: 5px solid rgb(231, 144, 24);
+    
+  }
+  .logo-image {
+    position:absolute;
+    top: 27%;
+    width: 250px;
+    height: 150px;
+    background-color: black;
+    
+    background: url('http://localhost:3000/images/logo.png');
+    
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    
+    
+  }
+  h2 {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    margin-top: 100px;
+    letter-spacing: 0.2rem;
+    
+  }
+  form {
+    color: rgb(255, 255, 255);
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    label {
+      font-size: 1.5rem;
+      letter-spacing: 0.2rem;
+      
+    }
+    input {
+      width: 100%;
+      height: 50px;
+      border: none;
+      border-bottom: 2px solid rgb(231, 144, 24);
+      background: transparent;
+      color: rgb(231, 144, 24);
+      font-size: 1.2rem;
+      padding: 0 10px;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      height: 50px;
+      margin: 10px 0;
+      border: none;
+      background: rgb(231, 144, 24);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      outline: none;
+      transition: 0.3s;
+      &:hover {
+        background: rgb(231, 144, 24);
+        transform: scale(1.1);
+      }
+    }
+    p {
+      text-align: center;
+      color: lightgray;
+      font-size: 1.2rem;
+      letter-spacing:0.2rem;
+    }
+    a {
+      color:aqua;
+      letter-spacing: 0.2rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+    .or {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.2rem;
+      
+      color: rgb(231, 144, 24);
+      font-weight: bold;
+    &::before, &::after {
+      content: '';
+      display: inline-block;
+      width: 60px;
+      height: 3px;
+      background: rgb(231, 144, 24);
+      margin: 0 10px;
+    }
+    }
+    .other-signup-buttons{
+      
+      width: 100%;
+      height: 50px;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+    .un {
+      background-color: red;
+    }
+    .deux {
+      background-color: blue;
+    }
+  }
+
+}
