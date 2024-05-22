@@ -1,0 +1,30 @@
+.pagination-container {
+    width: 96%;
+    height: 50px;
+    list-style-type: none;
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    cursor: pointer;
+    gap: 3px;
+    
+  }
+  .pagination {   
+    width: 33px;
+    height: 33px;
+    border-radius: 9999px;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+  .active-pagination {
+    background-color: hotpink;
+    cursor: pointer;  
+
+  }
+  .others-pagination {
+    background-color: aqua;
+    cursor: pointer;  
+  }
