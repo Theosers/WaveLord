@@ -83,7 +83,7 @@ const AdminDashboard = () => {
               <MdCurrencyExchange className='icon' />
               <div>
                 <h3>$9483</h3>
-                <p>Total Sale TEST</p>
+                <p>Total Sale</p>
               </div>
             </div>
             <div className='stat-card deux'>
