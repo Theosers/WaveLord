@@ -92,11 +92,6 @@ const Orders = () => {
             
             
              
-                   
-          </div>
-
-
-
           <Pagination
             pageNumber= {currentPage}
             setPageNumber= {setCurrentPage}
@@ -104,6 +99,10 @@ const Orders = () => {
             parPage= {parPage}
             showItem= {3}
           />
+
+          </div>
+
+
 
             </div>
         </div>
