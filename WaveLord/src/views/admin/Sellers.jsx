@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import '../../scss/Sellers.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
-import '../../scss/Category.scss'
-import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
+import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
 
 
-const Category = () => {
+
+const Sellers = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
@@ -15,26 +16,32 @@ const Category = () => {
 
 
     return (
-        <div className='container'>
-            test
+        <div className='largest-container'>
             <div className='second-container'>
-                <div className='gauche-container'>
-                    <div className="gauche">
-                        <select onChange={(e) => setParPage(parseInt(e.target.value))}>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option> 
-                            </select>
-                        <input type="text" placeholder='search'/>
-                    </div>
+                <div className="gauche">
+                    <select onChange={(e) => setParPage(parseInt(e.target.value))}>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option> 
+                        </select>
+                    <input type="text" placeholder='search'/>
+                </div>
 
-                    <div className='table-container'>
+
+
+
+                <div className='table-container'>
                     <table>
                         <thead>
                         <tr>
                             <th>N°</th>
                             <th>Image</th>
                             <th>Name</th>
+                            <th>Shop Name</th>
+                            <th>Payment Status</th>
+                            <th>Email</th>
+                            <th>Division</th>
+                            <th>District</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -49,11 +56,16 @@ const Category = () => {
                                 </td>
                     
                                 <td>{d.payment_status}Tshirt</td>
+                                <td>SurfShop</td>
+                                <td>Pending</td>
+                                <td>SurfShop.email@gmail.com</td>
+                                <td>Aile</td>
+                                <td>Poulet</td>
                                 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEdit className='fa-action'/> </Link>
-                                        <Link> <FaTrash className='fa-action'/> </Link>
+                                        <Link> <FaEye className='fa-action'/> </Link>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -71,38 +83,11 @@ const Category = () => {
                             parPage= {parPage}
                             showItem= {3}
                         />
-                </div>
-                
 
-                <div className='droite'>
-                    <h1>Add Category</h1>
-                    <form action="">
-                        <div className='form-container'>
-                            <label htmlFor="name">Category Name</label>
-                            <input type="text" id='name' name='category_name'
-                            placeholder='Category Name' />
-                        </div>
-
-                        <div>
-                            <label className='image-container' htmlFor='image'>
-                                <span><FaImage/></span>
-                                <span>Select Image</span>
-                            </label>
-                            <input type="file" name="file" id="image" />
-
-                            <div>
-                                <button>Add</button>
-                            </div>
-
-
-
-                        </div>
-                    </form>
-                </div>
             </div>
             
         </div>
-    );
-};
+    )
+}
 
-export default Category;
+export default Sellers;
