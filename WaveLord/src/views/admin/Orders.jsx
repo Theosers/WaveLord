@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../../scss/Orders.scss';
-import '../../scss/AdminDashboard.scss';
+import '../../scss/Pagination.scss'
 import { Link } from 'react-router-dom';
 import { LuArrowDownSquare } from 'react-icons/lu';
 import Pagination from '../Pagination';
