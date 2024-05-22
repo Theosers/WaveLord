@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { MdOutlineKeyboard, MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
 
 const Pagination = ({pageNumber, setPageNumber, totalItem, parPage, showItem}) => {
     
@@ -22,7 +22,8 @@ const Pagination = ({pageNumber, setPageNumber, totalItem, parPage, showItem}) =
         const btns = [];
         for (let i = startPage; i <= endPage; i++) {
             btns.push(
-                <li className={`${pageNumber === i ? 'active' : ''}`}>
+                <li onClick={() => setPageNumber(i)} className={`${pageNumber === i ? 'active-pagination' : 'others-pagination'}
+                                                                pagination`} >
                     {i}
                 </li>
             )
@@ -31,13 +32,18 @@ const Pagination = ({pageNumber, setPageNumber, totalItem, parPage, showItem}) =
 
     }
     return (
-        <ul className='flex gap-3 pagination'>
+        <ul className='pagination-container'>
             {
-            pageNumber > 1 && <li className='page-item'>
-                <MdOutlineKeyboardDoubleArrowLeft/>
+            pageNumber > 1 && <li onClick={() => setPageNumber(pageNumber - 1)} className='page-item'>
+                <MdKeyboardDoubleArrowLeft/>
             </li>
             }{
                 createBton()
+            }
+            {
+            pageNumber < totalPage && <li onClick={() => setPageNumber(pageNumber + 1)} className='page-item'>
+                <MdKeyboardDoubleArrowRight/>
+            </li>
             }
             
         </ul>
