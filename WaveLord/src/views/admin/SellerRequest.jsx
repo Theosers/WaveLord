@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../scss/admin/DeactiveSellers.scss'
+import '../../scss/admin/SellersRequest.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
@@ -7,7 +7,7 @@ import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
 
 
 
-const DeactivateSellers = () => {
+const SellerRequest = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
@@ -18,7 +18,7 @@ const DeactivateSellers = () => {
     return (
         <div className='largest-container'>
             
-                <h1 className='second-container'>Deactivate Sellers</h1>
+                <h1 className='second-container'>Seller Request</h1>
             
             <div className='second-container'>
                 <div className="gauche">
@@ -38,7 +38,6 @@ const DeactivateSellers = () => {
                         <thead>
                         <tr>
                             <th>N°</th>
-                            <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Payment Status</th>
@@ -51,20 +50,17 @@ const DeactivateSellers = () => {
                             [1,2,3,4,5].map((d, i) => (
                             <tr key={i}>
                                 <td scope='row'>#{d}</td>
-                                <td scope='row'>
-                                    <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                                    
-                                </td>
+                                
                     
                                 <td>{d.payment_status}Tshirt</td>
                                 <td>SurfShop.other.email@gmail.com</td>
+                                <td>Inactive</td>
                                 <td>Pending</td>
-                                <td>Deactivate</td>
                                
                                 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEye className='fa-action'/> </Link>
+                                        <Link to={'/admin/dashboard/seller/details/2'}> <FaEye className='fa-action'/> </Link>
                                         
                                     </div>
                                 </td>
@@ -90,4 +86,4 @@ const DeactivateSellers = () => {
     )
 }
 
-export default DeactivateSellers;
+export default SellerRequest;

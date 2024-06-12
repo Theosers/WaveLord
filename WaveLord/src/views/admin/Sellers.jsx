@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../scss/Sellers.scss'
+import '../../scss/admin/Sellers.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'

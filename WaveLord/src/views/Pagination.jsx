@@ -35,14 +35,15 @@ const Pagination = ({pageNumber, setPageNumber, totalItem, parPage, showItem}) =
         <ul className='pagination-container'>
             {
             pageNumber > 1 && <li onClick={() => setPageNumber(pageNumber - 1)} className='page-item'>
-                <MdKeyboardDoubleArrowLeft/>
+                <MdKeyboardDoubleArrowLeft className='keyboard-double-arrow-icon-left'/>
+                
             </li>
             }{
                 createBton()
             }
             {
             pageNumber < totalPage && <li onClick={() => setPageNumber(pageNumber + 1)} className='page-item'>
-                <MdKeyboardDoubleArrowRight/>
+                <MdKeyboardDoubleArrowRight className='keyboard-double-arrow-icon-right'/>
             </li>
             }
             

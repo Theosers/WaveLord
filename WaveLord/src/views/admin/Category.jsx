@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
-import '../../scss/Category.scss'
+import '../../scss/admin/Category.scss'
 import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
 
 
@@ -15,9 +15,8 @@ const Category = () => {
 
 
     return (
-        <div className='container'>
-            test
-            <div className='second-container'>
+        <div className='category-container'>
+            <div className='category-second-container'>
                 <div className='gauche-container'>
                     <div className="gauche">
                         <select onChange={(e) => setParPage(parseInt(e.target.value))}>

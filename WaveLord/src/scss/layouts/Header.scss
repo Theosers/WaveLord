@@ -1,3 +1,4 @@
+
 .header-container {
     position: fixed;
     top: 10px;
@@ -9,11 +10,12 @@
     height: 95px;
     z-index: 40;
     padding: 0 20px;
+    
 
     @media (max-width: 1024px) {
       width: 80%;
     }
-    
+ 
   
   
     .header-inner {
@@ -29,6 +31,10 @@
       padding: 0 1.25rem;
       transition: all 0.3s ease;
       
+    }
+    .scrolled {
+  
+      background-color: rgba(0, 0, 0, 0.347);
     }
   
     .menu-icon {

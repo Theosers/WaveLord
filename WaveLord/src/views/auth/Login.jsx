@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../scss/login.scss'
+import '../../scss/auth/login.scss'
 import {Link} from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";

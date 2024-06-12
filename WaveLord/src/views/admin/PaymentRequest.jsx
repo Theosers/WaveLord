@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { FixedSizeList as List} from "react-window";
-import '../../scss/PaymentRequest.scss'
+import '../../scss/admin/PaymentRequest.scss'
 
 function handleOnWheel({ deltaY }) {
     console.log('handleOnWheel', deltaY)

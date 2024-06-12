@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import '../../scss/Orders.scss';
+import '../../scss/admin/Orders.scss';
 import '../../scss/Pagination.scss'
 import { Link } from 'react-router-dom';
 import { LuArrowDownSquare } from 'react-icons/lu';
@@ -14,8 +14,8 @@ const Orders = () => {
     const [show, setShow] =  useState(false);
 
     return (
-        <div className='container'>
-            <div className='box'>
+        <div className='orders-container'>
+            <div className='orders-box'>
                 <div className='controls'>
                     <select onChange={(e) => setParPage(parseInt(e.target.value))}>
                         <option value="5">5</option>
@@ -54,7 +54,7 @@ const Orders = () => {
                         <td>{d.payment_status}Pending</td>
                         <td>{d.delivery_status}Pending</td>
                         <td>
-                          <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link>
+                          <Link to={`/admin/dashboard/order/details/3`}>View</Link>
                         </td>
                         <td onClick={(e) => setShow(!show)}><LuArrowDownSquare/> </td>
                       </tr>

@@ -4,9 +4,9 @@ import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6"; 
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom';
-import '../../scss/admin/AdminDashboard.scss';
+import '../../scss/seller/SellerDashboard.scss';
 
-const AdminDashboard = () => {
+const SellerDashboard = () => {
 
 
     const state = {
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
                 data : [67,39,45,56,90,56,23,56,87,78,67,78]
             },
             {
-                name : "Sellers",
+                name : "Sales",
                 data : [34,39,56,56,80,67,23,56,98,78,45,56]
             },
         ],
@@ -94,17 +94,17 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className='stat-card un'>
-              <FaUsers className='icon' />
+              <FaCartShopping className='icon' />
               <div>
                 <h3>10</h3>
-                <p>Sellers</p>
+                <p>Orders</p>
               </div>
             </div>
             <div className='stat-card trois'>
               <FaCartShopping className='icon' />
               <div>
                 <h3>54</h3>
-                <p>Orders</p>
+                <p>Pending Orders</p>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
 
             <div className='recent-seller-messages-container'>
                 <div className="recent-seller-messages-header">
-                    <h2>Recent Seller Message</h2>
+                    <h2>Recent Customer Message</h2>
                     <Link>View All</Link>
                 </div>
                 <div className="messages">
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
                         <li>
                             <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
                             <div>
-                                <Link>Admin</Link>
+                                <Link>Seller</Link>
                                 <time>2 day ago</time>
                             </div>
                             <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aut laborum ex magnam, ipsam voluptas alias est ipsa eaque mollitia. Nisi ducimus dolorem facere dignissimos fugit obcaecati veniam vero blanditiis!</div>
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
                         <li>
                             <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
                             <div>
-                                <Link>Admin</Link>
+                                <Link>Customer</Link>
                                 <time>2 day ago</time>
                             </div>
                             <div>How are you</div>
@@ -202,4 +202,4 @@ const AdminDashboard = () => {
       );
     };
 
-export default AdminDashboard;
+export default SellerDashboard;

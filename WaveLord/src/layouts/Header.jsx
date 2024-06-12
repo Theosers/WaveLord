@@ -1,13 +1,33 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { FaList } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import '../scss/Header.scss';
+import '../scss/layouts/Header.scss';
 
 const Header = ({showSidebar, setShowSidebar}) => {
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div className='header-container'>
-      <div className='header-inner'>
+      <div className={`header-inner ${isScrolled ? 'scrolled' : ''}`}>
         <div onClick={() => setShowSidebar(!showSidebar)} className='menu-icon'>
           <span><FaList/></span>
         </div>

@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getNav } from '../navigation/index';
 import { BiLogOutCircle } from 'react-icons/bi';
-import '../scss/Sidebar.scss';
+import '../scss/layouts/Sidebar.scss';
 import logo from '../assets/logo.png';
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
@@ -10,7 +10,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     const {pathname} = useLocation();
     const [allNav, setAllNav] = useState([]);
     useEffect(() => {
-        const navs = getNav('admin');
+        const navs = getNav('seller');
         setAllNav(navs);
         
     }, []);

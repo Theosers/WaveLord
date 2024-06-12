@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import '../../scss/register.scss'
+import '../../scss/auth/register.scss'
 const Register = () => {
 
     const [state, setState] = useState({

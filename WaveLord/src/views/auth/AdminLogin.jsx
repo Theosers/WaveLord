@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../scss/adminLogin.scss'
+import '../../scss/auth/adminLogin.scss'
 import {Link, useNavigate} from 'react-router-dom'
 import { admin_login, messageClear } from '../../store/Reducers/authReducer';
 import { useDispatch, useSelector } from 'react-redux';

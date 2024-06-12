@@ -2,15 +2,14 @@ body {
   margin: 0;
   padding: 0;
   background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
-  background: radial-gradient(circle, rgba(2, 0, 36, 0.8) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 213, 255, 0.3) 100%),  url('../assets/final_background.png');
+  background: radial-gradient(circle, rgba(2, 0, 36, 0.8) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 213, 255, 0.3) 100%),  url('../../assets/final_background.png');
   
   background-position: top;
   font-family: "Lobster", sans-serif;
 
 }
 
-
-
+ 
 .loginPage {
   width: 100%;
   height: 100vh;
@@ -29,7 +28,7 @@ body {
 .login-image-container {
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0, 255, 204, 0.207), rgba(0, 0, 0, 0.51)), url('../assets/login_Page.png');
+  background: linear-gradient(rgba(0, 255, 204, 0.207), rgba(0, 0, 0, 0.51)), url('../../assets/login_Page.png');
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -65,10 +64,10 @@ body {
   border-left: none;
   border-top-right-radius: 20%;
   
-  h2 {
+  .header {
     color: rgb(255, 255, 255);
     font-size: 2rem;
-    margin-top: 100px;
+    margin-top: 50px;
     letter-spacing: 0.2rem;
     
   }
@@ -94,6 +93,22 @@ body {
       font-size: 1.2rem;
       padding: 0 10px;
       outline: none;
+    }
+    .policy {
+      display: flex;
+      align-items: center;
+      
+    }
+    #checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    .privacy {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      letter-spacing:0.2rem;
     }
     button {
       width: 100%;
@@ -127,8 +142,7 @@ body {
     .or {
       margin-top: 1rem;
       font-size: 1.5rem;
-      letter-spacing: 0.2rem;
-      
+      letter-spacing: 0.2rem;      
       color: rgb(231, 144, 24);
       font-weight: bold;
     &::before, &::after {
@@ -143,27 +157,47 @@ body {
     .other-signup-buttons{
       
       width: 100%;
-      height: 50px;
+      height: 40px;
       margin-top: 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
+      
+      
+      
+    }
+    svg {
+      width: 20px;
+      height: 30px;
+    }
+    .un {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+      background-color: red;
+      margin-right: 10px;
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
       &:hover {
         transform: scale(1.1);
+        
       }
     }
-    svg {
-      width: 30px;
-      height: 30px;
-    }
-    .un {
-      background-color: red;
-    }
     .deux {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
       background-color: blue;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 10px;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
