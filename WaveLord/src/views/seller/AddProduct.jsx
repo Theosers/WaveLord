@@ -115,7 +115,7 @@ const AddProduct = () => {
 
             <div className='add-product-header'>
                 <h2>Add Product</h2>
-                <Link>All Products</Link>
+                <Link to='/seller/dashboard/products'>All Products</Link>
             </div>
 
             <div className='add-product-form'>
