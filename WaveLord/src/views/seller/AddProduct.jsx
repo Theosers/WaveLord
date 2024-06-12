@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../scss/seller/AddProduct.scss';
 import { Link } from 'react-router-dom';
+import { IoMdCloseCircle, IoMdImages } from "react-icons/io";
 
 const AddProduct = () => {
 
@@ -68,6 +69,44 @@ const AddProduct = () => {
         }
     }
 
+    const [images, setImages] = useState([])
+    const [imageShow, setImageShow] = useState([])
+    const imageHandle = (e) => {
+        const files = e.target.files
+        const length = files.length
+        
+        if (length > 0) {
+            setImages([...images, ...files])
+            let imageUrl = []
+            for (let i = 0; i < length; i++) {
+                imageUrl.push({url: URL.createObjectURL(files[i])})
+            }
+            setImageShow([...imageShow, ...imageUrl])
+
+        }
+    }
+    
+    const changeImage = (img, index) => {
+        if (img) {
+            let tempUrl = imageShow
+            let tempImages = images
+
+            tempImages[index] = img
+            tempUrl[index] = {url : URL.createObjectURL(img)}
+            setImageShow([...tempUrl])
+            setImages([...tempImages])
+
+        }
+    }
+
+    const removeImage = (i) => {
+
+        const filterImage = images.filter((img,index) => index !== i) 
+        const filterImageUrl = imageShow.filter((img,index) => index !== i)
+
+        setImages(filterImage)
+        setImageShow(filterImageUrl)
+    }
 
 
 
@@ -137,8 +176,24 @@ const AddProduct = () => {
                         </textarea>
 
                     <div className='images'>
-                        <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                        <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                        
+
+                        {
+                            imageShow.map((img,i) => <div className='imageShow' key={i}>
+                                <label htmlFor={i}>
+                                    <img src={img.url} alt="" />
+                                </label>
+                                <input onChange={(e)=> changeImage(e.target.files[0], i)} type="file" id={i} style={{display: 'none'}} />
+                                <span onClick={()=> removeImage(i)} className='close'><IoMdCloseCircle/></span>
+                            </div>)
+                        }
+
+                        <label  htmlFor="image">
+                            <span><IoMdImages /></span>
+                            <span>Select Image</span>
+                        </label>
+                        <input style={{display: 'none'}} onChange={imageHandle} multiple type="file" id='image'  />
+                        
                     </div>
 
                     <button type='submit'>Add Product</button>
