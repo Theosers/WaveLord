@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Search from "../components/Search";
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
@@ -8,11 +8,27 @@ import '../../scss/admin/Category.scss'
 import {FaEdit, FaEye, FaTrash} from 'react-icons/fa'
 import '../../scss/seller/Products.scss'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { get_products } from '../../store/Reducers/productReducer';
+
 const Products = () => {
+
+    const dispatch = useDispatch()
+    const { products,totalProduct} = useSelector(state=> state.product)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
+
+     useEffect(() => {
+        const obj = {
+            parPage: parseInt(parPage),
+            page: parseInt(currentPage),
+            searchValue
+        }
+        dispatch(get_products(obj))
+
+    },[searchValue, currentPage,parPage])
 
     return (
         <div className='orders-container'>
