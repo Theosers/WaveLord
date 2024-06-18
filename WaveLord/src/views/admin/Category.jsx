@@ -107,7 +107,7 @@ const Category = () => {
                                 <span><FaImage/></span>
                                 <span>Select Image</span>
                             </label>
-                            <input type="file" name="file" id="image" />
+                            <input onChange={imageHandle} type="file" name="file" id="image" />
 
                             <div>
                                 <button>Add</button>
