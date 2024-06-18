@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Category = () => {
 
+    const dispatch = useDispatch()
+    const {loader} = useSelector(state=> state.category)
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
