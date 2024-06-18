@@ -12,6 +12,26 @@ const Category = () => {
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+    const [imageShow, setImage] = useState('')
+
+    const [state, setState] = useState({
+
+        name: '',
+        image: ''
+
+    })
+
+
+    const imageHandle = (e) => {
+        let files = e.target.files 
+        if (files.length > 0) {
+            setImage(URL.createObjectURL(files[0]))
+            setState({
+                ...state,
+                image: files[0]
+            })
+        }
+    }
 
 
     return (
