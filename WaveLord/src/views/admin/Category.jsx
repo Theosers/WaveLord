@@ -4,6 +4,8 @@ import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import '../../scss/admin/Category.scss'
 import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils';
 
 
 const Category = () => {
@@ -32,6 +34,13 @@ const Category = () => {
             })
         }
     }
+
+    const add_category = (e) => {
+        e.preventDefault()
+        console.log(state)
+    }
+
+    const loader = false
 
 
     return (
@@ -95,7 +104,7 @@ const Category = () => {
 
                 <div className='droite'>
                     <h1>Add Category</h1>
-                    <form action="">
+                    <form onSubmit={add_category} action="">
                         <div className='form-container'>
                             <label htmlFor="name">Category Name</label>
                             <input value={state.name} onChange={(e)=>setState({...state,name : e.target.value})} type="text" id='name' name='category_name'
@@ -110,7 +119,7 @@ const Category = () => {
                             <input onChange={imageHandle} type="file" name="file" id="image" />
 
                             <div>
-                                <button>Add</button>
+                                <button>Add</button> //Ici faire la modif du bouton
                             </div>
 
 
