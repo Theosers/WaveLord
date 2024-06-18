@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
@@ -6,14 +6,14 @@ import '../../scss/admin/Category.scss'
 import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
-import { categoryAdd } from '../../store/Reducers/categoryReducer';
+import { categoryAdd, messageClear } from '../../store/Reducers/categoryReducer';
 import { useDispatch, useSelector } from 'react-redux';
-
+import toast from 'react-hot-toast';
 
 const Category = () => {
 
     const dispatch = useDispatch()
-    const {loader} = useSelector(state=> state.category)
+    const {loader,successMessage,errorMessage} = useSelector(state=> state.category)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
@@ -48,6 +48,25 @@ const Category = () => {
 
     const loader = false
 
+    useEffect(() => {
+
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear()) 
+            setState({
+                name: '',
+                image: ''
+            }) 
+            setImage('')
+
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+
+
+    },[successMessage,errorMessage])
 
     return (
         <div className='category-container'>
