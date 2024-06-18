@@ -1,40 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../scss/seller/AddProduct.scss';
 import { Link } from 'react-router-dom';
 import { IoMdCloseCircle, IoMdImages } from "react-icons/io";
 
 const AddProduct = () => {
 
-    const categories = [
-        {
-            id: 1,
-            name: 'Sports'
-        },
-        
-        {
-            id: 2,
-            name: 'Tshirt'
-        },
-        
-        {
-            id: 3,
-            name: 'Mobile'
-        },
-        
-        {
-            id: 4,
-            name: 'Computer'
-        },
-        
-        {
-            id: 5,
-            name: 'Watch'
-        },
-        {
-            id: 6,
-            name: 'Pant'
-        },
-    ]
+    const dispatch = useDispatch()
+    const { categorys } = useSelector(state => state.category)
+
+    useEffect(() => {
+        dispatch(get_category({
+            searchValue: '',
+            parPage: '',
+            page: ""
+        }))
+    }, [])
 
     const [state, setState] = useState({
         name: '',
