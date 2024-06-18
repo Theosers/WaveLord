@@ -6,7 +6,7 @@ import '../../scss/Pagination.scss'
 import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
 import Search from '../components/Search';
-import { get_seller_request } from '../../store//Reducers/sellerReducer';
+import { get_seller_request } from '../../store/Reducers/sellerReducer';
 
 
 
