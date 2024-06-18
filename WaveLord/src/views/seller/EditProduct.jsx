@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { IoMdCloseCircle, IoMdImages } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { get_category } from '../../store/Reducers/categoryReducer';
-import { get_product } from '../../store/Reducers/productReducer';
+import { get_product,update_product,messageClear } from '../../store/Reducers/productReducer';
 
 const EditProduct = () => {
 
@@ -112,6 +112,12 @@ const EditProduct = () => {
 
     console.log(imageShow)
 
+	useEffect(() => {
+		if (categorys.length > 0) {
+		setAllCategory(categorys)
+		}
+	} )
+
 
         useEffect(() => {
 
@@ -184,7 +190,7 @@ const EditProduct = () => {
                                         <div className='pt-14'></div>
                                         <div className='roll-menu'>
                                         {
-                                            allCategories.map((c, i) => <span className={`cursor ${category === c.name && 'bgcolor'}` }
+                                            allCategory.length > 0 && allCategory.map((c,i) => <span className={`cursor ${category === c.name && 'bgcolor'}` }
                                             onClick={() => {
                                                 setCateShow(false);
                                                 setCategory(c.name);
@@ -223,7 +229,7 @@ const EditProduct = () => {
                         
 
                         {
-                            imageShow.map((img,i) => <div className='imageShow' key={i}>
+                            (imageShow && imageShow.length > 0) &&  imageShow.map((img,i) => <div className='imageShow' key={i}>
                                 <label htmlFor={i}>
                                     <img src={img} alt="" />
                                 </label>
