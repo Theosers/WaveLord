@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import '../../scss/admin/SellersRequest.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux';
+import Search from '../components/Search';
+import { get_seller_request } from '../../store//Reducers/sellerReducer';
 
 
 
 const SellerRequest = () => {
 
+    const dispatch = useDispatch()
+    const {sellers,totalSeller} = useSelector(state=> state.seller)
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+
+    useEffect(() => {
+        dispatch(get_seller_request({
+            parPage,
+            searchValue,
+            page: currentPage
+        }))
+
+    },[parPage,searchValue,currentPage])
 
 
     return (
@@ -21,14 +36,7 @@ const SellerRequest = () => {
                 <h1 className='second-container'>Seller Request</h1>
             
             <div className='second-container'>
-                <div className="gauche">
-                    <select onChange={(e) => setParPage(parseInt(e.target.value))}>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option> 
-                        </select>
-                    <input type="text" placeholder='search'/>
-                </div>
+                <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
 
 
 
