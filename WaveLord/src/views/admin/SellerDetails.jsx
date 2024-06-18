@@ -26,7 +26,11 @@ const SellerDetails = () => {
                     <div className='triparte'>
                         <div className='triparte-1ersection'>
                             <div>
-                                <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                                {
+                                    seller?.image ?  <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /> :
+                                    <span>Image Not Uploaded </span>
+                               }
+                                
                             </div>
 
                         </div>
@@ -38,23 +42,23 @@ const SellerDetails = () => {
                             <div>
                                 <div>
                                     <span>Name : </span>
-                                    <span>Théo SERS</span>
+                                    <span>{ seller?.name }</span>
                                 </div>
                                 <div>
                                     <span>Email : </span>
-                                    <span>Theo.sers@gmail.com</span>
+                                    <span>{ seller?.email }</span>
                                 </div>
                                 <div>
                                     <span>Role : </span>
-                                    <span>Seller </span>
+                                    <span>{ seller?.role } </span>
                                 </div>
                                 <div>
                                     <span>Status : </span>
-                                    <span>Active </span>
+                                    <span>{ seller?.status } </span>
                                 </div>
                                 <div>
                                     <span>Payment Status : </span>
-                                    <span>Active </span>
+                                    <span>{ seller?.payment } </span>
                                 </div>
                             </div>
                         </div>
@@ -65,23 +69,23 @@ const SellerDetails = () => {
                             <div>
                                 <div>
                                     <span>Shop Name : </span>
-                                    <span>Easy Shop</span>
+                                    <span>{seller?.shopInfo?.shopName}</span>
                                 </div>
                                 <div>
                                     <span>Division : </span>
-                                    <span>Poueteu</span>
+                                    <span>{seller?.shopInfo?.division}</span>
                                 </div>
                                 <div>
                                     <span>District : </span>
-                                    <span>SelPoefjeler </span>
+                                    <span>{seller?.shopInfo?.district} </span>
                                 </div>
                                 <div>
                                     <span>State : </span>
-                                    <span>Poueteu </span>
+                                    <span>{seller?.shopInfo?.sub_district} </span>
                                 </div>
                                 <div>
                                     <span>Payment Status : </span>
-                                    <span>Active </span>
+                                    <span>{ seller?.payment } </span>
                                 </div>
                             </div>
                         </div>
