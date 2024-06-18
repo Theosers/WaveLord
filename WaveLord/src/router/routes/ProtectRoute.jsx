@@ -7,14 +7,14 @@ import { Suspense } from 'react';
 const ProtectRoute = ({ route, children }) => {
 
     
-    const { role, user } = useSelector(state => state.auth);
-    console.log(role, user)
-    console.log('user et infos : ',user, user.role)
+    const { role, userInfo } = useSelector(state => state.auth);
+    console.log(role, userInfo)
 
     if(role) {
-        if (user) {
-            console.log(user.role, route.role)
-            if (user.role === route.role) {
+        console.log('il y a bien un role', role)
+        if (userInfo) {
+            console.log(('il y a bien un userInfo', userInfo)
+            if (userInfo.role === route.role) {
                 return <Suspense fallback={null}>{children}</Suspense>
             }
             else {
@@ -24,7 +24,7 @@ const ProtectRoute = ({ route, children }) => {
         }
         
     } else {
-        console.log(user.role, route.role)
+        console.log('final else, pas de role')
         return <Navigate to='/login' replace />
     }
 };
