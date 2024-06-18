@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import '../../scss/seller/Profile.scss'
 import { FaImages } from "react-icons/fa";
 import { FadeLoader } from "react-spinners";
 import { useDispatch, useSelector } from 'react-redux';
 import { profile_image_upload } from '../../store/Reducers/authReducer'
+import { profile_image_upload,messageClear } from '../../store/Reducers/authReducer'
+import toast from 'react-hot-toast';
 
 const Profile = () => {
 
     const dispatch = useDispatch()
-    const { userInfo } = useSelector(state => state.auth)
+    const { userInfo,loader,successMessage } = useSelector(state => state.auth)
 
     const image = false
     const loader = true
 
     const status = 'active' 
+
+    useEffect(() => {
+
+        if (successMessage) {
+            toast.success(successMessage)
+            messageClear() 
+        } 
+    },[successMessage])
 
     const add_image = (e) => {
         if (e.target.files.length > 0) { 
@@ -30,7 +40,7 @@ const Profile = () => {
                 <div className="profile-infos">
                     
                     {
-                        image?.image ? <img src="http://localhost:3000/src/assets/admin.jpeg" alt=""  />
+                        userInfo?.image ? <img src={userInfo.image} alt=""  />
                               : <label htmlFor="img">
                                 <span><FaImages/></span>
                                 <span>Select Image</span>
