@@ -6,9 +6,10 @@ import '../../scss/admin/Category.scss'
 import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
-import { categoryAdd, messageClear } from '../../store/Reducers/categoryReducer';
+import { categoryAdd, messageClear, get_category } from '../../store/Reducers/categoryReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import Search from '../components/Search';
 
 const Category = () => {
 
@@ -68,18 +69,21 @@ const Category = () => {
 
     },[successMessage,errorMessage])
 
+    useEffect(() => {
+        const obj = {
+            parPage: parseInt(parPage),
+            page: parseInt(currentPage),
+            searchValue
+        }
+        dispatch(get_category(obj))
+
+    },[searchValue, currentPage,parPage])
+
     return (
         <div className='category-container'>
             <div className='category-second-container'>
                 <div className='gauche-container'>
-                    <div className="gauche">
-                        <select onChange={(e) => setParPage(parseInt(e.target.value))}>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option> 
-                            </select>
-                        <input type="text" placeholder='search'/>
-                    </div>
+                    <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue}  />
 
                     <div className='table-container'>
                     <table>
