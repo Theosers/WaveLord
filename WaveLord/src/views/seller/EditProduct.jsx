@@ -12,15 +12,14 @@ const EditProduct = () => {
 
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
-    const { product } = useSelector(state => state.product)
+    const { product,loader,successMessage,errorMessage } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(get_category({
-            searchValue: '',
-            parPage: '',
-            page: ""
-        }))
-    }, [])
+	    const EditProduct = () => {
+        setCategory(product.category)
+        setImageShow( product.images)
+    },[product])
 
     useEffect(() => {
         dispatch(get_product(productId))
@@ -112,6 +111,47 @@ const EditProduct = () => {
     },[product])
 
     console.log(imageShow)
+
+
+        useEffect(() => {
+
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear()) 
+            setState({
+                name: "",
+                description: '',
+                discount: '',
+                price: "",
+                brand: "",
+                stock: ""
+            })  
+            setCategory('')
+
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+
+
+    },[successMessage,errorMessage])
+
+
+    const update = (e) => {
+        e.preventDefault()
+        const obj = {
+                name: state.name,
+                description: state.description,
+                discount: state.discount,
+                price: state.price,
+                brand: state.brand,
+                stock: state.stock,
+                productId: productId
+        }
+        dispatch(update_product(obj))
+
+    }
 
 
     return (
