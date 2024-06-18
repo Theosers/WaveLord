@@ -86,9 +86,10 @@ class authControllers {
                     name,
                     email,
                     password: await bcrpty.hash(password, 10),
-                    method: 'paypal',
+                    method: 'menualy',
                     shopInfo: {}
                 });
+                console.log(seller)
                 await sellerCustomerModel.create({
                     myId: seller.id
                 });
