@@ -6,6 +6,8 @@ import '../../scss/admin/Category.scss'
 import {FaEdit, FaImage, FaTrash} from 'react-icons/fa'
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
+import { categoryAdd } from '../../store/Reducers/categoryReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Category = () => {
