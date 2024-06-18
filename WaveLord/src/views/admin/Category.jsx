@@ -97,15 +97,15 @@ const Category = () => {
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
+                            categorys.map((d, i) => (
                             <tr key={i}>
-                                <td scope='row'>#{d}</td>
+                                <td scope='row'>{i+1}</td>
                                 <td scope='row'>
-                                    <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                                    <img src={d.image} alt="" />
                                     
                                 </td>
                     
-                                <td>{d.payment_status}Tshirt</td>
+                                <td>{d.name}</td>
                                 
                                 <td>
                                     <div className='actions-container'>
