@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../scss/auth/login.scss'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
+import { PropagateLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { overrideStyle } from '../../utils/utils';
+import { seller_login, messageClear } from '../../store/Reducers/authReducer';
 
 const Login = () => {
+
+    const navgiate = useNavigate();
+
+    const dispatch = useDispatch();
+    const {loader, errorMessage, successMessage} = useSelector(state => state.auth);
+
 
     const [state, setState] = useState({
         email: '',
@@ -21,8 +32,20 @@ const Login = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(state)
+        dispatch(seller_login(state));
     }
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage);
+            dispatch(messageClear())
+            navgiate('/')
+        }
+        if (errorMessage) {
+            toast.error(errorMessage);
+            dispatch(messageClear())
+        }
+        
+    }, [successMessage, errorMessage]);
 
     return (
         <>
@@ -40,7 +63,11 @@ const Login = () => {
                             <label htmlFor="">Password</label>
                             <input onChange={inputHandler} value={state.password}
                                     type="password" placeholder="Password" name='password' id='password' required/>
-                            <button type="submit">Sign In</button>
+                            <button disabled={loader ? true : false} type="submit">
+                                {
+                                    loader ? <PropagateLoader color='white' cssOverride={overrideStyle}/> : 'Sign In'
+                                }
+                                </button>
                             <p>Don't Have an account ? </p> 
                             <Link to="/register">Sign Up</Link> 
                             

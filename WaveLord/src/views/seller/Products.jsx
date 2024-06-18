@@ -60,7 +60,7 @@ const Products = () => {
                                 <td>{d.payment_status}20</td>
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEdit className='fa-action'/> </Link>
+                                        <Link to={`/seller/dashboard/edit-product/32`}> <FaEdit className='fa-action'/> </Link>
                                         <Link> <FaEye className='fa-action'/> </Link>
                                         <Link> <FaTrash className='fa-action'/> </Link>
                                     </div>

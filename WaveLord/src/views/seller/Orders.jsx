@@ -49,7 +49,7 @@ const Orders = () => {
                                 <td>{d.payment_status}Pending</td>
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEye className='fa-action'/> </Link>
+                                        <Link to= {`/seller/dashboard/order/details/34`}> <FaEye className='fa-action'/> </Link>
                                     </div>
                                 </td>
                             </tr>

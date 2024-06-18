@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import api from '../../api/api';
+import { jwtDecode } from 'jwt-decode';
 
 export const admin_login = createAsyncThunk(
     'auth/admin_login',
@@ -15,6 +16,68 @@ export const admin_login = createAsyncThunk(
         }
     }
 );
+export const seller_login = createAsyncThunk(
+    'auth/seller_login',
+    async (info, {rejectWithValue, fulfillWithValue}) => {
+        
+        try {
+            const {data} = await api.post('/seller-login', info,
+            {withCredentials: true});            
+            localStorage.setItem('accessToken', data.token);
+
+            
+            
+            return fulfillWithValue(data);
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+export const get_user_info = createAsyncThunk(
+    'auth/get_user_info',
+    async (_ , {rejectWithValue, fulfillWithValue}) => {
+        console.log('get user info');
+        try {
+            const {data} = await api.get('/get-user', { withCredentials: true });     
+            console.log('data', data);       
+            return fulfillWithValue(data);
+        } catch (err) {
+            console.log('error get user info');
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const seller_register = createAsyncThunk(
+    'auth/seller-register',
+    async (info, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.post('/seller-register', info,
+            {withCredentials: true});            
+            localStorage.setItem('accessToken', data.token);
+            
+            return fulfillWithValue(data);
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+const returnRole = (token) => {
+    if (token) {
+        const decodeToken = jwtDecode(token);
+        const expireTime = new Date(decodeToken.exp * 1000);
+        if (new Date() > expireTime) {
+            localStorage.removeItem('accessToken')
+            return ''
+        }
+        else {
+            return decodeToken.role;
+        
+        }
+    }
+
+} 
 
 export const authReducer = createSlice({
     name: 'auth',
@@ -22,7 +85,9 @@ export const authReducer = createSlice({
         successMessage: '',
         errorMessage: '',
         loader: false,
-        user: ''
+        user: '',
+        role: returnRole(localStorage.getItem('accessToken')),
+        token: ''
     },
     reducers: {
         messageClear : (state,_) => {
@@ -31,6 +96,7 @@ export const authReducer = createSlice({
             }
     },
     extraReducers: (builder) => {
+        // admin_login
         builder.addCase(admin_login.pending, (state, { payload }) => {
             state.loader = true;
         });
@@ -42,6 +108,42 @@ export const authReducer = createSlice({
         builder.addCase(admin_login.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message;
+            state.token = payload.token;
+            state.role = returnRole(payload.token);
+        });
+        // seller_login
+        builder.addCase(seller_login.pending, (state, { payload }) => {
+            state.loader = true;
+        });
+        builder.addCase(seller_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload.error;
+           
+        });
+        builder.addCase(seller_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.token = payload.token;
+            state.role = returnRole(payload.token);
+        });
+        // seller_register
+        builder.addCase(seller_register.pending, (state, { payload }) => {
+            state.loader = true;
+        });
+        builder.addCase(seller_register.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload.error;
+           
+        });
+        builder.addCase(seller_register.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.token = payload.token;
+            state.role = returnRole(payload.token);
+        });
+        builder.addCase(get_user_info.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.user = payload.user;
         });
         }
     

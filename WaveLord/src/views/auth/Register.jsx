@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import '../../scss/auth/register.scss'
+import { useSelector } from 'react-redux';
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils';
+import { seller_register, messageClear } from '../../store/Reducers/authReducer';
+import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
+
+
+
 const Register = () => {
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const {loader, successMessage, errorMessage} = useSelector(state => state.auth)
 
     const [state, setState] = useState({
         name: '',
@@ -21,8 +36,24 @@ const Register = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(state)
+        dispatch(seller_register(state));
     }
+
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage);
+            dispatch(messageClear())
+            navigate('/')
+        }
+        if (errorMessage) {
+            toast.error(errorMessage);
+            dispatch(messageClear())
+        }
+        
+    }, [successMessage, errorMessage]);
+
+   
 
 
 
@@ -50,7 +81,11 @@ const Register = () => {
                                 <label htmlFor="checkbox" className='privacy'> I agree to privacy policy</label> 
                                 <input type="checkbox" name="checkbox" id="checkbox" required/>                                
                             </div>
-                            <button type="submit">Sign Up</button>               
+                            <button disabled={loader ? true : false} type="submit">
+                                {
+                                    loader ? <PropagateLoader color='white' cssOverride={overrideStyle}/> : 'Sign up'
+                                }
+                                </button>           
                             <p>Already have an account ? </p>      
                             <Link to="/login">Sign In</Link>                                 
                             <span className='or'>Or</span>
