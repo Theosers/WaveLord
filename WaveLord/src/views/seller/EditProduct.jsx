@@ -12,6 +12,7 @@ const EditProduct = () => {
 
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
+    const { product } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(get_category({
@@ -99,22 +100,16 @@ const EditProduct = () => {
 
     useEffect(() => {
         setState({
-            name : 'Men Full Sleeve',
-            description: 'This product is a great product and you should buy it.',
-            discount: 10,
-            price: 864,
-            brand: 'Veldo',
-            stock: 18
+            name: product.name,
+            description: product.description,
+            discount: product.discount,
+            price: product.price,
+            brand: product.brand,
+            stock: product.stock
         })
-        setCategory('Tshirt')
-        setImageShow([
-            'http://localhost:3000/src/assets/admin.jpeg',
-            'http://localhost:3000/src/assets/admin.jpeg',
-            'http://localhost:3000/src/assets/admin.jpeg',
-        ])
-
-
-    }, [])
+        setCategory(product.category)
+        setImageShow( product.images)
+    },[product])
 
     console.log(imageShow)
 
