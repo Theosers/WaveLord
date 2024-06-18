@@ -13,7 +13,7 @@ const ProtectRoute = ({ route, children }) => {
     if(role) {
         console.log('il y a bien un role', role)
         if (userInfo) {
-            console.log(('il y a bien un userInfo', userInfo)
+            console.log(('il y a bien un userInfo', userInfo))
             if (userInfo.role === route.role) {
                 return <Suspense fallback={null}>{children}</Suspense>
             }
