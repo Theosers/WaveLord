@@ -163,7 +163,7 @@ const EditProduct = () => {
             </div>
 
             <div className='add-product-form'>
-                <form>
+                <form onSubmit={update}>
                     <div className='form-details-container'>
                         <div className='form-left-container'>
                             <label htmlFor='name'>Product Name</label>
@@ -240,7 +240,7 @@ const EditProduct = () => {
                         
                     </div>
 
-                    <button type='submit'>Save Changes</button>
+                    <button type='submit'>Save Changes</button> //mettre le bouton
                 </form>
             </div>
         </div>
