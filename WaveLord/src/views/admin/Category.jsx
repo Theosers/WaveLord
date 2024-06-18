@@ -98,7 +98,7 @@ const Category = () => {
                     <form action="">
                         <div className='form-container'>
                             <label htmlFor="name">Category Name</label>
-                            <input type="text" id='name' name='category_name'
+                            <input value={state.name} onChange={(e)=>setState({...state,name : e.target.value})} type="text" id='name' name='category_name'
                             placeholder='Category Name' />
                         </div>
 
