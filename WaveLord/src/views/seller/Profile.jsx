@@ -2,20 +2,32 @@ import React from "react";
 import '../../scss/seller/Profile.scss'
 import { FaImages } from "react-icons/fa";
 import { FadeLoader } from "react-spinners";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
+
+    const dispatch = useDispatch()
+    const { userInfo } = useSelector(state => state.auth)
 
     const image = false
     const loader = true
 
+    const status = 'active' 
+
+    const add_image = (e) => {
+        if (e.target.files.length > 0) {
+            console.log(e.target.files[0])
+        }
+
+    }
+
     return (
         <div className="main-container">
-            <form action="">
+            <form action=""> // !userInfo?.shopInfo ? <form>
                 <div className="profile-infos">
                     
-
                     {
-                        image ? <img src="http://localhost:3000/src/assets/admin.jpeg" alt=""  />
+                        image?.image ? <img src="http://localhost:3000/src/assets/admin.jpeg" alt=""  />
                               : <label htmlFor="img">
                                 <span><FaImages/></span>
                                 <span>Select Image</span>
@@ -27,15 +39,15 @@ const Profile = () => {
                                     </div>
                                 }
                               </label>
-                    }
+                    } // onChange={add_image} sur un input
 
 
                     <div className="usual-infos">
-                        <span><em>Name : </em>Théo Spartacus</span>
-                        <span><em>Email : </em>seller@gmail.com</span>
-                        <span><em>Role : </em>Seller</span>
-                        <span><em>Status : </em>Active</span>
-                        <span><em>Payment Account : </em> <button>Pending</button></span>
+                        <span><em>Name : </em>{userInfo.name}</span>
+                        <span><em>Email : </em>{userInfo.email}</span>
+                        <span><em>Role : </em>{userInfo.role}</span>
+                        <span><em>Status : </em>{userInfo.status}</span>
+                        <span><em>Payment Account : </em> <button>{userInfo.payment}</button></span>
                     </div>
 
                     <label placeholder="Shop Name" htmlFor="">Shop Name</label>
