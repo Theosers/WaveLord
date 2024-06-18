@@ -88,8 +88,14 @@ const AddProduct = () => {
         setImageShow(filterImageUrl)
     }
 
+    const add = (e) => {
+        e.preventDefault()
+    }
 
-
+    useEffect(() => {
+        setAllCategory(categorys)
+    },[categorys])
+    
     return (
         <div className='add-product-container'>
 
@@ -99,7 +105,7 @@ const AddProduct = () => {
             </div>
 
             <div className='add-product-form'>
-                <form>
+                <form onSubmit={add}>
                     <div className='form-details-container'>
                         <div className='form-left-container'>
                             <label htmlFor='name'>Product Name</label>
