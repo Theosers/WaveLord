@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import '../../scss/seller/AddProduct.scss';
 import { Link } from 'react-router-dom';
 import { IoMdCloseCircle, IoMdImages } from "react-icons/io";
-import { add_product } from '../../store/Reducers/productReducer';
+import { get_category } from '../../store/Reducers/categoryReducer'; //maybe a enlever
+import { add_product, messageClear } from '../../store/Reducers/productReducer';
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils';
+import toast from 'react-hot-toast';
 
 const AddProduct = () => {
 
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
+    const { loader,successMessage,errorMessage } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(get_category({
@@ -66,6 +71,33 @@ const AddProduct = () => {
 
         }
     }
+
+
+    useEffect(() => {
+
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear()) 
+            setState({
+                name: "",
+                description: '',
+                discount: '',
+                price: "",
+                brand: "",
+                stock: ""
+            }) 
+            setImageShow([])
+            setImages([])
+            setCategory('')
+
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+
+
+    },[successMessage,errorMessage])
     
     const changeImage = (img, index) => {
         if (img) {
@@ -197,7 +229,7 @@ const AddProduct = () => {
                         
                     </div>
 
-                    <button type='submit'>Add Product</button>
+                    <button type='submit'>Add Product</button> //modifier avec le bouton
                 </form>
             </div>
         </div>
