@@ -116,11 +116,11 @@ class authControllers {
         try {
             if (role === 'admin') {
                 const user = await adminModel.findById(id)
-                responseReturn(res, 200, {user : user });
+                responseReturn(res, 200, {userInfo : user });
             }
             else {
                 const seller = await sellerModel.findById(id)
-                responseReturn(res, 200, {user : seller });
+                responseReturn(res, 200, {userInfo : seller });
                 
             }
         } catch (err) {
