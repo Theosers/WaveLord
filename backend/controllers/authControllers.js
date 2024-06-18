@@ -25,7 +25,7 @@ class authControllers {
                 }
                 else {
                     
-                    responseReturn(res, 401, {error: 'Invalid password'});
+                    responseReturn(res, 404, {error: 'Invalid password'});
                 
                 }
             }
