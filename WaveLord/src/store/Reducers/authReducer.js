@@ -24,11 +24,10 @@ export const seller_login = createAsyncThunk(
             const {data} = await api.post('/seller-login', info,
             {withCredentials: true});            
             localStorage.setItem('accessToken', data.token);
-
-            
-            
+            console.log(data)
             return fulfillWithValue(data);
         } catch (err) {
+            console.log(err.response.data)
             return rejectWithValue(err.response.data);
         }
     }
