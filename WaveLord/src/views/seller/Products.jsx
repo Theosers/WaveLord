@@ -82,7 +82,7 @@ const Products = () => {
                                 <td>{d.stock}</td>
                                 <td>
                                     <div className='actions-container'>
-                                        <Link to={`/seller/dashboard/edit-product/32`}> <FaEdit className='fa-action'/> </Link>
+                                        <Link to={`/seller/dashboard/edit-product/${d._id}`}> <FaEdit className='fa-action'/> </Link>
                                         <Link> <FaEye className='fa-action'/> </Link>
                                         <Link> <FaTrash className='fa-action'/> </Link>
                                     </div>
