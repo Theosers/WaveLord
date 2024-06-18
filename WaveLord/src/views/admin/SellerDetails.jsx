@@ -1,7 +1,21 @@
-import React from 'react';
 import '../../scss/admin/SellerDetails.scss';
+import React, { useEffect, useState } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { get_seller } from '../../store/Reducers/sellerReducer';
 
 const SellerDetails = () => {
+
+    const dispatch = useDispatch()
+    const {seller} = useSelector(state=> state.seller)
+    const { sellerId } = useParams()
+
+    useEffect(() => {
+        dispatch(get_seller(sellerId))
+
+    },[sellerId])
+
+    
     return (
         <>
 
