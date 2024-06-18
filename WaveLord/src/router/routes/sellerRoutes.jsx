@@ -11,8 +11,8 @@ const SellerToCustomer = lazy(() => import('../../views/seller/SellerToCustomer'
 const Profile = lazy(() => import('../../views/seller/Profile')); 
 const EditProduct = lazy(() => import('../../views/seller/EditProduct'));
 const OrderDetails = lazy(() => import('../../views/seller/OrderDetails'));
-const Pending = lazy(()=> import('./../../views/Pending')) 
-const Deactive = lazy(()=> import('./../../views/Deactive')) 
+const Pending = lazy(()=> import('./../../views/seller/Pending')) 
+const Deactive = lazy(()=> import('./../../views/seller/Deactive')) 
 
 export const sellerRoutes = [
 
