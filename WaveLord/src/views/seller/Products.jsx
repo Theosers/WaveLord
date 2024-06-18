@@ -59,21 +59,27 @@ const Products = () => {
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
+                            products.map((d, i) => (
                             <tr key={i}>
-                                <td scope='row'>#{d}</td>
+                                <td scope='row'>{i + 1}</td>
                                 <td scope='row'>
-                                    <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                                    <img src= {d.images[0]} alt="" />
                                     
                                 </td>
                     
-                                <td>{d.payment_status}Men Full Sleeve</td>
-                                <td>{d.payment_status}Tshirt</td>
-                                <td>{d.payment_status}Veldo</td>
+                                <td>{ d?.name?.slice(0,15)}...</td>
+                                <td>{ d.category }</td>
+                                <td>{d.brand}</td>
                                 
-                                <td>{d.payment_status}$864</td>
-                                <td>{d.payment_status}10%</td>
-                                <td>{d.payment_status}20</td>
+                                <td>${d.price}</td>
+                                <td>
+                                {
+                                    d.discount === 0 ? <span>No Discount</span> : 
+            
+                                    <span>%{d.discount}</span>
+                                }
+                                </td>
+                                <td>{d.stock}</td>
                                 <td>
                                     <div className='actions-container'>
                                         <Link to={`/seller/dashboard/edit-product/32`}> <FaEdit className='fa-action'/> </Link>
@@ -88,7 +94,7 @@ const Products = () => {
                         </tbody>
                     </table>
                         </div>
-
+                        //rajouter un div qui contiendra la pagination
                         <Pagination
                             pageNumber= {currentPage}
                             setPageNumber= {setCurrentPage}
