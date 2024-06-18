@@ -5,9 +5,19 @@ import { FadeLoader } from "react-spinners";
 import { useDispatch, useSelector } from 'react-redux';
 import { profile_image_upload } from '../../store/Reducers/authReducer'
 import { profile_image_upload,messageClear } from '../../store/Reducers/authReducer'
+import { profile_image_upload,messageClear,profile_info_add } from '../../store/Reducers/authReducer'
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils'; 
 import toast from 'react-hot-toast';
 
 const Profile = () => {
+
+    const [state, setState] =  useState({
+        division: '',
+        district: '',
+        shopName: '',
+        sub_district: '' 
+    })
 
     const dispatch = useDispatch()
     const { userInfo,loader,successMessage } = useSelector(state => state.auth)
@@ -34,9 +44,21 @@ const Profile = () => {
 
     }
 
+    const inputHandle = (e) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const add = (e) => {
+        e.preventDefault()
+        dispatch(profile_info_add(state))
+    }
+
     return (
         <div className="main-container">
-            <form action=""> // !userInfo?.shopInfo ? <form>
+            <form action=""> // !userInfo?.shopInfo ? <form onSubmit={add}>
                 <div className="profile-infos">
                     
                     {
@@ -63,12 +85,14 @@ const Profile = () => {
                         <span><em>Payment Account : </em> <button>{userInfo.payment}</button></span>
                     </div>
 
-                    <label placeholder="Shop Name" htmlFor="">Shop Name</label>
-                    <input type="text" />
+                    <label placeholder="Shop Name" htmlFor="">Shop Name</label> // { userInfo.shopInfo?.shopName } et le reste 44.1
+                    <input value={state.shopName} onChange={inputHandle} type="text" name='shopName' id='Shop' placeholder='Shop Name'/>
                     <label placeholder="Division Name" htmlFor="">Division Name</label>
-                    <input type="text" />
+                    <input value={state.division} onChange={inputHandle} type="text" />
                     <label placeholder="District Name" htmlFor="">District Name</label>
-                    <input type="text" />
+                    <input value={state.district} onChange={inputHandle} type="text" />
+
+                    // il manque value={state.sub_district} onChange={inputHandle} dans l'input inexistant et le label associé
 
                 </div>            
 
@@ -82,7 +106,7 @@ const Profile = () => {
                         <input type="password" />
                         <label placeholder="New Password" htmlFor="">New Password</label>
                         <input type="password" />
-                        <button>Save Changes</button>
+                        <button>Save Changes</button> // mettre le bouton
                     
 
                 </div>
