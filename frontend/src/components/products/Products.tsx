@@ -6,11 +6,8 @@ import { IoIosArrowBack,IoIosArrowForward } from "react-icons/io";
 
 import 'react-multi-carousel/lib/styles.css'
 
-const Products = ({title}) => {
-    const products = [
-        [1,2,3],
-        [4,5,6],
-    ]
+const Products = ({title,products}) => {
+    
 
     const responsive = {
         superLargeDesktop: {
@@ -62,13 +59,13 @@ const Products = ({title}) => {
                 {
                     products.map((p,i)=> {
                         return(
-                            <div>
+                            <div key={i}>
                             {
-                            p.map((pl, j) =>  <Link to='#'>
-                                <img src={`http://localhost:3000/public/images/products/${pl}.webp`} alt="" />
+                            p.map((pl, j) =>  <Link ey={j} to='#'>
+                                <img src={pl.images[0]} alt="" />
                                 <div>
-                                    <h2>Product Name </h2>
-                                    <span>$434</span> 
+                                    <h2>{pl.name}</h2>
+                                    <span>${pl.price}</span> 
                                 </div>  
                                     
                                 </Link>)

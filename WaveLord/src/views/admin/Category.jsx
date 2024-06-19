@@ -47,8 +47,6 @@ const Category = () => {
         console.log(state)
     }
 
-    const loader = false
-
     useEffect(() => {
 
         if (successMessage) {

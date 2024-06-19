@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useEffect, useState } from 'react';
 import Search from "../components/Search";
 import { Link } from 'react-router-dom';

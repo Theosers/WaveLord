@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
@@ -11,25 +11,65 @@ import {BsFillGridFill} from 'react-icons/bs'
 import {FaThList} from 'react-icons/fa'
 import ShopProducts from '../components/products/ShopProducts';
 import Pagination from '../components/Pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { price_range_product,query_products } from '../store/reducers/homeReducer';
 
 const Shops = () => {
 
-    const [filter, setFilter] = useState(true)
-    const categorys = [
-        'Mobiles',
-        'Laptops',
-        'Speakers',
-        'Top wear',
-        'Footwear',
-        'Watches',
-        'Home Decor',
-        'Smart Watches'
-    ]
-    const [state, setState] = useState({values: [50, 1500]})
+    const dispatch = useDispatch()
+    const {products,categorys,priceRange,latest_product,totalProduct,parPage} = useSelector(state => state.home)
+    useEffect(() => { 
+        dispatch(price_range_product())
+    },[])
+    useEffect(() => { 
+        setState({
+            values: [priceRange.low, priceRange.high]
+        })
+    },[priceRange])
+
+    const [filter, setFilter] = useState(true) 
+
+    const [state, setState] = useState({values: [priceRange.low, priceRange.high]})
     const [rating, setRating] = useState('')
     const [styles, setStyles] = useState('grid')
-    const [parPage, setParPage] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
+
+    const [sortPrice, setSortPrice] = useState('')
+    const [category, setCategory] = useState('')
+    const queryCategory = (e, value) => {
+        if (e.target.checked) {
+            setCategory(value)
+        } else {
+            setCategory('')
+        }
+    }
+
+    useEffect(() => { 
+        dispatch(
+            query_products({
+                low: state.values[0],
+                high: state.values[1],
+                category,
+                rating,
+                sortPrice,
+                pageNumber
+            })
+         )
+    },[state.values[0],state.values[1],category,rating,sortPrice,pageNumber])
+
+    const resetRating = () => {
+        setRating('')
+        dispatch(
+            query_products({
+                low: state.values[0],
+                high: state.values[1],
+                category,
+                rating: '',
+                sortPrice,
+                pageNumber
+            })
+         )
+    }
     
     return (
         <div>
@@ -59,9 +99,9 @@ const Shops = () => {
                     <h2>Category </h2>
                     <div>
                         {
-                        categorys.map((c,i) => <div>
-                            <input type="checkbox" id={c} />
-                            <label htmlFor={c}>{c}</label>
+                        categorys.map((c,i) => <div key={i}>
+                            <input checked={category === c.name ? true : false} onChange={(e)=>queryCategory(e,c.name)} type='checkbox' name={c.name} id={c.name} value={c.name} />
+                            <label htmlFor={c.name}>{c.name}</label>
                         </div>)
                         }
                     </div>
@@ -71,8 +111,8 @@ const Shops = () => {
 
                         <Range
                             step={5}
-                            min={50}
-                            max={1500}
+                            min={priceRange.low}
+                            max={priceRange.high}
                             values={(state.values)}
                             onChange={(values) => setState({values})}
                             renderTrack={({props,children}) => (
@@ -133,7 +173,7 @@ const Shops = () => {
                     <span><CiStar/> </span>
                   </div>
 
-                  <div>
+                  <div onClick={resetRating}>
                   <span><CiStar/> </span>
                   <span><CiStar/> </span>
                   <span><CiStar/> </span>
@@ -144,13 +184,13 @@ const Shops = () => {
             </div> 
          </div>
          <div>
-            <Products title='Latest Product' />
+         <Products title='Latest Product' products={latest_product} />
          </div>
 
         <div>
-            <h2>14 Products </h2>
+            <h2>{totalProduct} </h2>
             <div>
-                <select name="" id="">
+                <select onChange={(e)=>setSortPrice(e.target.value)} name="" id="">
                     <option value="">Sort By</option>
                     <option value="low-to-high">Low to High Price</option>
                     <option value="high-to-low">High to Low Price </option>
@@ -165,11 +205,13 @@ const Shops = () => {
                 </div>
             </div>
         </div>
-        <div className='pb-8'>
-                  <ShopProducts styles={styles} />  
+        <div>
+            <ShopProducts products={products} styles={styles} />
          </div>
          <div>
-            <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} totalItem={10} parPage={parPage} showItem={Math.floor(10 / 3 )} />
+         {
+             totalProduct > parPage &&  <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} totalItem={totalProduct} parPage={parPage} showItem={Math.floor(totalProduct / parPage )} />
+           }
          </div>
  
 

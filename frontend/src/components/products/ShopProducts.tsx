@@ -3,14 +3,14 @@ import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import Rating from '../Rating';
 
-const ShopProducts = ({styles}) => {
+const ShopProducts = ({styles,products}) => {
     return (
         <div>
             {
-                [1,2,3,4,5,6].map((p, i)=> <div key={i}>
+                products.map((p, i)=> <div key={i}>
 
                     <div>
-                        <img src={`http://localhost:3000/public/images/products/${i+1}.webp`} alt="" />
+                        <img src={p.images[0]} alt="" />
                         <ul>
                             <li>
                                 <FaRegHeart />
@@ -25,11 +25,11 @@ const ShopProducts = ({styles}) => {
                     </div>
 
                     <div>
-                        <h2>Product Name </h2>
+                        <h2>{p.name}</h2>
                         <div>
-                            <span>$656</span>
+                            <span>${p.price}</span>
                             <div>
-                                <Rating ratings={4.5} />
+                                <Rating ratings={p.rating} />
                             </div>
 
                         </div>

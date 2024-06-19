@@ -6,6 +6,7 @@ import { get_category } from '../../store/Reducers/categoryReducer'; //maybe a e
 import { add_product, messageClear } from '../../store/Reducers/productReducer';
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 const AddProduct = () => {
@@ -139,9 +140,9 @@ const AddProduct = () => {
         dispatch(add_product(formData))
     }
 
-    useEffect(() => {
-        setAllCategory(categorys)
-    },[categorys])
+    //useEffect(() => {
+    //    setAllCategory(categorys)
+    //},[categorys])
     
     return (
         <div className='add-product-container'>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 
 import '../../scss/FeatureProducts.scss'
 import Rating from '../Rating';
 
-const FeatureProducts = () => {
+const FeatureProducts = ({products}) => {
     return (
         <div className='feature-container'>
             <div>
@@ -14,29 +15,29 @@ const FeatureProducts = () => {
 
             <div className='images-container'>
             {
-                [1,2,3,4,5,6].map((p,i) => 
+                products.map((p,i) => 
                 <div key={i}>
                     <div>
-                        <div>8% </div> 
-                        <img src={`http://localhost:3000/public/images/products/${i+1}.webp`} alt="" />           
+                    p.discount ? <div>{p.discount}% </div> : ''
+                        <img src={p.images[0]} alt="" />           
                             <ul>
                                 <li>
                                 <FaRegHeart />
                                 </li>
-                                <li>
-                                <FaEye />
-                                </li>
+                                <Link to='/product/details/new'>
+                                    <FaEye />
+                                </Link>
                                 <li>
                                 <RiShoppingCartLine />
                                 </li>
                             </ul>    
                     </div>
                     <div>
-                        <h2>Product Name </h2>
+                        <h2>{p.name}</h2>
                         <div>
-                            <span>$656</span>
+                            <span>${p.price}</span>
                             <div className='flex'>
-                                <Rating ratings={4.5} />
+                                <Rating ratings={p.rating} />
                             </div>
                         </div>
                     </div>    

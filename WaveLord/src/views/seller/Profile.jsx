@@ -3,8 +3,6 @@ import '../../scss/seller/Profile.scss'
 import { FaImages } from "react-icons/fa";
 import { FadeLoader } from "react-spinners";
 import { useDispatch, useSelector } from 'react-redux';
-import { profile_image_upload } from '../../store/Reducers/authReducer'
-import { profile_image_upload,messageClear } from '../../store/Reducers/authReducer'
 import { profile_image_upload,messageClear,profile_info_add } from '../../store/Reducers/authReducer'
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils'; 
@@ -23,7 +21,6 @@ const Profile = () => {
     const { userInfo,loader,successMessage } = useSelector(state => state.auth)
 
     const image = false
-    const loader = true
 
     const status = 'active' 
 
@@ -55,10 +52,10 @@ const Profile = () => {
         e.preventDefault()
         dispatch(profile_info_add(state))
     }
-
+// </form> !userInfo?.shopInfo ? <form onSubmit={add}>
     return (
         <div className="main-container">
-            <form action=""> // !userInfo?.shopInfo ? <form onSubmit={add}>
+            <form action=""> 
                 <div className="profile-infos">
                     
                     {

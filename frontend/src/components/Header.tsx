@@ -5,25 +5,19 @@ import { FaFacebookF, FaList, FaLinkedin, FaGithub, FaLock, FaUser, FaPhoneAlt }
 import { FaTwitter, FaHeart, FaCartShopping } from "react-icons/fa6"
 import { IoMdArrowDropdown, IoIosArrowDown } from "react-icons/io";
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import '../scss/Header.scss'
 
 const Header = () => {
+
+    const {categorys} = useSelector(state => state.home)
 
     const {pathname} = useLocation()
     const [showShidebar, setShowShidebar] = useState(true);
     const [categoryShow, setCategoryShow] = useState(true);
     const user = true
     const wishlist_count = 3
-    const categorys = [
-        'Mobiles',
-        'Laptops',
-        'Speakers',
-        'Top wear',
-        'Footwear',
-        'Watches',
-        'Home Decor',
-        'Smart Watches',
-    ]
+    
 
     const [searchValue, setSearchValue] = useState('')
     const [category, setCategory] = useState('')
@@ -148,7 +142,8 @@ const Header = () => {
                         categorys.map((c,i) => {
                             return (
                             <li key={i} className=''>
-                                <Link className=''>{c}</Link>
+                                <img src={c.image} alt="" />
+                                <Link to={`/products?category=${c.name}`} className=''>{c.name}</Link>
                             </li>
                             )
                         })
@@ -160,8 +155,8 @@ const Header = () => {
                 <select onChange={(e) => setCategory(e.target.value)} name="" id="">
                     <option value="">Select Category</option>
                     {
-                        categorys.map((c, i) => <option value={c}>
-                            {c}
+                        categorys.map((c, i) => <option key={i} value={c}>
+                            {c.name}
                         </option> )
                     }
                 </select>

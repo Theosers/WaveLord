@@ -1,5 +1,5 @@
 const formidable = require("formidable")
-const { responseReturn } = require("../../utiles/response")
+const { responseReturn } = require("../../utilities/response")
 const cloudinary = require('cloudinary').v2
 const categoryModel = require('../../models/categoryModel')
 
