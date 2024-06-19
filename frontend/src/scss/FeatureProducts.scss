@@ -1,0 +1,19 @@
+.feature-container {
+    background-color: goldenrod;
+
+    .images-container {
+        display: flex;
+        gap: 1rem;
+        background-color: hotpink;
+
+        img {
+            width: 50%;
+        }
+        ul {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+    }
+}

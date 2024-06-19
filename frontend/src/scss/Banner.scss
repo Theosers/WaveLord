@@ -1,0 +1,16 @@
+.Banner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: brown;
+
+    .Banner-content {
+        width: 90%;
+        
+        background-color: red;
+        .carroussel {
+            width: 100%;
+
+        }
+    }
+}
