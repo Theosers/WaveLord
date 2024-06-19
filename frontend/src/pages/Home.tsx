@@ -4,6 +4,7 @@ import Banner from '../components/Banner';
 import Categorys from '../components/Categorys';
 import FeatureProducts from '../components/products/FeatureProducts';
 import Products from '../components/products/Products';
+import Footer from '../components/Footer';
 
 import '../../src/scss/pages/Home.scss'
 
@@ -33,6 +34,7 @@ const Home = () => {
                     </div> 
                 </div> 
             </div>
+            <Footer/>
         </div>
     )
 }
