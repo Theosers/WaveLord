@@ -44,7 +44,7 @@ const FeatureProducts = ({products}) => {
                                 <li onClick={() => add_wishlist(p)}>
                                 <FaRegHeart />
                                 </li>
-                                <Link to='/product/details/new'>
+                                <Link to={`/product/details/${p.slug}`}>
                                     <FaEye />
                                 </Link>
                                 <li>
