@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
+import { useDispatch } from 'react-redux';
+import { place_order } from '../store/reducers/orderReducer';
 
 const Shipping = () => {
 
     const { state: {products,price,shipping_fee,items }} = useLocation()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    //const {userInfo} = useSelector(state => state.auth) 
 
     const [res, setRes] = useState(false)
     const [state, setState] = useState({
@@ -31,6 +36,19 @@ const Shipping = () => {
             setRes(true)
         }
 
+    }
+
+     const placeOrder = () => {
+        dispatch(place_order({
+            price,
+            products,
+            shipping_fee,
+            items,
+            shippingInfo : state,
+            userId: userInfo,
+            navigate 
+
+        }))
     }
     
     return (
@@ -190,7 +208,7 @@ const Shipping = () => {
                     <span>Total</span>
                     <span>${price + shipping_fee}</span>
                 </div>
-                <button disabled={res ? false : true} className={`a ${res ? 'b' : 'c'}`}>
+                <button onClick={placeOrder} disabled={res ? false : true} className={`a ${res ? 'b' : 'c'}`}>
                    Place Order 
                 </button>
             </div>
