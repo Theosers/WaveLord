@@ -20,6 +20,7 @@ import Reviews from '../components/Reviews';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { product_details } from '../store/reducers/homeReducer';
+import toast from 'react-hot-toast';
 
 const Details = () => {
 
@@ -67,6 +68,23 @@ const Details = () => {
             breakpoint: { max: 440, min: 0 },
             items: 1
         },
+    }
+
+
+    const [quantity, setQuantity] = useState(1)
+
+    const inc = () => {
+        if (quantity >= product.stock) {
+            toast.error('Out of Stock')
+        } else {
+            setQuantity(quantity + 1)
+        }
+    }
+
+    const dec = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1)
+        }
     }
 
 
@@ -148,16 +166,16 @@ const Details = () => {
 
 
             <div className='text-slate-600'>
-            <p>{product.description}</p>
+            <p>{product.description.substring(0, 230)}{'...'}</p>
            </div> 
 
             <div>
                 {
                 product.stock ? <>
                     <div>
-                        <div>-</div>
-                        <div>2</div>
-                        <div>+</div>
+                        <div onClick={dec}>-</div>
+                        <div>{quantity}</div>
+                        <div onClick={inc}>+</div>
                     </div>
                     <div>
                         <button>Add To Card</button>
