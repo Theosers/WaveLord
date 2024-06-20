@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 
+import io from 'socket.io-client'
+const socket = io('http://localhost:5000')
+
 const Chat = () => {
 
     const {sellerId} = useParams()
