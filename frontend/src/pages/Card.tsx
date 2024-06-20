@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch,useSelector } from 'react-redux';
-import { get_card_products,delete_card_product,messageClear,quantity_inc } from '../store/reducers/cardReducer';
+import { get_card_products,delete_card_product,messageClear,quantity_inc,quantity_dec } from '../store/reducers/cardReducer';
 import toast from 'react-hot-toast';
 
 const Card = () => {
@@ -40,6 +40,13 @@ const Card = () => {
         const temp = quantity + 1;
         if (temp <= stock) {
             dispatch(quantity_inc(card_id))
+        }
+    }
+
+    const dec = (quantity, card_id) => {
+        const temp = quantity - 1;
+        if (temp !== 0) {
+            dispatch(quantity_dec(card_id))
         }
     }
     
@@ -91,7 +98,7 @@ const Card = () => {
                                         </div>
                                         <div>
                                             <div>
-                                                <div>-</div> 
+                                                <div onClick={() => dec(pt.quantity, pt._id )}>-</div> 
                                                 <div>{pt.quantity }</div> 
                                                 <div onClick={() => inc(pt.quantity,pt.productInfo.stock, pt._id )}>+</div> 
                                             </div>
@@ -131,11 +138,11 @@ const Card = () => {
                                 </div>
                                 <div>
                                     <div>
-                                        <div>-</div> 
+                                        <div onClick={() => dec(p.quantity, p._id )}>-</div> 
                                         <div>{p.quantity}</div> 
                                         <div>+</div> 
                                     </div>
-                                    <button>Delete</button>
+                                    <button onClick={() => dispatch(delete_card_product(p._id)) }>Delete</button>
                                 </div>
                             </div>
 
