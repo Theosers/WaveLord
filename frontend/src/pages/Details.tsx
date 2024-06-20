@@ -321,7 +321,7 @@ const Details = () => {
             </div>
             <div>
                 {
-                    state === 'reviews' ? <Reviews/> : <p>
+                    state === 'reviews' ? <Reviews product={product} /> : <p>
                         {product.description}
                     </p>
                 }
