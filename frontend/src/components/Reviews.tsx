@@ -6,16 +6,30 @@ import { Link } from 'react-router-dom';
 import RatingReact from 'react-rating'
 import { FaStar } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
+import { useDispatch, useSelector } from 'react-redux';
+import { customer_review } from '../store/reducers/homeReducer';
 
 
-const Reviews = () => {
+const Reviews = ({product}) => {
 
+    const dispatch = useDispatch()
     const [parPage, setParPage] = useState(1)
     const [pageNumber, setPageNumber] = useState(10)
-    const userInfo = {}
+    const {userInfo } = useSelector(state => state.auth)
 
     const [rat, setRat] = useState('')
     const [re, setRe] = useState('')
+
+    const review_submit = (e) => {
+        e.preventDefault()
+        const obj = {
+            name: userInfo.name,
+            review: re,
+            rating : rat,
+            productId: product._id
+        }
+        dispatch(customer_review(obj))
+    }
 
     return (
         <>
@@ -122,8 +136,8 @@ const Reviews = () => {
                         emptySymbol={<span><CiStar/></span>}
                         fullSymbol={<span><FaStar/></span>}/> 
                     </div> 
-                    <form>
-                        <textarea required name="" id="" cols="30" rows="5"></textarea>
+                    <form onSubmit={review_submit}>
+                        <textarea value={re} onChange={(e) => setRe(e.target.value)} required name="" id="" cols="30" rows="5"></textarea>
                         <div>
                             <button>Submit</button>
                         </div>
