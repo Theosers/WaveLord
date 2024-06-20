@@ -16,7 +16,7 @@ const SellerToCustomer = () => {
     const [show, setShow] = useState(false);
     const sellerId = 65
     const {userInfo } = useSelector(state => state.auth)
-
+    const {customers } = useSelector(state => state.chat)
 
     const dispatch = useDispatch()
 
@@ -34,21 +34,17 @@ const SellerToCustomer = () => {
                     <IoMdClose className='chat-seller-close-icon' onClick={() => setShow(!show)} />
                 </div>
                 
-                {[{'_id':'0', 'name':'gogogadgetoChapeau'},{'_id':'0', 'name':'gogo'},{'_id':'0', 'name':'gogo'},
-                    {'_id':'0', 'name':'gogo'},{'_id':'0', 'name':'gogo'},{'_id':'0', 'name':'gogo'}
-                ].map((s, i) => (
-                    <Link key={i} to={`/admin/dashboard/chat-sellers/${s._id}`} className={`chat-seller-subcontainer ${sellerId === s._id ? 'chat-seller-active' : ''}`}>
-                        <div className='chat-seller-subcontainer'>
-                            <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                            {[0,1,2].some(a => a.sellerId === s._id) && <div className='chat-seller-active-indicator'></div>}
-                            <h2 className='chat-seller-name'>{s.name}</h2>
-                        </div>
-                        
-                       
-                        
-                        
+                {
+                    customers.map((c,i) => (
+                        <Link key={i} to={`/seller/dashboard/chat-customer/${c.fdId} className={`chat-seller-subcontainer ${sellerId === s._id ? 'chat-seller-active' : ''}`}>
+                            <div className='chat-seller-subcontainer'>
+                                <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                            
+                                <h2 className='chat-seller-name'>{c.name}</h2>
+                            </div>
+                            
                     </Link>
-                ))}
+                )}
             </div>
             <div className={`chat-current-seller ${show ? 'chat-current-seller-off' : ''}`}>
 
