@@ -8,7 +8,6 @@ const Orders = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { orderId } = useParams()
     const {userInfo} = useSelector(state => state.auth)
     const { myOrders } = useSelector(state => state.order)
     useEffect(() => {
