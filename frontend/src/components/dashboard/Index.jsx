@@ -7,8 +7,8 @@ import { get_dashboard_index_data } from '../../store/reducers/dashboardReducer'
 const Index = () => {
 
     const dispatch = useDispatch()
-    const {userInfo} = useSelector(state => state.auth)
-
+    //const {userInfo} = useSelector(state => state.auth)
+    const {recentOrders,totalOrder,pendingOrder,cancelledOrder} = useSelector(state => state.dashboard)
     useEffect(() => {
         dispatch(get_dashboard_index_data(userInfo.id))
     },[])
@@ -21,7 +21,7 @@ const Index = () => {
                         <span><RiShoppingCart2Fill /></span>
                     </div>
                     <div>
-                        <h2>45</h2>
+                        <h2>{totalOrder}5</h2>
                         <span>Orders </span>
                     </div>     
                 </div>
@@ -30,7 +30,7 @@ const Index = () => {
                         <span><RiShoppingCart2Fill /></span>
                     </div>
                     <div>
-                        <h2>25</h2>
+                        <h2>{pendingOrder}</h2>
                         <span>Pending Orders </span>
                     </div>     
                 </div>
@@ -39,7 +39,7 @@ const Index = () => {
                             <span><RiShoppingCart2Fill /></span>
                         </div>
                         <div>
-                            <h2 className='text-3xl font-bold'>2</h2>
+                            <h2 className='text-3xl font-bold'>{cancelledOrder}</h2>
                             <span>Cancelled Orders </span>
                         </div>     
                 </div> 
@@ -58,11 +58,12 @@ const Index = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope='row'>#344</td>
-                            <td scope='row'>$233</td>
-                            <td scope='row'>pending</td>
-                            <td scope='row'>pending</td>
+                        {
+                        recentOrders.map((o,i) => <tr>
+                            <td scope='row'>#{o._id}</td>
+                            <td scope='row'>${o.price}</td>
+                            <td scope='row'>{o.payment_status }</td>
+                            <td scope='row'>{o.delivery_status}</td>
                             <td scope='row'>
                                 <Link><span>View</span></Link>
             
@@ -71,7 +72,7 @@ const Index = () => {
                         </tr>
             
                         <tr>
-                            <td scope='row'>#344</td>
+                            <td scope='row'>#{o._id}</td>
                             <td scope='row'>$233</td>
                             <td scope='row'>pending</td>
                             <td scope='row'>pending</td>
@@ -80,6 +81,8 @@ const Index = () => {
                                 <Link><span>Pay Now</span></Link> 
                             </td> 
                         </tr>
+                        )
+                        }
                     </tbody>
                 </table>
                 </div>
