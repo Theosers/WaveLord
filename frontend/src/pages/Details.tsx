@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import Carousel from 'react-multi-carousel'; 
 import Rating from '../components/Rating';
@@ -21,16 +21,33 @@ import Reviews from '../components/Reviews';
 import { useDispatch, useSelector } from 'react-redux';
 import { product_details } from '../store/reducers/homeReducer';
 import toast from 'react-hot-toast';
+import { add_to_card,messageClear } from '../store/reducers/cardReducer';
 
 const Details = () => {
 
+    const navigate = useNavigate()
     const {slug} = useParams()
     const dispatch = useDispatch()
     const {product,relatedProducts,moreProducts} = useSelector(state => state.home)
+    const {userInfo } = useSelector(state => state.auth)
+    const {errorMessage,successMessage } = useSelector(state => state.card)
 
     useEffect(() => {
         dispatch(product_details(slug))
     },[slug])
+
+
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())  
+        } 
+
+    },[successMessage,errorMessage])
     
 
     const images = [1,2,3,4,5,6]
@@ -84,6 +101,18 @@ const Details = () => {
     const dec = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1)
+        }
+    }
+
+    const add_card = () => {
+        if (userInfo) {
+           dispatch(add_to_card({
+            userId: userInfo.id,
+            quantity,
+            productId : product._id
+           }))
+        } else {
+            navigate('/login')
         }
     }
 
@@ -166,7 +195,7 @@ const Details = () => {
 
 
             <div className='text-slate-600'>
-            <p>{product.description.substring(0, 230)}{'...'}</p>
+            <p>{product.description</p>
            </div> 
 
             <div>
@@ -178,7 +207,7 @@ const Details = () => {
                         <div onClick={inc}>+</div>
                     </div>
                     <div>
-                        <button>Add To Card</button>
+                        <button onClick={add_card}>Add To Card</button>
                     </div>
                     </> : ''
                 }
@@ -196,8 +225,8 @@ const Details = () => {
                         <span>Share On</span> 
                     </div> 
                     <div>
-                        <span className={`text-${stock ? 'a' : 'b'}`}>
-                            {stock ? `In Stock(${stock})` : 'Out Of Stock'}
+                        <span className={`text-${product.stock ? 'a' : 'b'}`}>
+                            {product.stock ? `In Stock(${product.stock})` : 'Out Of Stock'}
                         </span>
 
                         <ul>
@@ -243,8 +272,7 @@ const Details = () => {
             <div>
                 {
                     state === 'reviews' ? <Reviews/> : <p>
-            What is Lorem Ipsum?
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        {product.description}
                     </p>
                 }
             </div>
