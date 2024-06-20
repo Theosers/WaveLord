@@ -5,6 +5,8 @@ import Rating from '../Rating';
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { get_wishlist_products } from '../../store/reducers/cardReducer';
+import { get_wishlist_products, remove_wishlist,messageClear } from '../../store/reducers/cardReducer';
+import toast from 'react-hot-toast';
 
 const Wishlist = () => {
 
@@ -16,6 +18,13 @@ const Wishlist = () => {
         dispatch(get_wishlist_products(userInfo.id))
     },[])
 
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        }   
+    },[successMessage])
+
     
     return (
         <div>
@@ -25,7 +34,7 @@ const Wishlist = () => {
                 <div>5% </div>   
                   <img src={p.image} alt="" />  
                   <ul>
-                    <li>
+                    <li onClick={() => dispatch(remove_wishlist(p._id))}>
                       <FaRegHeart />
                     </li>
                     <Link to={`/product/details/${p.slug}`}
