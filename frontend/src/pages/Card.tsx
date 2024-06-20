@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch,useSelector } from 'react-redux';
-import { get_card_products } from '../store/reducers/cardReducer';
+import { get_card_products,delete_card_product } from '../store/reducers/cardReducer';
 
 const Card = () => {
 
@@ -78,7 +78,7 @@ const Card = () => {
                                                 <div>{pt.quantity }</div> 
                                                 <div>+</div> 
                                             </div>
-                                            <button>Delete</button>
+                                            <button onClick={() => dispatch(delete_card_product(pt._id)) }>Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,12 +139,12 @@ const Card = () => {
                             card_products.length > 0 && <div>
                                 <h2>Order Summary</h2>
                                 <div>
-                                    <span>2 Items </span>
-                                    <span>$343 </span>
+                                    <span>{buy_product_item} Items </span>
+                                    <span>${price} </span>
                                 </div>
                                 <div>
                                     <span>Shipping Fee </span>
-                                    <span>$40 </span>
+                                    <span>${shipping_fee} </span>
                                 </div>
                                 <div>
                                     <input type="text" placeholder='Input Vauchar Coupon' />
@@ -153,10 +153,10 @@ const Card = () => {
 
                                 <div>
                                     <span>Total</span>
-                                    <span>$430 </span>
+                                    <span>${price + shipping_fee} </span>
                                 </div>
                                 <button onClick={redirect}>
-                                    Process to Checkout 
+                                    Process to Checkout ({buy_product_item})
                                 </button>
 
                             </div>
