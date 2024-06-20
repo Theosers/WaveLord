@@ -33,7 +33,7 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <span><FaBorderAll/></span>
-                            <Link to='/dashboard'>My Orders </Link>
+                            <Link to='/dashboard/my-orders'>My Orders </Link>
                         </li>
                         <li>
                             <span><FaHeart/></span>
