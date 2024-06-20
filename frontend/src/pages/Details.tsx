@@ -134,6 +134,38 @@ const Details = () => {
 
     }
 
+    const buynow = () => {
+        let price = 0;
+        if (product.discount !== 0) {
+            price = product.price - Math.floor((product.price * product.discount) / 100)
+        } else {
+            price = product.price
+        }
+
+        const obj = [
+            {
+                sellerId: product.sellerId,
+                shopName: product.shopName,
+                price :  quantity * (price - Math.floor((price * 5) / 100)),
+                products : [
+                    {
+                        quantity,
+                        productInfo: product
+                    }
+                ]
+            }
+        ]
+
+        navigate('/shipping',{
+            state: {
+                products : obj,
+                price: price * quantity,
+                shipping_fee : 50,
+                items: 1
+            }
+        }) 
+   }
+
 
     return (
         <div>
@@ -266,7 +298,7 @@ const Details = () => {
 
                 <div>
                     {
-                        stock ? <button>Buy Now</button> : ''
+                        product.stock ? <button onClick={buynow}>Buy Now</button> : ''
                     }
                     <Link to='#'>
                         Chat Seller
