@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
+import { get_customers } from '../../store/Reducers/chatReducer';
 
 import { Link, useParams } from 'react-router-dom';
 import { FaRegFaceGrinHearts } from "react-icons/fa6";
@@ -13,12 +14,16 @@ import { TRUE } from 'sass';
 const SellerToCustomer = () => {
     const scrollRef = useRef();
     const [show, setShow] = useState(false);
-    const { sellerId } = useParams();
-    const [text, setText] = useState('');
-    const [receverMessage, setReceverMessage] = useState('');
+    const sellerId = 65
+    const {userInfo } = useSelector(state => state.auth)
 
-    
-    const dispatch = useDispatch();
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(get_customers(userInfo._id))
+    },[])
+
 
 
     return (
