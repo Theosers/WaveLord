@@ -45,7 +45,7 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <span><RiLockPasswordLine/></span>
-                            <Link to='/dashboard'>Change Password  </Link>
+                            <Link to='/dashboard/change-password'>Change Password  </Link>
                         </li>
                         <li>
                             <span><IoMdLogOut/></span>
