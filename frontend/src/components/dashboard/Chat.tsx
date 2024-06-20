@@ -16,6 +16,7 @@ const Chat = () => {
     const dispatch = useDispatch()
     const {sellerId} = useParams()
     const {userInfo } = useSelector(state => state.auth)
+    const {fb_messages,currentFd,my_friends } = useSelector(state => state.chat)
 
     useEffect(() => {
         socket.emit('add_user',userInfo.id, userInfo)
@@ -36,13 +37,19 @@ const Chat = () => {
                 <span>Message</span>
               </div>
               <div>
-                 <Link to='#'>
-                  <div>
-                    <div></div>
-                      <img src="http://localhost:3000/public/images/user.png" alt="" />
+
+
+                  {
+                    my_friends.map((f,i) => <Link to={`/dashboard/chat/${f.fdId}`} key={i}>
+                    <div>    
+                        <img src={f.image} alt="" />
                     </div>
-                    <span>asdfsd</span>
-                </Link> 
+                    <span>{f.name}</span>
+                </Link> )
+               }
+
+                  
+                  
             </div>
         <div>
           <div>
