@@ -17,7 +17,7 @@ const Reviews = ({product}) => {
    const [parPage, setParPage] = useState(10)
     const [pageNumber, setPageNumber] = useState(1)
     const {userInfo } = useSelector(state => state.auth)
-    const {successMessage } = useSelector(state => state.home)
+    const {successMessage,reviews,rating_review,totalReview } = useSelector(state => state.home)
 
     const [rat, setRat] = useState('')
     const [re, setRe] = useState('')
@@ -36,6 +36,10 @@ const Reviews = ({product}) => {
         useEffect(() => { 
         if (successMessage) {
             toast.success(successMessage) 
+            dispatch(get_reviews({
+                productId: product._id,
+                pageNumber
+            }))
             setRat('')
             setRe('')
             dispatch(messageClear())
@@ -112,25 +116,25 @@ const Reviews = ({product}) => {
             
         </div> 
        
-        <h2>Product Review 10</h2>
+        <h2>Product Review ({totalReview})</h2>
 
         <div>
             {
-                [1,2,3,4,5].map((r,i) => <div key={i}>
+                reviews.map((r,i) => <div key={i}>
                         <div>
                             <div>
-                                <RatingTemp rating={4} />
+                                <RatingTemp rating={r.rating} />
                             </div>
-                            <span>8 Jan 2024</span>
+                            <span>{r.date}</span>
                         </div>
-                        <span>Kazi Ariyan</span>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                        <span>{r.name}</span>
+                        <p>{r.review}</p>
                     </div>
                 )
             }
             <div>
                 {
-                    <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber}  totalItem={10} parPage={parPage} showItem={Math.floor(10 / 3)} />
+                    totalReview > 5 && <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber}  totalItem={totalReview} parPage={parPage} showItem={Math.floor(totalReview / 3)} />
                 }
             </div>
 
