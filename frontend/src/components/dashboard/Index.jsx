@@ -1,5 +1,6 @@
 import React from 'react';
 import { RiShoppingCart2Fill } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 
 const Index = () => {
     return (
@@ -40,8 +41,36 @@ const Index = () => {
                     <thead>
                         <tr>
                             <th scope='col'>Order Id</th>
+                            <th scope='col'>Price</th>
+                            <th scope='col'>Payment Status</th>
+                            <th scope='col'>Order Status</th>
+                            <th scope='col'>Action</th> 
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td scope='row'>#344</td>
+                            <td scope='row'>$233</td>
+                            <td scope='row'>pending</td>
+                            <td scope='row'>pending</td>
+                            <td scope='row'>
+                                <Link><span>View</span></Link>
+            
+                                <Link><span>Pay Now</span></Link> 
+                            </td> 
+                        </tr>
+            
+                        <tr>
+                            <td scope='row'>#344</td>
+                            <td scope='row'>$233</td>
+                            <td scope='row'>pending</td>
+                            <td scope='row'>pending</td>
+                            <td scope='row'>
+                                <Link><span>View</span></Link>
+                                <Link><span>Pay Now</span></Link> 
+                            </td> 
+                        </tr>
+                    </tbody>
                 </table>
                 </div>
             </div>
