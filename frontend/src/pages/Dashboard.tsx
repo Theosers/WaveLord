@@ -37,7 +37,7 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <span><FaHeart/></span>
-                            <Link to='/dashboard'>Wishlist </Link>
+                            <Link to='/dashboard/my-wishlist'>Wishlist </Link>
                         </li>
                         <li>
                             <span><IoChatbubbleEllipsesSharp/></span>
