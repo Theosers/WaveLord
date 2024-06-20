@@ -37,10 +37,22 @@ const Payment = () => {
                 </div>
                }
             {
-                paymentMethod === 'cod' && <div className='w-full px-4 py-8 bg-white shadow-sm'>
-                    <button className='px-10 py-[6px] rounded-sm hover:shadow-green-500/20 hover:shadow-lg bg-[#059473] text-white'>Pay Now</button>
+                paymentMethod === 'cod' && <div>
+                    <button>Pay Now</button>
                 </div>
             }
+
+            <div>
+                <h2>Order Summary </h2>
+                <div>
+                    <span>{items} Items and Shipping Fee Included </span>
+                    <span>${price} </span>
+                </div>
+                <div>
+                    <span>Total Amount </span>
+                    <span>${price}</span>
+                </div>
+            </div>
         </div>
         </section>
         <Footer/>
