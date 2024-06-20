@@ -21,7 +21,7 @@ import Reviews from '../components/Reviews';
 import { useDispatch, useSelector } from 'react-redux';
 import { product_details } from '../store/reducers/homeReducer';
 import toast from 'react-hot-toast';
-import { add_to_card,messageClear } from '../store/reducers/cardReducer';
+import { add_to_card,messageClear,add_to_wishlist } from '../store/reducers/cardReducer';
 
 const Details = () => {
 
@@ -114,6 +114,24 @@ const Details = () => {
         } else {
             navigate('/login')
         }
+    }
+
+    const add_wishlist = () => {
+        if (userInfo) {
+            dispatch(add_to_wishlist({
+                userId: userInfo.id,
+                productId: product._id,
+                name: product.name,
+                price: product.price,
+                image: product.images[0],
+                discount: product.discount,
+                rating: product.rating,
+                slug: product.slug
+            }))
+        } else {
+            navigate('/login')
+        }
+
     }
 
 
@@ -212,7 +230,7 @@ const Details = () => {
                     </> : ''
                 }
                 <div>
-                    <div>
+                    <div onClick={add_wishlist}>
                         <FaHeart />
                     </div>
                 </div>
