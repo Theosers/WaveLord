@@ -6,6 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const Shipping = () => {
 
+    const { state: {products,price,shipping_fee,items }} = useLocation()
+
     const [res, setRes] = useState(false)
     const [state, setState] = useState({
         name: '',
@@ -126,28 +128,28 @@ const Shipping = () => {
 
 
             {
-                   [1,2].map((p,i) => <div>
+                   products.map((p,i) => <div key={i}>
                     <div>
-                        <h2>Easy Shop</h2>
+                        <h2>{p.shopName}</h2>
                     </div>
 
                         {
-                            [1,2].map((p,i) => <div>
+                            p.products.map((pt,i) => <div>
                                     <div>
                                         <div>
-                                            <img src={`http://localhost:3000/public/images/products/${i+1}.webp`} alt="" />
+                                            <img src={pt.productInfo.images[0]} alt="" />
                                             <div>
-                                                <h2>Product Name </h2>
-                                                <span>Brand: Jara</span>
+                                                <h2>{pt.productInfo.name} </h2>
+                                                <span>Brand: {pt.productInfo.brand}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
                                         <div>
-                                            <h2>$240</h2>
-                                            <p>$300</p>
-                                            <p>-15%</p>
+                                            <h2>${pt.productInfo.price - Math.floor((pt.productInfo.price * pt.productInfo.discount) / 100)}</h2>
+                                            <p>${pt.productInfo.price}</p>
+                                            <p>-{pt.productInfo.discount}%</p>
                                         </div>
                                         <div>
                                             <div>
@@ -170,23 +172,23 @@ const Shipping = () => {
             <div>
                 <h2>Order Summary</h2>
                 <div>
-                    <span>Items Total (5) </span>
-                    <span>$343 </span>
+                    <span>Items Total (items) </span>
+                    <span>${price} </span>
                 </div>
                 <div>
                     <span>Delivery Fee </span>
-                    <span>$40 </span>
+                    <span>${shipping_fee} </span>
                 </div>
 
                 <div>
                     <span>Total Payment </span>
-                    <span>$450 </span>
+                    <span>${price + shipping_fee} </span>
                 </div>
 
 
                 <div>
                     <span>Total</span>
-                    <span>$490 </span>
+                    <span>${price + shipping_fee}</span>
                 </div>
                 <button disabled={res ? false : true} className={`a ${res ? 'b' : 'c'}`}>
                    Place Order 
