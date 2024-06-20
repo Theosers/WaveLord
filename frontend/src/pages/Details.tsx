@@ -301,7 +301,7 @@ const Details = () => {
                     {
                         product.stock ? <button onClick={buynow}>Buy Now</button> : ''
                     }
-                    <Link to='#'>
+                    <Link to={`/dashboard/chat/${product.sellerId}`}>
                         Chat Seller
                     </Link>
                 </div>
