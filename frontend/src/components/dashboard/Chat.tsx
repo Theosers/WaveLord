@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineMessage, AiOutlinePlus } from 'react-icons/ai'
 import { GrEmoji } from 'react-icons/gr'
 import { IoSend } from 'react-icons/io5'
@@ -13,6 +13,10 @@ const Chat = () => {
 
     const {sellerId} = useParams()
     const {userInfo } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        socket.emit('add_user',userInfo.id, userInfo)
+    },[])
     
     return (
         <div>
