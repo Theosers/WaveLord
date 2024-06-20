@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import Carousel from 'react-multi-carousel'; 
 import Rating from '../components/Rating';
@@ -17,7 +17,18 @@ import 'swiper/css/pagination';
 import {Swiper, SwiperSlide } from 'swiper/react';
 import Reviews from '../components/Reviews';
 
+import { useDispatch } from 'react-redux';
+import { product_details } from '../store/reducers/homeReducer';
+
 const Details = () => {
+
+    const {slug} = useParams()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(product_details(slug))
+    },[slug])
+    
 
     const images = [1,2,3,4,5,6]
     const [image, setImage] = useState('')
