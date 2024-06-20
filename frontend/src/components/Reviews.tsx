@@ -7,7 +7,7 @@ import RatingReact from 'react-rating'
 import { FaStar } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
-import { customer_review, get_reviews, messageClear } from '../store/reducers/homeReducer';
+import { customer_review, get_reviews, messageClear, product_details } from '../store/reducers/homeReducer';
 import toast from 'react-hot-toast';
 
 
@@ -40,6 +40,7 @@ const Reviews = ({product}) => {
                 productId: product._id,
                 pageNumber
             }))
+            dispatch(product_details(product.slug))
             setRat('')
             setRe('')
             dispatch(messageClear())
@@ -60,13 +61,13 @@ const Reviews = ({product}) => {
         <div>
             <div>
                 <div>
-                    <span>4.5</span>
+                    <span>{product.rating}</span>
                     <span>/5</span>
                 </div>
                 <div>
-                    <Rating ratings={4.5} />
+                    <Rating ratings={product.rating} />
                 </div>
-                <p>15 Reviews</p>
+                <p>({totalReview}) Reviews</p>
             </div>
 
             <div>
@@ -75,36 +76,39 @@ const Reviews = ({product}) => {
                 </div>
                 
             </div>
-
+            <div style={{ width: `${Math.floor(( 100 * (rating_review[0]?.sum || 0)) / totalReview )}%` }}> 
+                </div> 
             <div>
-                <p>10</p>
+                <p>{rating_review[0]?.sum }</p>
             </div>
             <div>
                 <div>
                 <RatingTemp rating={4} />
                 </div>
-                <p>20</p>
+                <div style={{ width: `${Math.floor(( 100 * (rating_review[1]?.sum || 0)) / totalReview )}%` }}>
+                    </div>
+                <p>{rating_review[1]?.sum }</p>
             </div>
 
             <div>
                 <div>
                     <RatingTemp rating={3} />
                 </div>
-                <p>8</p>
+                <p>{rating_review[2]?.sum }</p>
             </div>
 
             <div>
                 <div>
                     <RatingTemp rating={2} />
                 </div>
-                <p>5</p>
+                <p>{rating_review[3]?.sum }</p>
             </div>
 
             <div>
                 <div>
                     <RatingTemp rating={1} />
                 </div>
-                <p>3</p>
+                <p>{rating_review[4]?.sum }</p>
             </div>
 
             <div>
