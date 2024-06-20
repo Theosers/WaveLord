@@ -52,13 +52,14 @@ const Chat = () => {
                   
             </div>
         <div>
-          <div>
-            <div>
+           {
+                currentFd ? <div>
                 <div>
-                    <div></div>
-                        <img src="http://localhost:3000/public/images/user.png" alt="" />
+                    <div>
+                    
+                        <img src={currentFd.image} alt="" />
                     </div>
-                    <span>ewewewe</span>
+                    <span>{currentFd.name}</span>
                   </div>
                   <div>
                     <div>
@@ -96,6 +97,7 @@ const Chat = () => {
                 </div> : <div>
                     <span>select seller</span>
                 </div>
+           }
         </div>
     </div>
 </div>
