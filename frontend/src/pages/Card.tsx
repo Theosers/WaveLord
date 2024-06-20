@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch,useSelector } from 'react-redux';
-import { get_card_products,delete_card_product,messageClear } from '../store/reducers/cardReducer';
+import { get_card_products,delete_card_product,messageClear,quantity_inc } from '../store/reducers/cardReducer';
 import toast from 'react-hot-toast';
 
 const Card = () => {
@@ -35,6 +35,13 @@ const Card = () => {
         } 
 
     },[successMessage])
+
+    const inc = (quantity, stock, card_id) => {
+        const temp = quantity + 1;
+        if (temp <= stock) {
+            dispatch(quantity_inc(card_id))
+        }
+    }
     
     return (
         <div>
@@ -86,7 +93,7 @@ const Card = () => {
                                             <div>
                                                 <div>-</div> 
                                                 <div>{pt.quantity }</div> 
-                                                <div>+</div> 
+                                                <div onClick={() => inc(pt.quantity,pt.productInfo.stock, pt._id )}>+</div> 
                                             </div>
                                             <button onClick={() => dispatch(delete_card_product(pt._id)) }>Delete</button>
                                         </div>
