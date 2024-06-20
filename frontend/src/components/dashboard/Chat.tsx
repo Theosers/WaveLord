@@ -16,7 +16,7 @@ const Chat = () => {
     const dispatch = useDispatch()
     const {sellerId} = useParams()
     const {userInfo } = useSelector(state => state.auth)
-    const {fb_messages,currentFd,my_friends } = useSelector(state => state.chat)
+    const {fb_messages,currentFd,my_friends,successMessage } = useSelector(state => state.chat)
     const [text,setText] = useState('')
     
     useEffect(() => {
@@ -76,18 +76,29 @@ const Chat = () => {
                   </div>
                   <div>
                     <div>
-                      <div>
-                          <img src="http://localhost:3000/public/images/user.png" alt="" />
-                          <div>
-                              <span>weewewewewewewe</span>
-                          </div>
-                      </div>
-        <div>
-                <img src="http://localhost:3000/public/images/user.png" alt="" />
-                <div >
-                    <span>ewwwwwwwww</span>
-                </div>
-            </div> 
+                        {
+                            fb_messages.map((m, i) => {
+                                if (currentFd?.fdId !== m.receverId) {
+                                    return(
+                                              <div key={i}>
+                                                  <img src="http://localhost:3000/public/images/user.png" alt="" />
+                                                  <div>
+                                                    <span>{m.message}</span>
+                                                  </div>
+                                              </div>
+                                        )
+                                        }else{ 
+                                          return (
+                                                    <div key={i}>
+                                                            <img src="http://localhost:3000/public/images/user.png" alt="" />
+                                                            <div >
+                                                                <span>{m.message}</span>
+                                                            </div>
+                                                        </div> 
+                                                          )     
+                                                            }
+                                                        })
+                                                    }
                         </div>
                     </div>
                     <div >
