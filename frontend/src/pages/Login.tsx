@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaFacebookF } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa6"; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { customer_login,messageClear } from '../store/reducers/authReducer';
+import toast from 'react-hot-toast';
+import { FadeLoader } from 'react-spinners';
 
 const Login = () => {
+
+    const navigate = useNavigate()
+    const {loader,errorMessage,successMessage,userInfo } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     const [state, setState] = useState({ 
         email: '',
@@ -21,12 +29,32 @@ const Login = () => {
 
     const login = (e) => {
         e.preventDefault()
-        console.log(state)
+        dispatch(customer_login(state))
     }
+
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())  
+        } 
+        if (userInfo) {
+            navigate('/')
+        }
+    },[successMessage,errorMessage])
+    
 
 
     return (
         <div>
+            {
+                loader && <div>
+                    <FadeLoader/>
+                </div>
+            }
             <Header/>
             <div>
                 <div>

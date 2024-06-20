@@ -1,12 +1,19 @@
 import React from 'react';
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { add_to_card } from '../../store/reducers/cardReducer';
 
 import '../../scss/FeatureProducts.scss'
 import Rating from '../Rating';
 
 const FeatureProducts = ({products}) => {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    //const {userInfo } = useSelector(state => state.auth)
+
     return (
         <div className='feature-container'>
             <div>
@@ -37,7 +44,7 @@ const FeatureProducts = ({products}) => {
                         <div>
                             <span>${p.price}</span>
                             <div className='flex'>
-                                <Rating ratings={p.rating} />
+                                <Rating ratings={p.rating}z />
                             </div>
                         </div>
                     </div>    

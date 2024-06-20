@@ -4,13 +4,15 @@ import {IoMdPhonePortrait} from "react-icons/io"
 import { FaFacebookF, FaList, FaLinkedin, FaGithub, FaLock, FaUser, FaPhoneAlt } from "react-icons/fa"
 import { FaTwitter, FaHeart, FaCartShopping } from "react-icons/fa6"
 import { IoMdArrowDropdown, IoIosArrowDown } from "react-icons/io";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../scss/Header.scss'
 
 const Header = () => {
 
-    const {categorys} = useSelector(state => state.home)
+    const navigate = useNavigate()
+    const {categorys} = useSelector(state => state.home) 
+    //const {userInfo} = useSelector(state => state.auth)
 
     const {pathname} = useLocation()
     const [showShidebar, setShowShidebar] = useState(true);
@@ -21,6 +23,10 @@ const Header = () => {
 
     const [searchValue, setSearchValue] = useState('')
     const [category, setCategory] = useState('')
+
+    const search = () => {
+        navigate(`/products/search?category=${category}&&value=${searchValue}`)
+    }
 
     return (
         <div className='main-container'>
@@ -59,7 +65,7 @@ const Header = () => {
                     {
                         user ? <Link className='profile' to='/dashboard'>
                                     <span> <FaUser/> </span>
-                                    <span>Theo Sers</span>
+                                    <span>{user.name}</span>
                                 </Link> 
                             : <Link className='profile' to='/login'>
                                     <span> <FaLock /> </span>
@@ -155,13 +161,13 @@ const Header = () => {
                 <select onChange={(e) => setCategory(e.target.value)} name="" id="">
                     <option value="">Select Category</option>
                     {
-                        categorys.map((c, i) => <option key={i} value={c}>
+                        categorys.map((c, i) => <option key={i} value={c.name}>
                             {c.name}
                         </option> )
                     }
                 </select>
                 <input onChange={(e)=> setSearchValue(e.target.value)} type="text" name='' id='' placeholder='What do you need' />
-                <button >Search</button>
+                <button onClick={search} >Search</button>
             </div>
 
             <div className='tel-container'>
