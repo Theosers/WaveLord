@@ -10,8 +10,8 @@ const Wishlist = () => {
 
     const dispatch = useDispatch()
     const {userInfo } = useSelector(state => state.auth)
-    const {errorMessage,successMessage } = useSelector(state => state.card)
-
+    const {wishlist,successMessage } = useSelector(state => state.card)
+    
     useEffect(() => {
         dispatch(get_wishlist_products(userInfo.id))
     },[])
@@ -20,15 +20,15 @@ const Wishlist = () => {
     return (
         <div>
           {
-              [1,2,3,4].map((p, i) => <div key={i}>
+             wishlist.map((p, i) => <div key={i}>
               <div>
                 <div>5% </div>   
-                  <img src="http://localhost:3000/public/images/products/1.webp" alt="" />  
+                  <img src={p.image} alt="" />  
                   <ul>
                     <li>
                       <FaRegHeart />
                     </li>
-                    <Link to='/product/details/new'>
+                    <Link to={`/product/details/${p.slug}`}
                       <FaEye />
                     </Link>
                     <li>
@@ -38,11 +38,11 @@ const Wishlist = () => {
               </div>
 
               <div>
-                  <h2>Product Name data </h2>
+                  <h2>{p.name} </h2>
                   <div>
-                      <span>$122</span>
+                      <span>${p.price}</span>
                       <div>
-                          <Rating ratings={5} />
+                          <Rating ratings={p.rating} />
                       </div>
                   </div>
               </div>    
