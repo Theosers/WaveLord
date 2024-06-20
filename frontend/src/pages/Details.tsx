@@ -246,6 +246,7 @@ const Details = () => {
 
             <div className='text-slate-600'>
             <p>{product.description</p>
+            <p>Shop Name : {product.shopName}</p>
            </div> 
 
             <div>
@@ -330,7 +331,7 @@ const Details = () => {
 
         <div>
             <div>
-                <h2 className='font-bold'>From Easy Shop</h2>
+                <h2 className='font-bold'>From {product.shopName}</h2>
             </div>
             <div>
                 {
