@@ -15,15 +15,17 @@ import {Pagination } from 'swiper/modules';
 import 'swiper/css'; 
 import 'swiper/css/pagination';
 import {Swiper, SwiperSlide } from 'swiper/react';
+
 import Reviews from '../components/Reviews';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { product_details } from '../store/reducers/homeReducer';
 
 const Details = () => {
 
     const {slug} = useParams()
     const dispatch = useDispatch()
+    const {product,relatedProducts,moreProducts} = useSelector(state => state.home)
 
     useEffect(() => {
         dispatch(product_details(slug))
@@ -90,9 +92,9 @@ const Details = () => {
                 <div>
                     <Link to='/'>Home</Link>
                     <span className='pt-1'><IoIosArrowForward /></span>
-                    <Link to='/'>Category</Link>
+                    <Link to='/'>{ product.category }</Link>
                     <span className='pt-1'><IoIosArrowForward /></span>
-                    <span>Product Name </span>
+                    <span>{ product.name } </span>
                 </div>
 
             </div>
@@ -102,20 +104,20 @@ const Details = () => {
     <section>
     <div>
         <div>
-            <img src={image ? `http://localhost:3000/public/images/products/${image}.webp` : `http://localhost:3000/public/images/products/${images[2]}.webp`} alt="" />
+            <img src={image ? image : product.images?.[0] } alt="" />
         </div>
         <div>
             {
-                images && <Carousel
+                product.images && <Carousel
                 autoPlay={true}
                 infinite={true} 
                 responsive={responsive}
                 transitionDuration={500}>
                 {
-                    images.map((img, i) => {
+                    product.images.map((img, i) => {
                     return (
                         <div>
-                            <img src={`http://localhost:3000/public/images/products/${img}.webp`} alt="" /> 
+                            <img src={img} alt="" /> 
                         </div>
                     )
                     })
@@ -126,7 +128,7 @@ const Details = () => {
 
         <div>
             <div>
-                <h3>Product Name </h3>
+                <h3>{product.name} </h3>
             </div>
             <div>
                 <div>
@@ -136,22 +138,22 @@ const Details = () => {
             </div>
             <div>
                 {
-                discount !== 0 ? <>
-                    Price : <h2>$500</h2>
-                    <h2>${500 - Math.floor((500 * discount) / 100)} (-{discount}%) </h2>
+                product.discount !== 0 ? <>
+                    Price : <h2>${product.price}</h2>
+                    <h2>${product.price - Math.floor((product.price * product.discount) / 100)} (-{product.discount}%) </h2>
 
-                </> : <h2> Price : $200 </h2>
+                </> : <h2> Price : ${product.price} </h2>
                 }
             </div>       
 
 
             <div className='text-slate-600'>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+            <p>{product.description}</p>
            </div> 
 
             <div>
                 {
-                stock ? <>
+                product.stock ? <>
                     <div>
                         <div>-</div>
                         <div>2</div>
