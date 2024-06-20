@@ -13,6 +13,7 @@ const Header = () => {
     const navigate = useNavigate()
     const {categorys} = useSelector(state => state.home) 
     //const {userInfo} = useSelector(state => state.auth)
+    const {card_product_count} = useSelector(state => state.card)
 
     const {pathname} = useLocation()
     const [showShidebar, setShowShidebar] = useState(true);
@@ -26,6 +27,13 @@ const Header = () => {
 
     const search = () => {
         navigate(`/products/search?category=${category}&&value=${searchValue}`)
+    }
+    const redirect_card_page = () => {
+        if (userInfo) {
+            navigate('/card')
+        } else {
+            navigate('/login')
+        }
     }
 
     return (
@@ -123,13 +131,13 @@ const Header = () => {
                             
                         </div>
                     </div>
-                    <div className='icon-container'>
+                    <div onClick={redirect_card_page} className='icon-container'>
                         <span className=''><FaCartShopping /></span>
-                        <div>
+                        
                             {
                                 wishlist_count
                             }
-                        </div>
+                       
                     </div>
                 </div>
                     
