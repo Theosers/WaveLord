@@ -41,7 +41,7 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <span><IoChatbubbleEllipsesSharp/></span>
-                            <Link to='/dashboard'>Chat  </Link>
+                            <Link to='/dashboard/chat'>Chat  </Link>
                         </li>
                         <li>
                             <span><RiLockPasswordLine/></span>
