@@ -284,22 +284,22 @@ const Details = () => {
             </div>
             <div>
                 {
-                    [1,2,3].map((p,i) => {
+                   moreProducts.map((p,i) => {
                         return (
                             <Link>
                                 <div>
-                                    <img src={`http://localhost:3000/public/images/products/${p}.webp`} alt="" /> 
+                                    <img src={ p.images[0]} alt="" /> 
                                     {
-                                        discount !== 0 && <div>{discount}%
+                                        p.discount !== 0 && <div>{p.discount}%
                                         </div>
                                     }
                                 </div>
 
-                                <h2>Product Name </h2>
+                                <h2>{p.name}</h2>
                                 <div>
-                                    <h2>$434</h2>
+                                    <h2>${p.price}</h2>
                                     <div>
-                                        <Rating ratings={4.5}  />
+                                        <Rating ratings={p.rating}  />
                                     </div>
                                 </div>
 
@@ -337,27 +337,27 @@ const Details = () => {
                     className='mySwiper'> 
 
                     {
-                        [1,2,3,4,5,6].map((p, i) => {
+                        relatedProducts.map((p, i) => {
                             return (
 
                                 <SwiperSlide key={i}>
                                     <Link>
                                         <div>
                                             <div>
-                                                <img src={`http://localhost:3000/public/images/products/${p}.webp`} alt="" />
+                                                <img src={p.images[0] } alt="" />
                                             </div>
                                                 {
-                                                    discount !== 0 && <div>{discount}%
+                                                    p.discount !== 0 && <div>{p.discount}%
                                                     </div>
                                                 }
                                         </div>
 
                                         <div>
-                                            <h2>Product Name </h2>
+                                            <h2>{p.name}</h2>
                                             <div>
-                                                <h2>$434</h2>
+                                                <h2>${p.price}</h2>
                                                 <div>
-                                                    <Rating ratings={4.5}  />
+                                                    <Rating ratings={p.rating}  />
                                                 </div>
                                             </div>
                                         </div>
