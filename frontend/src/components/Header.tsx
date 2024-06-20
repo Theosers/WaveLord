@@ -13,14 +13,11 @@ const Header = () => {
     const navigate = useNavigate()
     const {categorys} = useSelector(state => state.home) 
     //const {userInfo} = useSelector(state => state.auth)
-    const {card_product_count} = useSelector(state => state.card)
+    const {card_product_count,wishlist_count} = useSelector(state => state.card)
 
     const {pathname} = useLocation()
     const [showShidebar, setShowShidebar] = useState(true);
     const [categoryShow, setCategoryShow] = useState(true);
-    const user = true
-    const wishlist_count = 3
-    
 
     const [searchValue, setSearchValue] = useState('')
     const [category, setCategory] = useState('')
@@ -124,12 +121,11 @@ const Header = () => {
                 <div className='multiple-icons-container'>
                     <div className='icon-container'>
                         <span className=''><FaHeart /></span>
-                        <div>
-                            {
-                                wishlist_count
-                            }
-                            
-                        </div>
+                        {
+                            wishlist_count !== 0 && <div>
+                                {wishlist_count}
+                            </div>
+                        }                  
                     </div>
                     <div onClick={redirect_card_page} className='icon-container'>
                         <span className=''><FaCartShopping /></span>
