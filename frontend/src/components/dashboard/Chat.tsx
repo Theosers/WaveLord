@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineMessage, AiOutlinePlus } from 'react-icons/ai'
 import { GrEmoji } from 'react-icons/gr'
 import { IoSend } from 'react-icons/io5'
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 
 import io from 'socket.io-client'
-import { add_friend } from '../../store/reducers/chatReducer';
+import { add_friend, send_message } from '../../store/reducers/chatReducer';
 const socket = io('http://localhost:5000')
 
 
@@ -17,7 +17,8 @@ const Chat = () => {
     const {sellerId} = useParams()
     const {userInfo } = useSelector(state => state.auth)
     const {fb_messages,currentFd,my_friends } = useSelector(state => state.chat)
-
+    const [text,setText] = useState('')
+    
     useEffect(() => {
         socket.emit('add_user',userInfo.id, userInfo)
     },[])
@@ -28,6 +29,18 @@ const Chat = () => {
             userId: userInfo.id
         }))
     },[sellerId])
+
+    const send = () => {
+        if (text) {
+            dispatch(send_message({
+                userId: userInfo.id,
+                text,
+                sellerId,
+                name: userInfo.name 
+            }))
+            setText('')
+        }
+    }
     
     return (
         <div>
@@ -83,13 +96,13 @@ const Chat = () => {
                             <input type="file" />
                         </div>
                         <div>
-                            <input type="text" placeholder='input message'/>
+                            <input value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder='input message'/>
                             <div>
                                 <span><GrEmoji /></span>
                             </div>
                         </div>
                         <div>
-                            <div>
+                            <div onClick={send}>
                                 <IoSend />
                             </div>
                         </div>
