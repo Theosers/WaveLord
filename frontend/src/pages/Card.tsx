@@ -10,10 +10,7 @@ const Card = () => {
 
     const dispatch = useDispatch()
     //const {userInfo} = useSelector(state => state.auth) 
-
-    const navigate = useNavigate()
-    const card_products = [1,2]
-    const outOfStockProduct = [1,2]
+    const {card_products,successMessage,price,buy_product_item,shipping_fee,outofstock_products} = useSelector(state => state.card)
 
     useEffect(() => {
         dispatch(get_card_products(userInfo.id))
@@ -45,7 +42,7 @@ const Card = () => {
             <section>
                 <div>
                 {
-                    card_products.length > 0 || outOfStockProduct > 0 ? <div>
+                    card_products.length > 0 || outofstock_products > 0 ? <div>
                         <div>
                             <div>
                                 <h2>Stock Products {card_products.length}</h2>
@@ -54,31 +51,31 @@ const Card = () => {
                         {
                         <div>
                             <div>
-                                <h2>Easy Shop</h2>
+                                <h2>{p.shopName}<</h2>
                             </div>
 
                             {
-                                <div>
+                                p.products.map((pt,i) => <div>
                                     <div>
                                         <div>
-                                            <img src="http://localhost:3000/images/products/3.webp" alt="" />
+                                            <img src={pt.productInfo.images[0]} alt="" />
                                             <div>
-                                                <h2>Product Name </h2>
-                                                <span>Brand: Jara</span>
+                                                <h2>{pt.productInfo.name}</h2>
+                                                <span>{pt.productInfo.brand}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
                                         <div>
-                                            <h2>$240</h2>
-                                            <p>$300</p>
-                                            <p>-15%</p>
+                                            <h2>${pt.productInfo.price - Math.floor((pt.productInfo.price * pt.productInfo.discount) / 100)}</h2>
+                                            <p>${pt.productInfo.price}</p>
+                                            <p>-{pt.productInfo.discount}%</p>
                                         </div>
                                         <div>
                                             <div>
                                                 <div>-</div> 
-                                                <div>2</div> 
+                                                <div>{pt.quantity }</div> 
                                                 <div>+</div> 
                                             </div>
                                             <button>Delete</button>
@@ -91,34 +88,34 @@ const Card = () => {
 
 
                         {
-                        outOfStockProduct.length > 0 && <div>
+                        outofstock_products.length > 0 && <div>
                             <div>
-                                <h2>Out of Stock {outOfStockProduct.length}</h2>
+                                <h2>Out of Stock {outofstock_products.length}</h2>
                             </div>
 
                         <div>
                         {
-                            [1].map((p,i) => <div>
+                            outofstock_products.map((p,i) => <div>
                             <div>
                                 <div>
-                                    <img src={`http://localhost:3000/public/images/products/${i+1}.webp`} alt="" />
+                                    <img src={ p.products[0].images[0] } alt="" />
                                     <div>
-                                        <h2>Product Name </h2>
-                                        <span>Brand: Jara</span>
+                                        <h2>{p.products[0].name}</h2>
+                                        <span>{p.products[0].brand}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
                                 <div>
-                                    <h2>$240</h2>
-                                    <p>$300</p>
-                                    <p>-15%</p>
+                                    <h2>${p.products[0].price - Math.floor((p.products[0].price * p.products[0].discount) / 100 )}</h2>
+                                    <p>${p.products[0].price}</p>
+                                    <p>-{p.products[0].discount}%</p>
                                 </div>
                                 <div>
                                     <div>
                                         <div>-</div> 
-                                        <div>2</div> 
+                                        <div>{p.quantity}</div> 
                                         <div>+</div> 
                                     </div>
                                     <button>Delete</button>
