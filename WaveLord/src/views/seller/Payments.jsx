@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import '../../scss/seller/Payments.scss'
 
 import { FixedSizeList as List} from "react-window";
-import { get_seller_payment_details, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
+import { get_seller_payment_details, messageClear, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
 import toast from 'react-hot-toast';
 
 import '../../scss/admin/PaymentRequest.scss'
@@ -63,6 +63,17 @@ const Payments = () => {
      useEffect(() => {
         dispatch(get_seller_payment_details(userInfo._id))
     },[])
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+    },[successMessage,errorMessage])
 
     return (
         <div className='admin-dashboard'>
