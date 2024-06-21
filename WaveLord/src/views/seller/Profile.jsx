@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { profile_image_upload,messageClear,profile_info_add } from '../../store/Reducers/authReducer'
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils'; 
+import { create_stripe_connect_account } from '../../store/Reducers/sellerReducer';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
@@ -80,6 +81,20 @@ const Profile = () => {
                         <span><em>Role : </em>{userInfo.role}</span>
                         <span><em>Status : </em>{userInfo.status}</span>
                         <span><em>Payment Account : </em> <button>{userInfo.payment}</button></span>
+                        {
+                            userInfo.payment === 'active' ? <span><button>{userInfo.payment}</button></span>
+                            : <span onClick={()=> dispatch(create_stripe_connect_account())}><button>Click Active</button></span>
+                        } 
+
+
+
+
+
+
+
+
+
+                        
                     </div>
 
                     <label placeholder="Shop Name" htmlFor="">Shop Name</label> // { userInfo.shopInfo?.shopName } et le reste 44.1
