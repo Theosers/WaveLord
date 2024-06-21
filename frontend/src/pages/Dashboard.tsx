@@ -2,17 +2,37 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaList } from 'react-icons/fa';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { IoIosHome } from "react-icons/io";
 import { FaBorderAll } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
+import api from '../api/api';
+import { useDispatch } from 'react-redux';
+import { user_reset } from '../store/reducers/authReducer'
+import { reset_count } from '../store/reducers/cardReducer'
 
 const Dashboard = () => {
 
     const [filterShow, setFilterShow] = useState(false)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const logout = async () => {
+        try {
+            const {data} = await api.get('/customer/logout')
+            localStorage.removeItem('customerToken')
+            dispatch(user_reset())
+            dispatch(reset_count())
+            navigate('/login')
+
+        } catch (error) {
+            console.log(error.response.data)
+        }
+    }
     
     return (
         <div>
@@ -47,9 +67,9 @@ const Dashboard = () => {
                             <span><RiLockPasswordLine/></span>
                             <Link to='/dashboard/change-password'>Change Password  </Link>
                         </li>
-                        <li>
+                        <li onClick={logout}>
                             <span><IoMdLogOut/></span>
-                            <Link to='/dashboard'>Logout </Link>
+                            <Link>Logout </Link>
                         </li> 
                 </ul> 
 
