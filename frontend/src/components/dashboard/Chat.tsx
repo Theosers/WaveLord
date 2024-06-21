@@ -3,11 +3,13 @@ import { AiOutlineMessage, AiOutlinePlus } from 'react-icons/ai'
 import { GrEmoji } from 'react-icons/gr'
 import { IoSend } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 
 import io from 'socket.io-client'
-import { add_friend, send_message } from '../../store/reducers/chatReducer';
+import { add_friend, messageClear, send_message,updateMessage } from '../../store/reducers/chatReducer';
+import toast from 'react-hot-toast';
 const socket = io('http://localhost:5000')
 
 
@@ -52,6 +54,19 @@ const Chat = () => {
             setActiveSeller(sellers)
         })
     },[])    
+
+    useEffect(() => {
+        if (receverMessage) {
+            if (sellerId === receverMessage.senderId && userInfo.id === receverMessage.receverId) {
+                dispatch(updateMessage(receverMessage))
+            } else {
+                toast.success(receverMessage.senderName + " " + "Send A message")
+                dispatch(messageClear())
+            }
+        }
+
+    },[receverMessage])
+    
     return (
         <div>
           <div]'>
