@@ -4,9 +4,16 @@ import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6"; 
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { get_admin_dashboard_data } from '../../store/Reducers/dashboardReducer';
 import '../../scss/admin/AdminDashboard.scss';
 
 const AdminDashboard = () => {
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(get_admin_dashboard_data())
+    }, [])
 
 
     const state = {
