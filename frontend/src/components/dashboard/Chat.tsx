@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineMessage, AiOutlinePlus } from 'react-icons/ai'
 import { GrEmoji } from 'react-icons/gr'
 import { IoSend } from 'react-icons/io5'
@@ -14,6 +14,8 @@ const socket = io('http://localhost:5000')
 
 
 const Chat = () => {
+
+    const scrollRef = useRef()
 
     const dispatch = useDispatch()
     const {sellerId} = useParams()
@@ -73,6 +75,10 @@ const Chat = () => {
         }
 
     },[receverMessage])
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth'})
+    },[fb_messages])
     
     return (
         <div>
@@ -117,7 +123,7 @@ const Chat = () => {
                             fb_messages.map((m, i) => {
                                 if (currentFd?.fdId !== m.receverId) {
                                     return(
-                                              <div key={i}>
+                                              <div ref={scrollRef} key={i}>
                                                   <img src="http://localhost:3000/public/images/user.png" alt="" />
                                                   <div>
                                                     <span>{m.message}</span>
@@ -126,7 +132,7 @@ const Chat = () => {
                                         )
                                         }else{ 
                                           return (
-                                                    <div key={i}>
+                                                    <div ref={scrollRef} key={i}>
                                                             <img src="http://localhost:3000/public/images/user.png" alt="" />
                                                             <div >
                                                                 <span>{m.message}</span>
