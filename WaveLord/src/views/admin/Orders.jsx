@@ -5,7 +5,7 @@ import '../../scss/Pagination.scss'
 import { Link } from 'react-router-dom';
 import { LuArrowDownSquare } from 'react-icons/lu';
 import Pagination from '../Pagination';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get_admin_orders } from '../../store/Reducers/OrderReducer';
 
 const Orders = () => {
@@ -16,6 +16,9 @@ const Orders = () => {
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+
+    const {myOrders,totalOrder } = useSelector(state => state.order)
+    
 
     useEffect(() => {
         const obj = {
@@ -60,16 +63,16 @@ const Orders = () => {
                 </thead>
                 <tbody >
                   {
-                    [1,2,3,4,5,6,7,8,9,10].map((d, i) => (
+                    myOrders.map((o,i) =>
                       <tr key={i}>
-                        <td>#{d._id}123456789</td>
-                        <td>${d.price}6784</td>
-                        <td>{d.payment_status}Pending</td>
-                        <td>{d.delivery_status}Pending</td>
+                        <td>#{o._id}</td>
+                        <td>${o.price}</td>
+                        <td>{o.payment_status}</td>
+                        <td>{o.delivery_status}</td>
                         <td>
-                          <Link to={`/admin/dashboard/order/details/3`}>View</Link>
+                          <Link to={`/admin/dashboard/order/details/${o._id}`}>View</Link>
                         </td>
-                        <td onClick={(e) => setShow(!show)}><LuArrowDownSquare/> </td>
+                        <td onClick={(e) => setShow(o._id)}><LuArrowDownSquare/> </td>
                       </tr>
                       
                     ))
@@ -78,12 +81,12 @@ const Orders = () => {
                 </tbody>
                 <tbody style = {show ? {backgroundColor:'red'} : {display:'none'}}>
                     {
-                    [1,2,3].map((d, i) => (
+                    o.suborder.map((so, i) => (
                       <tr key={i}>
-                        <td>#{d._id}123456789</td>
-                        <td>${d.price}6784</td>
-                        <td>{d.payment_status}Pending</td>
-                        <td>{d.delivery_status}Pending</td>
+                        <td>#{so._id}</td>
+                        <td>${so.price}</td>
+                        <td>{so.payment_status}Pending</td>
+                        <td>{so.delivery_status}</td>
                         <td></td>
                         <td></td>
                       </tr>
@@ -104,14 +107,16 @@ const Orders = () => {
             </div>
             
             
-             
-          <Pagination
-            pageNumber= {currentPage}
-            setPageNumber= {setCurrentPage}
-            totalItem= {50}
-            parPage= {parPage}
-            showItem= {3}
-          />
+         {
+                totalOrder <= parPage ? "" : <Pagination 
+                    pageNumber = {currentPage}
+                    setPageNumber = {setCurrentPage}
+                    totalItem = {totalOrder}
+                    parPage = {parPage}
+                    showItem = {4}
+                />
+               
+            }
 
           </div>
 
