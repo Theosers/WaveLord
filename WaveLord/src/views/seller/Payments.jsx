@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { FaUsers } from "react-icons/fa";
@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import '../../scss/seller/Payments.scss'
 
 import { FixedSizeList as List} from "react-window";
-import { get_seller_payment_details } from '../../store/Reducers/PaymentReducer';
+import { get_seller_payment_details, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
+import toast from 'react-hot-toast';
 
 import '../../scss/admin/PaymentRequest.scss'
 
@@ -26,6 +27,20 @@ const Payments = () => {
     const {userInfo } = useSelector(state => state.auth)
     const {successMessage, errorMessage,loader,pendingWithdrows,   successWithdrows, totalAmount, withdrowAmount, pendingAmount,
     availableAmount, } = useSelector(state => state.payment)
+
+    const [amount,setAmount] = useState(0)
+
+
+    const sendRequest = (e) => {
+        e.preventDefault()
+        if (availableAmount - amount > 10) {
+            dispatch(send_withdrowal_request({amount, sellerId: userInfo._id }))
+            setAmount(0)
+        } else {
+            toast.error('Insufficient Balance')
+        }
+    }
+    
 
     const Row = ({ index, style }) => {
         
@@ -85,9 +100,9 @@ const Payments = () => {
             <div className="main-content">
                 <div className="SendPendingRequest">
                     <h3>Send Request</h3>
-                    <form action="">
-                        <input min="0" type="number" name="amount" />
-                        <button>Submit</button>
+                    <form onSubmit={sendRequest} action="">
+                        <input onChange={(e) => setAmount(e.target.value)} value={amount} min="0" type="number" name="amount" />
+                        <button disabled={loader}>{loader ? 'loading..' : 'Submit'}</button>
                     </form>
                     <h3>Pending Request</h3>
                     <div>
