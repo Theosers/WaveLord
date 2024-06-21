@@ -47,6 +47,9 @@ const addSeller = (sellerId,socketId,userInfo) => {
 const findCustomer = (customerId) => {
     return allCustomer.find(c => c.customerId === customerId)
 }
+const findSeller = (sellerId) => {
+    return allSeller.find(c => c.sellerId === sellerId)
+}
 const remove = (socketId) => {
     allCustomer = allCustomer.filter(c => c.socketId !== socketId)
 }
@@ -71,6 +74,13 @@ soc.on('send_seller_message',(msg) => {
             soc.to(customer.socketId).emit('seller_message', msg)
         }
     })
+soc.on('send_customer_message',(msg) => {
+        const seller = findSeller(msg.receverId)
+        if (seller !== undefined) {
+            soc.to(seller.socketId).emit('customer_message', msg)
+        }
+    })  
+
 soc.on('disconnect',() => {
         console.log('user disconnect')
         remove(soc.id)
