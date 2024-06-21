@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
 import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6"; 
 import Chart from 'react-apexcharts'
@@ -7,6 +8,8 @@ import { Link } from 'react-router-dom';
 import '../../scss/seller/Payments.scss'
 
 import { FixedSizeList as List} from "react-window";
+import { get_seller_payment_details } from '../../store/Reducers/PaymentReducer';
+
 import '../../scss/admin/PaymentRequest.scss'
 
 function handleOnWheel({ deltaY }) {
@@ -19,6 +22,8 @@ const outerElementType = forwardRef((props, ref) => (
 
 const Payments = () => {
 
+    const dispatch = useDispatch()
+    const {userInfo } = useSelector(state => state.auth)
 
     const Row = ({ index, style }) => {
         
@@ -38,9 +43,9 @@ const Payments = () => {
         )
     }
 
-
-
-
+     useEffect(() => {
+        dispatch(get_seller_payment_details(userInfo._id))
+    },[])
 
     return (
         <div className='admin-dashboard'>
