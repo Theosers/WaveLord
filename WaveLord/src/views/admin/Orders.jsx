@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useState } from 'react';
 import '../../scss/admin/Orders.scss';
 import '../../scss/Pagination.scss'
 import { Link } from 'react-router-dom';
 import { LuArrowDownSquare } from 'react-icons/lu';
 import Pagination from '../Pagination';
+import { useDispatch } from 'react-redux';
+import { get_admin_orders } from '../../store/Reducers/OrderReducer';
 
 const Orders = () => {
+
+    const dispatch = useDispatch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+
+    useEffect(() => {
+        const obj = {
+            parPage: parseInt(parPage),
+            page: parseInt(currentPage),
+            searchValue
+        }
+        dispatch(get_admin_orders(obj))
+    },[searchValue,currentPage,parPage])
 
     return (
         <div className='orders-container'>
@@ -22,7 +35,7 @@ const Orders = () => {
                         <option value="10">10</option>
                         <option value="20">20</option> 
                     </select>
-                    <input type="text" placeholder='search'/>
+                    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} type="text" placeholder='search'/>
 
                 </div>
 
