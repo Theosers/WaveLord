@@ -47,6 +47,9 @@ const addSeller = (sellerId,socketId,userInfo) => {
 const findCustomer = (customerId) => {
     return allCustomer.find(c => c.customerId === customerId)
 }
+const remove = (socketId) => {
+    allCustomer = allCustomer.filter(c => c.socketId !== socketId)
+}
 
 
 io.on('connection', (soc) => {
@@ -54,10 +57,12 @@ io.on('connection', (soc) => {
 })
 soc.on('add_seller',(sellerId, userInfo) => {
        addSeller(sellerId,soc.id,userInfo)
+       io.emit('activeSeller', allSeller)
     })
 
 soc.on('add_user',(customerId,userInfo)=>{
          addUser(customerId,soc.id,userInfo)
+         io.emit('activeSeller', allSeller)
 
     })
 soc.on('send_seller_message',(msg) => {
@@ -65,6 +70,11 @@ soc.on('send_seller_message',(msg) => {
         if (customer !== undefined) {
             soc.to(customer.socketId).emit('seller_message', msg)
         }
+    })
+soc.on('disconnect',() => {
+        console.log('user disconnect')
+        remove(soc.id)
+        io.emit('activeSeller', allSeller) 
     })
 
 require('dotenv').config()
