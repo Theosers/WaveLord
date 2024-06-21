@@ -1,5 +1,8 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List} from "react-window";
+import { get_payment_request } from '../../store/Reducers/PaymentReducer';
+import moment from 'moment';
 import '../../scss/admin/PaymentRequest.scss'
 
 function handleOnWheel({ deltaY }) {
@@ -12,7 +15,12 @@ const outerElementType = forwardRef((props, ref) => (
 
 const PaymentRequest = () => {
 
-    const array = [1,2,3,4,5,6,7,8,9,10]
+    const dispatch = useDispatch()
+    const {successMessage, errorMessage, pendingWithdrows } = useSelector(state => state.payment)
+
+    useEffect(() => { 
+        dispatch(get_payment_request())
+    },[])
 
     const Row = ({ index, style }) => {
         
@@ -20,11 +28,11 @@ const PaymentRequest = () => {
             <div style={style} className="row-container">
 
                 <div>{index + 1}</div>
-                <div>$6528</div>
+                <div>${pendingWithdrows[index]?.amount}</div>
                 <div>
-                    <span>Pending</span>
+                    <span>{pendingWithdrows[index]?.status}</span>
                 </div>
-                <div>25 Dec 2023</div>
+                <div>{moment(pendingWithdrows[index]?.createdAt).format('LL')}</div>
                 <div>
                     <button>Confirm</button>
                 </div>
@@ -61,7 +69,7 @@ const PaymentRequest = () => {
                             style={{ minWidth : '340px'}}
                             className='List'
                             height={350}
-                            itemCount={1000}
+                            itemCount={pendingWithdrows.length}
                             itemSize={35}
                             outerElementType= {outerElementType}
                             >{Row}</List>
