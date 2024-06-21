@@ -9,6 +9,7 @@ const rootReducer = {
     category: categoryReducer,
     product: productReducer,
     seller: sellerReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    order: OrderReducer
 }
 export default rootReducer;
