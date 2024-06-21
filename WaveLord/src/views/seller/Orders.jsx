@@ -56,34 +56,33 @@ const Orders = () => {
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
-                            <tr key={i}>
-                                                    
-                                <td>{d.payment_status}#1559</td>
-                                <td>{d.payment_status}$467</td>
-                                <td>{d.payment_status}Pending</td>
-                                
-                                <td>{d.payment_status}Pending</td>
+                            myOrders.map((d, i) => <tr key={i}>
+
+                                <td scope='row'>#{d._id}</td>
+                                <td scope='row'>${d.price}</td>
+                                <td scope='row'>{d.payment_status} </td>
+                                <td scope='row'>{d.delivery_status}</td> 
+                                <td scope='row'>{d.date}</td> 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link to= {`/seller/dashboard/order/details/34`}> <FaEye className='fa-action'/> </Link>
+                                        <Link to={`/seller/dashboard/order/details/${d._id}`} <FaEye className='fa-action'/> </Link>
                                     </div>
                                 </td>
                             </tr>
                             
-                            ))
+                            )
                         }
                         </tbody>
                     </table>
                         </div>
 
-                        <Pagination
-                            pageNumber= {currentPage}
-                            setPageNumber= {setCurrentPage}
-                            totalItem= {50}
-                            parPage= {parPage}
-                            showItem= {3}
-                        />
+                            {
+                                totalOrder <= parPage ? "" : <Pagination
+                                                            pageNumber= {currentPage}
+                                                            setPageNumber= {setCurrentPage}
+                                                            totalItem= {totalOrder}
+                                                            parPage= {parPage}
+                                                            showItem= {3}/>
                 </div>
 
             </div>
