@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_customers } from '../../store/Reducers/chatReducer';
-
+import { get_customer_message, get_customers } from '../../store/Reducers/chatReducer';
 import { Link, useParams } from 'react-router-dom';
+
 import { FaRegFaceGrinHearts } from "react-icons/fa6";
 import toast from 'react-hot-toast';
 
@@ -16,7 +16,9 @@ const SellerToCustomer = () => {
     const [show, setShow] = useState(false);
     const sellerId = 65
     const {userInfo } = useSelector(state => state.auth)
-    const {customers } = useSelector(state => state.chat)
+    const {customers,messages,currentCustomer } = useSelector(state => state.chat)
+    const { customerId } = useParams()
+    
 
     const dispatch = useDispatch()
 
@@ -24,6 +26,11 @@ const SellerToCustomer = () => {
         dispatch(get_customers(userInfo._id))
     },[])
 
+    useEffect(() => {
+        if (customerId) {
+            dispatch(get_customer_message(customerId))
+        }
+    },[customerId])
 
 
     return (
@@ -35,8 +42,7 @@ const SellerToCustomer = () => {
                 </div>
                 
                 {
-                    customers.map((c,i) => (
-                        <Link key={i} to={`/seller/dashboard/chat-customer/${c.fdId} className={`chat-seller-subcontainer ${sellerId === s._id ? 'chat-seller-active' : ''}`}>
+                    customers.map((c,i) => ( <Link key={i} to={`/seller/dashboard/chat-customer/${c.fdId} className={`chat-seller-subcontainer ${sellerId === s._id ? 'chat-seller-active' : ''}`}>
                             <div className='chat-seller-subcontainer'>
                                 <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
                             
@@ -50,8 +56,8 @@ const SellerToCustomer = () => {
 
                 <div className='chat-current-seller-title-container' >
                     <div className='chat-current-seller-title-container' >
-                        <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                        <h2>Théo Sayonara</h2>
+                        <img className='chat-seller-img' src="http://localhost:3001/src/assets/admin.jpeg" alt="" />
+                        <h2>{currentCustomer.name}</h2>
                     </div>
                     <FaList className='chat-seller-list-icon' onClick={() => setShow(!show)} />
                 </div>
