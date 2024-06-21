@@ -81,6 +81,12 @@ soc.on('send_customer_message',(msg) => {
             soc.to(seller.socketId).emit('customer_message', msg)
         }
     })  
+soc.on('send_message_admin_to_seller',(msg) => {
+        const seller = findSeller(msg.receverId)
+        if (seller !== undefined) {
+            soc.to(seller.socketId).emit('receved_admin_message', msg)
+        }
+    })
 
 soc.on('add_admin',(adminInfo) => {
         delete adminInfo.email
