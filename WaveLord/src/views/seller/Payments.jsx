@@ -24,6 +24,8 @@ const Payments = () => {
 
     const dispatch = useDispatch()
     const {userInfo } = useSelector(state => state.auth)
+    const {successMessage, errorMessage,loader,pendingWithdrows,   successWithdrows, totalAmount, withdrowAmount, pendingAmount,
+    availableAmount, } = useSelector(state => state.payment)
 
     const Row = ({ index, style }) => {
         
@@ -53,28 +55,28 @@ const Payments = () => {
             <div className='stat-card quatre'>
             <MdCurrencyExchange className='icon' />
             <div>
-                <h3>$9483</h3>
+                <h3>${totalAmount}</h3>
                 <p>Total Sales</p>
             </div>
             </div>
             <div className='stat-card deux'>
             <MdCurrencyExchange className='icon' />
             <div>
-                <h3>$350</h3>
+                <h3>${availableAmount}</h3>
                 <p>Available Amount</p>
             </div>
             </div>
             <div className='stat-card un'>
             <MdCurrencyExchange className='icon' />
             <div>
-                <h3>$100</h3>
+                <h3>${withdrowAmount}</h3>
                 <p>Withdrawal Amount</p>
             </div>
             </div>
             <div className='stat-card trois'>
             <MdCurrencyExchange className='icon' />
             <div>
-                <h3>$0</h3>
+                <h3>${pendingAmount}</h3>
                 <p>Pending Amount</p>
             </div>
             </div>
