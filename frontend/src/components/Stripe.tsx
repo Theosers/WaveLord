@@ -20,9 +20,9 @@ const Stripe = ({ price, orderId }) => {
             {
                 clientSecret ? (
                     <Elements options={options} stripe={stripePromise}>
-                        <CheckoutForm />
+                        <CheckoutForm orderId={orderId} />
                     </Elements>
-                ) : <button>Start Payment</button>
+                ) : <button onClick={create_payment}>Start Payment</button>
             }
         </div>
     );
