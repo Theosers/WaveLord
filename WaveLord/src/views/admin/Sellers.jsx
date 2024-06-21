@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
-
+import { useDispatch } from 'react-redux';
+import { get_active_sellers } from '../../store/Reducers/sellerReducer';
 
 
 const Sellers = () => {
-
+    
+    const dispatch = useDispatch()
+    
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
