@@ -61,6 +61,20 @@ const Payments = () => {
         )
     }
 
+    const Rows = ({ index, style }) => {
+        return (
+        <div style={style} className="row-container">
+        <div>{index + 1}</div>
+        <div>${successWithdrows[index]?.amount}</div>
+        <div>
+            <span>{successWithdrows[index]?.status}</span>
+         </div>
+        <div> {moment(successWithdrows[index]?.createdAt).format('LL')} </div>  
+            </div>
+        )
+    }
+    
+
      useEffect(() => {
         dispatch(get_seller_payment_details(userInfo._id))
     },[])
@@ -140,7 +154,7 @@ const Payments = () => {
                     </div>
 
                 </div>
-                <div className="SuccessWithdraw">
+                <div className="Success Withdraw">
                     <h3>Sucess Withdraw</h3>
                     <div>
                         <div className="title">
@@ -156,10 +170,10 @@ const Payments = () => {
                             style={{ minWidth : '340px'}}
                             className='List'
                             height={350}
-                            itemCount={9}
+                            itemCount={successWithdrows.length}
                             itemSize={35}
                             outerElementType= {outerElementType}
-                            >{Row}</List>
+                            >{Rows}</List>
                         }
 
                     </div>
