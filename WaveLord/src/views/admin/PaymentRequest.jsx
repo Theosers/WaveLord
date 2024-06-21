@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List} from "react-window";
-import { get_payment_request } from '../../store/Reducers/PaymentReducer';
+import { confirm_payment_request, get_payment_request } from '../../store/Reducers/PaymentReducer';
 import moment from 'moment';
 import '../../scss/admin/PaymentRequest.scss'
 
@@ -16,11 +16,18 @@ const outerElementType = forwardRef((props, ref) => (
 const PaymentRequest = () => {
 
     const dispatch = useDispatch()
-    const {successMessage, errorMessage, pendingWithdrows } = useSelector(state => state.payment)
+    
+    const {successMessage, errorMessage, pendingWithdrows,loader } = useSelector(state => state.payment)
+    const [paymentId, setPaymentId] = useState('')
 
     useEffect(() => { 
         dispatch(get_payment_request())
     },[])
+
+    const confirm_request = (id) => {
+        setPaymentId(id)
+        dispatch(confirm_payment_request(id))
+    }
 
     const Row = ({ index, style }) => {
         
@@ -34,7 +41,9 @@ const PaymentRequest = () => {
                 </div>
                 <div>{moment(pendingWithdrows[index]?.createdAt).format('LL')}</div>
                 <div>
-                    <button>Confirm</button>
+                    <button disabled={loader} onClick={() => confirm_request(pendingWithdrows[index]?._id)}>
+                        {(loader && paymentId === pendingWithdrows[index]?._id) ? 'loading..' : 'Confirm'}
+                    </button>
                 </div>
                 
 
