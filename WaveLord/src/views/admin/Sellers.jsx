@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get_active_sellers } from '../../store/Reducers/sellerReducer';
 
 
@@ -16,6 +16,7 @@ const Sellers = () => {
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+    const {sellers,totalSeller } = useSelector(state => state.seller)
 
     useEffect(() => {
         const obj = {
@@ -36,7 +37,7 @@ const Sellers = () => {
                             <option value="10">10</option>
                             <option value="20">20</option> 
                         </select>
-                    <input type="text" placeholder='search'/>
+                    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} type="text" placeholder='search'/>
                 </div>
 
 
@@ -52,31 +53,31 @@ const Sellers = () => {
                             <th>Shop Name</th>
                             <th>Payment Status</th>
                             <th>Email</th>
-                            <th>Division</th>
+                            <th>Status</th>
                             <th>District</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
+                            sellers.map((d, i) => (
                             <tr key={i}>
-                                <td scope='row'>#{d}</td>
+                                <td scope='row'>{i+1}</td>
                                 <td scope='row'>
-                                    <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                                    <img src={ d.image } alt="" />
                                     
                                 </td>
                     
-                                <td>{d.payment_status}Tshirt</td>
-                                <td>SurfShop</td>
-                                <td>Pending</td>
-                                <td>SurfShop.email@gmail.com</td>
-                                <td>Aile</td>
-                                <td>Poulet</td>
+                                <td>{d.payment_status}{ d.name }</td>
+                                <td>{ d.shopInfo?.shopName }</td>
+                                <td>{ d.payment }</td>
+                                <td>{ d.email }</td>
+                                <td>{ d.status }</td>
+                                <td>{ d.shopInfo?.district }</td>
                                 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEye className='fa-action'/> </Link>
+                                        <Link to={`/admin/dashboard/seller/details/${d._id}`}> <FaEye className='fa-action'/> </Link>
                                         
                                     </div>
                                 </td>
@@ -88,13 +89,15 @@ const Sellers = () => {
                     </table>
                         </div>
 
-                        <Pagination
-                            pageNumber= {currentPage}
-                            setPageNumber= {setCurrentPage}
-                            totalItem= {50}
-                            parPage= {parPage}
-                            showItem= {3}
-                        />
+                        {
+                         totalSeller <= parPage ? <Pagination 
+                                                 pageNumber = {currentPage}
+                                                 setPageNumber = {setCurrentPage}
+                                                 totalItem = {totalSeller}
+                                                 parPage = {parPage}
+                                                 showItem = {4}
+                                             /> : ""
+                       }
 
             </div>
             
