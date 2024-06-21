@@ -1,18 +1,34 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../scss/admin/DeactiveSellers.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import {FaEdit, FaEye, FaImage, FaTrash} from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux';
+import { get_deactive_sellers } from '../../store/Reducers/sellerReducer';
 
 
+const DeactivateSellers = () => {*
 
-const DeactivateSellers = () => {
+    const dispatch = useDispatch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
+
+
+    const {sellers,totalSeller } = useSelector(state => state.seller)
+
+
+    useEffect(() => {
+        const obj = {
+            parPage: parseInt(parPage),
+            page: parseInt(currentPage),
+            searchValue
+        }
+        dispatch(get_deactive_sellers(obj))
+    },[searchValue,currentPage,parPage])
 
 
     return (
@@ -27,7 +43,7 @@ const DeactivateSellers = () => {
                             <option value="10">10</option>
                             <option value="20">20</option> 
                         </select>
-                    <input type="text" placeholder='search'/>
+                    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} type="text" placeholder='search'/>
                 </div>
 
 
@@ -40,31 +56,34 @@ const DeactivateSellers = () => {
                             <th>N°</th>
                             <th>Image</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Shop Name</th>
                             <th>Payment Status</th>
-                            <th>Status</th>
+                            <th scope='col' >Email</th> 
+                            <th scope='col'>Status</th> 
+                            <th scope='col'>District</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
+                            sellers.map((d, i) => (
                             <tr key={i}>
                                 <td scope='row'>#{d}</td>
                                 <td scope='row'>
-                                    <img src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
+                                    <img src={ d.image } alt="" />
                                     
                                 </td>
                     
-                                <td>{d.payment_status}Tshirt</td>
-                                <td>SurfShop.other.email@gmail.com</td>
-                                <td>Pending</td>
-                                <td>Deactivate</td>
-                               
+                                <td>{ d.name }</td>
+                                <td>{ d.shopInfo?.shopName }</td>
+                                <td><span>{ d.payment }</span> </td>
+                                <td>{ d.email }</td>
+                                <td>{ d.status } </td>
+                                <td scope='row'>{ d.shopInfo?.district } </td>
                                 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link> <FaEye className='fa-action'/> </Link>
+                                        <Link to={`/admin/dashboard/seller/details/${d._id}`}> <FaEye className='fa-action'/> </Link>
                                         
                                     </div>
                                 </td>
