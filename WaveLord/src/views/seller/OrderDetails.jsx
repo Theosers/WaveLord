@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { get_seller_order } from '../../store/Reducers/OrderReducer';
 import '../../scss/admin/OrderDetails.scss';
 
 const OrderDetails = () => {
+
+    const { orderId } = useParams() 
+    const dispatch = useDispatch() 
+    const { order,errorMessage,successMessage } = useSelector(state => state.order)
+
+    useEffect(() => {
+        dispatch(get_seller_order(orderId))
+    },[orderId])
+    
     return (
         <div className='order-details-container'>
             <div className='order-details-box'>
@@ -18,60 +30,36 @@ const OrderDetails = () => {
                 <div className='duo-box'>
                     <div className='big-box'>
                         <div className='subtitle-container'>
-                            <h2>#12345</h2>
-                            <span>3 Jan 2024</span>
+                            <h2>#{order._id}</h2>
+                            <span>{order.date}</span> 
                         </div>
                         <div className='deliver-to'>
                             <div className="deliver-to-top-content">
-                                <h2>Deliver To : warehouse</h2>
+                                <h2>Deliver To : {order.shippingInfo}</h2>
                                 <span>2504 Ivin Avenue, Egg Harbor Township, NI 06234 USA</span>
                             </div>
                             <div className='payment-status'>
                                 <h2>Payment Status : </h2>
-                                <span>Paid</span>
+                                <span>{order.payment_status}</span>
                             </div>
-                            <span className='order-details-price'>Price : $920</span>
+                            <span className='order-details-price'>Price : ${order.price}</span>
                         </div>
 
-                        <div className='order-items'>
-                            <img className='user-image' src='http://localhost:3000/src/assets/admin.jpeg' alt='' />
-                            <div>
-                                <h2>Product Name here</h2>
-                                <p>
-                                    <span>Brand : </span>
-                                    <span>Easy</span>
-                                    <span>Quantity : 3</span>
-                                </p>
-                            </div>
-
-                        </div>
-                        <div className='order-items'>
-                            <img className='user-image' src='http://localhost:3000/src/assets/admin.jpeg' alt='' />
-                            <div>
-                                <h2>Product Name here</h2>
-                                <p>
-                                    <span>Brand : </span>
-                                    <span>Easy</span>
-                                    <span>Quantity : 3</span>
-                                </p>
-                            </div>
-
-                        </div>
-                        <div className='order-items'>
-                            <img className='user-image' src='http://localhost:3000/src/assets/admin.jpeg' alt='' />
-                            <div>
-                                <h2>Product Name here</h2>
-                                <p>
-                                    <span>Brand : </span>
-                                    <span>Easy</span>
-                                    <span>Quantity : 3</span>
-                                </p>
-                            </div>
-
-                        </div>
-                    
+                        {
+                            order?.products?.map((p,i) => <div key={i} className='order-items'>
+                                <img className='user-image' src={p.images[0]} alt="" />
+                                    <div>
+                                        <h2>{p.name}</h2>
+                                        <p>
+                                            <span>Brand : </span>
+                                            <span>{p.brand}</span>
+                                            <span>Quantity : {p.quantity} </span>
+                                        </p>
+                                    </div> 
+                            </div> 
+                            )
+                         }
                     </div>
-                    
                 </div>
             </div>
         </div>
