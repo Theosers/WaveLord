@@ -6,6 +6,7 @@ import '../scss/layouts/Sidebar.scss';
 import logo from '../assets/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/Reducers/authReducer';
+import logo from '../assets/logo.png'
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
