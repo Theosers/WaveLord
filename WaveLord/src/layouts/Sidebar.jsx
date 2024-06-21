@@ -1,15 +1,17 @@
 import React, { useState,useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link,useLocation, useNavigate } from 'react-router-dom';
 import { getNav } from '../navigation/index';
 import { BiLogOutCircle } from 'react-icons/bi';
 import '../scss/layouts/Sidebar.scss';
 import logo from '../assets/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../store/Reducers/authReducer';
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
     const dispatch = useDispatch();
     const {role} = useSelector(state => state.auth);
+    const navigate = useNavigate()
 
     const {pathname} = useLocation();
     const [allNav, setAllNav] = useState([]);
