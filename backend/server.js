@@ -87,6 +87,11 @@ soc.on('send_message_admin_to_seller',(msg) => {
             soc.to(seller.socketId).emit('receved_admin_message', msg)
         }
     })
+soc.on('send_message_seller_to_admin',(msg) => { 
+        if (admin.socketId) {
+            soc.to(admin.socketId).emit('receved_seller_message', msg)
+        }
+    })
 
 soc.on('add_admin',(adminInfo) => {
         delete adminInfo.email
