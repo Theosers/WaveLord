@@ -18,6 +18,7 @@ const Chat = () => {
     const {userInfo } = useSelector(state => state.auth)
     const {fb_messages,currentFd,my_friends,successMessage } = useSelector(state => state.chat)
     const [text,setText] = useState('')
+    const [receverMessage,setReceverMessage] = useState('')
     
     useEffect(() => {
         socket.emit('add_user',userInfo.id, userInfo)
@@ -41,6 +42,12 @@ const Chat = () => {
             setText('')
         }
     }
+
+    useEffect(() => {
+        socket.on('seller_message', msg => {
+            setReceverMessage(msg)
+        })
+    },[])
     
     return (
         <div>
