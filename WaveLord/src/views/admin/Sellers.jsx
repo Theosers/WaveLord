@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../scss/admin/Sellers.scss'
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
@@ -14,6 +14,14 @@ const Sellers = () => {
     const [parPage, setParPage] = useState(5);
     const [show, setShow] =  useState(false);
 
+    useEffect(() => {
+        const obj = {
+            parPage: parseInt(parPage),
+            page: parseInt(currentPage),
+            searchValue
+        }
+        dispatch(get_active_sellers(obj))
+    },[searchValue,currentPage,parPage])
 
     return (
         <div className='largest-container'>
