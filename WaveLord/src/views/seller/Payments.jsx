@@ -6,6 +6,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom';
 import '../../scss/seller/Payments.scss'
+import moment from 'moment';
 
 import { FixedSizeList as List} from "react-window";
 import { get_seller_payment_details, messageClear, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
@@ -48,9 +49,9 @@ const Payments = () => {
             <div style={style} className="row-container">
 
                 <div>{index + 1}</div>
-                <div>$6528</div>
+                <div>${pendingWithdrows[index]?.amount}</div>
                 <div>
-                    <span>Pending</span>
+                    <span>{pendingWithdrows[index]?.status}</span>
                 </div>
                 <div>25 Dec 2023</div>
                 
@@ -130,7 +131,7 @@ const Payments = () => {
                             style={{ minWidth : '340px'}}
                             className='List'
                             height={350}
-                            itemCount={9}
+                            itemCount={pendingWithdrows.length}
                             itemSize={35}
                             outerElementType= {outerElementType}
                             >{Row}</List>
