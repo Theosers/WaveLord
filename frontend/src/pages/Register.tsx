@@ -99,7 +99,25 @@ const Register = () => {
 
                     <div>
                         <p>You Have No Account? <Link to='/login'> Login</Link> </p>
-                    </div> 
+                    </div>
+
+                    <a target='_blank' href="http://localhost:3001/login">
+                         <div>
+                            Login As a Seller
+                         </div>
+                     </a>
+                
+                     <a target='_blank' href="http://localhost:3001/register">
+                         <div>
+                            Register As a Seller
+                         </div>
+                     </a>
+
+
+
+
+
+                    
                 </div> 
                 <div>
                     <img src="http://localhost:3000/public/images/login.jpg" alt="" />
