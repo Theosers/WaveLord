@@ -120,7 +120,7 @@ const AddBanner = () => {
 
           <button disabled={loader ? true : false}>
             {
-               loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Add Banner'
+               loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Update Banner'
             } 
           </button>
         </form> 
