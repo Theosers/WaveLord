@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 
 import io from 'socket.io-client'
+import {FaList} from 'react-icons/fa'
 import { add_friend, messageClear, send_message,updateMessage } from '../../store/reducers/chatReducer';
 import toast from 'react-hot-toast';
 const socket = io('http://localhost:5000')
@@ -24,6 +25,7 @@ const Chat = () => {
     const [text,setText] = useState('')
     const [receverMessage,setReceverMessage] = useState('')
     const [activeSeller,setActiveSeller] = useState([])
+    const [show, setShow] = useState(false)
     
     useEffect(() => {
         socket.emit('add_user',userInfo.id, userInfo)
@@ -82,8 +84,8 @@ const Chat = () => {
     
     return (
         <div>
-          <div]'>
-              <div>
+          <div>
+              <div className={`a ${show ? 'b' : 'c'}`}>
                 <span><AiOutlineMessage /></span>
                 <span>Message</span>
               </div>
@@ -110,13 +112,21 @@ const Chat = () => {
                 currentFd ? <div>
                 <div>
                     <div>
-                        {
-                        activeSeller.some(c => c.sellerId === currentFd.fdId) && <div>test_active_Seller</div>
-                        }                    
-                        <img src={currentFd.image} alt="" />
-                    </div>
-                    <span>{currentFd.name}</span>
-                  </div>
+                        <div>
+                            {
+                            activeSeller.some(c => c.sellerId === currentFd.fdId) && <div>test_active_Seller</div>
+                            }                    
+                            <img src={currentFd.image} alt="" />
+                            </div>
+                        <span>{currentFd.name}</span>
+
+                        </div> 
+
+                        <div onClick={()=> setShow(!show)}>
+                            <FaList/>
+                        </div>      
+                    
+                      </div>
                   <div>
                     <div>
                         {
@@ -161,7 +171,7 @@ const Chat = () => {
                             </div>
                         </div>
                     </div>
-                </div> : <div>
+                </div> : <div onClick={() => setShow(true)}>
                     <span>select seller</span>
                 </div>
            }
