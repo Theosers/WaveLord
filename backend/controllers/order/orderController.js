@@ -6,7 +6,7 @@ const sellerWallet = require('../../models/sellerWallet')
 
 const cardModel = require('../../models/cardModel')
 const moment = require("moment")
-const { responseReturn } = require('../../utiles/response') 
+const { responseReturn } = require('../../utilities/response') 
 const { mongo: {ObjectId}} = require('mongoose')
 const stripe = require('stripe')('sk_test_51Oml5cGAwoXiNtjJZbPFBKav0pyrR8GSwzUaLHLhInsyeCa4HI8kKf2IcNeUXc8jc8XVzBJyqjKnDLX9MlRjohrL003UDGPZgQ')
 
