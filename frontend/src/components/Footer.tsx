@@ -1,11 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaFacebookF} from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { FaHeart } from "react-icons/fa6";
+import { FaCartShopping } from "react-icons/fa6";
+
 import '../scss/Footer.scss'
 const Footer = () => {
+
+    const navigate = useNavigate() 
+    const {userInfo} = useSelector(state => state.auth) 
+    const {card_product_count,wishlist_count} = useSelector(state => state.card) 
+    
     return (
         <footer>
             <div>
@@ -91,7 +100,31 @@ const Footer = () => {
                 </div>
 
             </div>
-        </footer>
+    <div>
+        <div onClick={() => navigate(userInfo ? '/card' : '/login') }>
+            <span><FaCartShopping/></span>
+            {
+                card_product_count !== 0 && <div>
+                    {
+                        card_product_count
+                    }
+                </div>
+            }
+        </div>
+    
+        <div  onClick={() => navigate(userInfo ? '/dashboard/my-wishlist' : '/login') }>
+            <span><FaHeart/></span>
+            {
+                wishlist_count !== 0 && <div>
+                    {
+                       wishlist_count 
+                    }
+                </div>
+            }
+
+        </div>
+    </div>    
+    </footer>
     );
 };
 export default Footer;
