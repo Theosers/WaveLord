@@ -181,12 +181,11 @@ const AdminDashboard = () => {
                 </thead>
                 <tbody>
                   {
-                    [1,2,3,4,5].map((d, i) => (
-                      <tr key={i}>
-                        <td>#{d._id}123456789</td>
-                        <td>${d.price}6784</td>
-                        <td>{d.payment_status}Pending</td>
-                        <td>{d.delivery_status}Pending</td>
+                    recentOrder.map((d, i) => <tr key={i}>
+                        <td>#{d._id}</td>
+                        <td>${d.price}</td>
+                        <td>{d.payment_status}</td>
+                        <td>{d.delivery_status}</td>
                         <td>
                           <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link>
                         </td>
