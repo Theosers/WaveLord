@@ -13,6 +13,7 @@ const EditProduct = lazy(() => import('../../views/seller/EditProduct'));
 const OrderDetails = lazy(() => import('../../views/seller/OrderDetails'));
 const Pending = lazy(()=> import('./../../views/seller/Pending')) 
 const Deactive = lazy(()=> import('./../../views/seller/Deactive')) 
+const AddBanner = lazy(()=> import('../../views/seller/AddBanner'))
 
 export const sellerRoutes = [
 
@@ -96,6 +97,12 @@ export const sellerRoutes = [
         role : 'seller',
         visibility : ['active','deactive','pending']
     },
+    {
+        path: '/seller/dashboard/add-banner/:productId',
+        element : <AddBanner/>,
+        role : 'seller',
+        status : 'active'
+    }
 
 
 ];
