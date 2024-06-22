@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_seller_dashboard_data } from '../../store/Reducers/dashboardReducer';
 import moment from 'moment';
+import customer from '../../assets/demo.jpg'
 
 import '../../scss/seller/SellerDashboard.scss';
 
@@ -94,28 +95,28 @@ const SellerDashboard = () => {
             <div className='stat-card quatre'>
               <MdCurrencyExchange className='icon' />
               <div>
-                <h3>$9483</h3>
+                <h3>${totalSale}</h3>
                 <p>Total Sale</p>
               </div>
             </div>
             <div className='stat-card deux'>
               <MdProductionQuantityLimits className='icon' />
               <div>
-                <h3>50</h3>
+                <h3>{totalProduct}</h3>
                 <p>Products</p>
               </div>
             </div>
             <div className='stat-card un'>
               <FaCartShopping className='icon' />
               <div>
-                <h3>10</h3>
+                <h3>{totalOrder}</h3>
                 <p>Orders</p>
               </div>
             </div>
             <div className='stat-card trois'>
               <FaCartShopping className='icon' />
               <div>
-                <h3>54</h3>
+                <h3>{totalPendingOrder}</h3>
                 <p>Pending Orders</p>
               </div>
             </div>
@@ -132,38 +133,27 @@ const SellerDashboard = () => {
                 </div>
                 <div className="messages">
                     <ol>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Seller</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aut laborum ex magnam, ipsam voluptas alias est ipsa eaque mollitia. Nisi ducimus dolorem facere dignissimos fugit obcaecati veniam vero blanditiis!</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>How are you</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Customer</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>How are you</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>How are you</div>
-                        </li>
+
+                        
+                        {
+                                recentMessage.map((m, i) => <li>
+                                    <div>
+                                        {
+                                            m.senderId === userInfo._id ? <img src={userInfo.image} alt="" /> : <img src={customer} alt="" />
+                                        } 
+                                    </div>
+                                    
+                                    <div>
+                                        <Link>{m.senderName}</Link>
+                                        <time> {moment(m.createdAt).startOf('hour').fromNow()}</time>
+                                    </div>
+                                    <div>
+                                        {m.message}
+                                    </div>
+                                
+                            </li>)
+                            }
+                        
                     </ol>
 
                 </div>
@@ -193,18 +183,15 @@ const SellerDashboard = () => {
                 </thead>
                 <tbody>
                   {
-                    [1,2,3,4,5].map((d, i) => (
-                      <tr key={i}>
-                        <td>#{d._id}123456789</td>
-                        <td>${d.price}6784</td>
-                        <td>{d.payment_status}Pending</td>
-                        <td>{d.delivery_status}Pending</td>
+                    recentOrder.map((d, i) => <tr key={i}>
+                        <td>#{d._id}</td>
+                        <td>${d.price}</td>
+                        <td>{d.payment_status}</td>
+                        <td>{d.delivery_status}</td>
                         <td>
                           <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link>
                         </td>
                       </tr>
-                      
-                    ))
                   }
                 </tbody>
               </table>
