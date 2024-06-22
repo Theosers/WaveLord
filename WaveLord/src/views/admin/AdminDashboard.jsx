@@ -190,8 +190,8 @@ const AdminDashboard = () => {
                           <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link>
                         </td>
                       </tr>
-                      
-                    ))
+                      )
+                    
                   }
                 </tbody>
               </table>
