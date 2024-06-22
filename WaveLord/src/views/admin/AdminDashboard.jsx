@@ -4,13 +4,17 @@ import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6"; 
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import seller from '../../assets/seller.png'
 import { get_admin_dashboard_data } from '../../store/Reducers/dashboardReducer';
 import '../../scss/admin/AdminDashboard.scss';
 
 const AdminDashboard = () => {
 
     const dispatch = useDispatch()
+    const {totalSale,totalOrder,totalProduct,totalSeller,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
+    const {userInfo} = useSelector(state=> state.auth)
+    
     useEffect(() => {
         dispatch(get_admin_dashboard_data())
     }, [])
@@ -89,28 +93,28 @@ const AdminDashboard = () => {
             <div className='stat-card quatre'>
               <MdCurrencyExchange className='icon' />
               <div>
-                <h3>$9483</h3>
+                <h3>${totalSale}</h3>
                 <p>Total Sale</p>
               </div>
             </div>
             <div className='stat-card deux'>
               <MdProductionQuantityLimits className='icon' />
               <div>
-                <h3>50</h3>
+                <h3>{totalProduct}</h3>
                 <p>Products</p>
               </div>
             </div>
             <div className='stat-card un'>
               <FaUsers className='icon' />
               <div>
-                <h3>10</h3>
+                <h3>{totalSeller}</h3>
                 <p>Sellers</p>
               </div>
             </div>
             <div className='stat-card trois'>
               <FaCartShopping className='icon' />
               <div>
-                <h3>54</h3>
+                <h3>{totalOrder}</h3>
                 <p>Orders</p>
               </div>
             </div>
@@ -127,38 +131,27 @@ const AdminDashboard = () => {
                 </div>
                 <div className="messages">
                     <ol>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
+
+                        {
+                            recentMessage.map((m, i) => <li>
+                                <div>
+                            {
+                                m.senderId === userInfo._id ? <img src={userInfo.image} alt="" /> : <img src={seller} alt="" />
+                            } 
+                                </div>
+                            
+                            
                             <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
+                                <Link>{m.senderName}</Link>
+                                <time> {moment(m.createdAt).startOf('hour').fromNow()}</time>
                             </div>
-                            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aut laborum ex magnam, ipsam voluptas alias est ipsa eaque mollitia. Nisi ducimus dolorem facere dignissimos fugit obcaecati veniam vero blanditiis!</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
                             <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
+                                {m.message}
+                            
                             </div>
-                            <div>How are you</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>How are you</div>
-                        </li>
-                        <li>
-                            <div><img src="http://localhost:3000/src/assets/admin.jpeg" alt="" /></div>
-                            <div>
-                                <Link>Admin</Link>
-                                <time>2 day ago</time>
-                            </div>
-                            <div>How are you</div>
-                        </li>
+                        </li>)
+                       }
+                    
                     </ol>
 
                 </div>
