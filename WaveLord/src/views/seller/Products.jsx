@@ -9,6 +9,7 @@ import '../../scss/seller/Products.scss'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { get_products } from '../../store/Reducers/productReducer';
+import { LuImageMinus } from "react-icons/lu";
 
 const Products = () => {
 
@@ -82,6 +83,7 @@ const Products = () => {
                                 <td>
                                     <div className='actions-container'>
                                         <Link to={`/seller/dashboard/edit-product/${d._id}`}> <FaEdit className='fa-action'/> </Link>
+                                        <Link> <LuImageMinus className='fa-action' /> </Link>
                                         <Link> <FaEye className='fa-action'/> </Link>
                                         <Link> <FaTrash className='fa-action'/> </Link>
                                     </div>
