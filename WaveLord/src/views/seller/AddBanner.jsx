@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { add_banner,messageClear } from '../../store/Reducers/bannerReducer';
+import { add_banner,get_banner,messageClear } from '../../store/Reducers/bannerReducer';
 import toast from 'react-hot-toast';
 
 
@@ -14,8 +14,7 @@ const AddBanner = () => {
     const {productId} = useParams()    
     const dispatch = useDispatch()
 
-    const { loader,successMessage,errorMessage } = useSelector(state => state.banner)
-  
+    const { loader,successMessage,errorMessage,banner } = useSelector(state => state.banner)  
     const [imageShow, setImageShow] = useState('')
       const [image, setImage] = useState('')
 
@@ -48,6 +47,18 @@ const AddBanner = () => {
           formData.append('mainban',image)
           dispatch(add_banner(formData))
       }
+
+  const update = (e) => {
+        e.preventDefault()
+    }
+
+
+    useEffect(() => {
+        dispatch(get_banner(productId))
+    },[productId])
+
+
+
   
 
   
@@ -55,7 +66,8 @@ const AddBanner = () => {
     <div>
         <h1>Add Banner</h1> 
         <div>
-
+      {
+        !banner && <div>
           <form onSubmit={add}>
            <div >
               <label htmlFor="image">
@@ -77,6 +89,41 @@ const AddBanner = () => {
               </button>
   
           </form> 
+          </div>
+        }
+
+        {
+          banner && <div>
+            {
+              <div>
+                <img src={banner.banner} alt="" />
+              </div>
+            }
+
+        <form onSubmit={update}>
+         <div>
+            <label htmlFor="image">
+                <span><FaRegImage /></span>
+                <span>Select Banner Image </span>
+            </label>
+            <input required onChange={imageHandle} type="file" id='image' />
+          </div>
+        
+          {
+              imageShow && <div>
+                  <img src={imageShow} alt="" />
+              </div>
+          }
+
+          <button disabled={loader ? true : false}>
+            {
+               loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Add Banner'
+            } 
+          </button>
+        </form> 
+
+            </div>
+        }
 
         </div>
     </div>
