@@ -191,7 +191,7 @@ const SellerDashboard = () => {
                         <td>
                           <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link>
                         </td>
-                      </tr>
+                      </tr>)
                   }
                 </tbody>
               </table>
