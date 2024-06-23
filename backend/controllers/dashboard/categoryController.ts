@@ -3,13 +3,7 @@ import formidable, { Fields, Files, File } from 'formidable';
 import cloudinary from 'cloudinary';
 import { responseReturn } from "../../utilities/response";
 import categoryModel from '../../models/categoryModel';
-
-cloudinary.v2.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true,
-});
+import { env } from 'process';
 
 class CategoryController {
     add_category = async (req: Request, res: Response) => {
@@ -34,6 +28,13 @@ class CategoryController {
 
             name = name.trim();
             const slug = name.split(' ').join('-');
+
+            cloudinary.v2.config({
+                cloud_name: process.env.CLOUDINARY_NAME, 
+                api_key: process.env.CLOUDINARY_API_KEY,
+                api_secret: process.env.CLOUDINARY_API_SECRET,
+                secure: true,
+            });
 
             try {
                 const result = await cloudinary.v2.uploader.upload((image as File).filepath, { folder: 'categorys' });
