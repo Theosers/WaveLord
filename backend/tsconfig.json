@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          
+    "module": "commonjs",                     
+    "strict": true,                           
+    "esModuleInterop": true,                  
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true, 
+    "outDir": "./dist",                       
+    "rootDir": "../backend"                        
+  },
+  "include": ["controllers/**/*", "middlewares/**/*", "models/**/*", "routes/**/*", "utilities/**/*"],
+  "exclude": ["node_modules"]
+}
