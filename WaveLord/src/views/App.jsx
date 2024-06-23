@@ -19,9 +19,9 @@ function App() {
     }, [])
 
     useEffect(() => {
-        console.log('pas de token')
         if (token) {
-            console.log('token', token)
+            console.log('get_user_info APP : ', get_user_info )
+            console.log('get_user_info APP2 : ', get_user_info() )
             dispatch(get_user_info())
         }
     }, [token])

@@ -63,11 +63,12 @@ export const get_seller = createAsyncThunk(
   export const get_active_sellers = createAsyncThunk(
     'seller/get_active_sellers',
     async({ parPage,page,searchValue },{rejectWithValue, fulfillWithValue}) => {
+        console.log('get_active_sellers')
         
         try {
              
             const {data} = await api.get(`/get-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-           
+            console.log('get_active_sellers data : ',data)
             return fulfillWithValue(data)
         } catch (error) {
             // console.log(error.response.data)

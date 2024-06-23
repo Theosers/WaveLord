@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useState } from 'react';
-import '../../scss/admin/Orders.scss';
-import '../../scss/Pagination.scss'
 import { Link } from 'react-router-dom';
 import { LuArrowDownSquare } from 'react-icons/lu';
-import Pagination from '../Pagination';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Pagination from '../Pagination';
 import { get_admin_orders } from '../../store/Reducers/OrderReducer';
+
+import '../../scss/admin/Orders.scss';
+import '../../scss/Pagination.scss'
 
 const Orders = () => {
 
@@ -18,8 +19,8 @@ const Orders = () => {
     const [show, setShow] =  useState(false);
 
     const {myOrders,totalOrder } = useSelector(state => state.order)
-    
 
+    console.log('myOrders',myOrders,totalOrder)
     useEffect(() => {
         const obj = {
             parPage: parseInt(parPage),
@@ -29,6 +30,7 @@ const Orders = () => {
         dispatch(get_admin_orders(obj))
     },[searchValue,currentPage,parPage])
 
+    console.log('myOrders',myOrders,totalOrder)
     return (
         <div className='orders-container'>
             <div className='orders-box'>
@@ -58,7 +60,7 @@ const Orders = () => {
                     <th>Payment Status</th>
                     <th>Order Status</th>
                     <th>Action</th>
-                    <th >download</th>
+                    <th ><LuArrowDownSquare /></th>
                   </tr>
                 </thead>
                 <tbody >
@@ -73,36 +75,29 @@ const Orders = () => {
                           <Link to={`/admin/dashboard/order/details/${o._id}`}>View</Link>
                         </td>
                         <td onClick={(e) => setShow(o._id)}><LuArrowDownSquare/> </td>
+
+
+                        {
+                          o.suborder.map((so, i) => (
+                            <tr key={i} style = {show ? {backgroundColor:'red'} : {display:'none'}}>
+                              <td>#{so._id}</td>
+                              <td>${so.price}</td>
+                              <td>{so.payment_status}Pending</td>
+                              <td>{so.delivery_status}</td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            
+                          ))
+                        }
+
                       </tr>
                       
-                    ))
+                    )
                   }
 
                 </tbody>
-                <tbody style = {show ? {backgroundColor:'red'} : {display:'none'}}>
-                    {
-                    o.suborder.map((so, i) => (
-                      <tr key={i}>
-                        <td>#{so._id}</td>
-                        <td>${so.price}</td>
-                        <td>{so.payment_status}Pending</td>
-                        <td>{so.delivery_status}</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      
-                    ))
-                  }
-                </tbody>
-
-            <tbody  >
-                  
-                   
-            </tbody>
-
-
-
-
+   
               </table>
             </div>
             

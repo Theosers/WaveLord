@@ -21,6 +21,8 @@ const PaymentRequest = () => {
     const {successMessage, errorMessage, pendingWithdrows,loader } = useSelector(state => state.payment)
     const [paymentId, setPaymentId] = useState('')
 
+    console.log(successMessage, errorMessage, pendingWithdrows,loader)
+
     useEffect(() => { 
         dispatch(get_payment_request())
     },[])

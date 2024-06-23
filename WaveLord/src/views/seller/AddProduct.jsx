@@ -15,6 +15,8 @@ const AddProduct = () => {
     const { categorys } = useSelector(state => state.category)
     const { loader,successMessage,errorMessage } = useSelector(state => state.product)
 
+    console.log('categorys : ',categorys)
+
     useEffect(() => {
         dispatch(get_category({
             searchValue: '',
@@ -52,7 +54,7 @@ const AddProduct = () => {
             let srcValue = allCategories.filter(c => c.name.toLowerCase().indexOf(value.toLowerCase()) > -1);
             setAllCategories(srcValue);
         } else {
-            setAllCategories(categories);
+            setAllCategories(categorys);
         }
     }
 
@@ -179,7 +181,7 @@ const AddProduct = () => {
                                                 setCateShow(false);
                                                 setCategory(c.name);
                                                 setSearchValue('');
-                                                setAllCategories(categories);
+                                                setAllCategories(categorys);
                                             }}>{c.name} </span>)
                                         }
                                         </div>

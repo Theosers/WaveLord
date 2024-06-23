@@ -4,32 +4,44 @@
     top: 10px;
     left: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 93%;
     height: 95px;
     z-index: 40;
-    padding: 0 20px;
-    
+    padding: 0 0px;
+    margin-left: 290px;
+    margin-right: 1000px;
 
     @media (max-width: 1024px) {
       width: 80%;
+      margin-left: 10%;
     }
  
   
   
     .header-inner {
-      margin-left: 220px;
-      text-align: center;
+      
+      margin-right: 220px;
       height: 80%;
-      width: 80%;
+      width: 100%;
       background-color: rgba(0, 0, 0, 0.8);
       border-radius: 20px;
       display: flex;
+      padding-right: 20%;
       justify-content: space-between;
       align-items: center;
       padding: 0 1.25rem;
       transition: all 0.3s ease;
+
+      @media (max-width: 1024px) {
+        flex-direction: row-reverse;
+        min-width: 230px;
+      }
+      @media (max-width: 1024px) {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+      }
       
     }
     .scrolled {
@@ -55,6 +67,7 @@
       @media (min-width: 1024px) {
         display: none;
       }
+      
     }
   
     .search-input {
@@ -76,15 +89,14 @@
           }
         }
       }
+      @media screen and (max-width: 1024px) {
+        display: none;
+        
+      }
     }
   
     .user-info {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      position: relative;
-      color: rgb(231, 144, 24);;
+      color: rgb(231, 144, 24);
   
       .user-details {
         display: flex;
@@ -92,10 +104,17 @@
         align-items: center;
         gap: 0.75rem;
   
+        @media (max-width: 1024px) {
+          flex-direction: row-reverse;
+        }
         .user-text {
           display: flex;
           flex-direction: column;
           text-align: end;
+          @media (max-width: 1024px) {
+            text-align: start;
+
+          }
   
           h2 {
             font-size: 1rem;

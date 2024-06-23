@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useState } from "react";
 import Search from "../components/Search";
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
@@ -7,7 +6,7 @@ import '../../scss/Pagination.scss'
 import '../../scss/admin/Category.scss'
 import {FaEdit, FaEye, FaTrash} from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
-import { get_seller_orders } from '../../store/Reducers/OrderReducer';
+//import { get_seller_orders } from '../../store/Reducers/OrderReducer';
 import '../../scss/seller/Orders.scss'
 
 const Orders = () => {
@@ -22,13 +21,13 @@ const Orders = () => {
     const [parPage, setParPage] = useState(5);
 
     useEffect(() => {
-        const obj = {
-            parPage: parseInt(parPage),
-            page: parseInt(currentPage),
-            searchValue,
-            sellerId: userInfo._id
-        }
-        dispatch(get_seller_orders(obj))
+     //   const obj = {
+     //       parPage: parseInt(parPage),
+     //       page: parseInt(currentPage),
+     //       searchValue,
+     //       sellerId: userInfo._id
+     //   }
+        //dispatch(get_seller_orders(obj))
     },[searchValue,currentPage,parPage])
 
     return (
@@ -65,7 +64,7 @@ const Orders = () => {
                                 <td scope='row'>{d.date}</td> 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link to={`/seller/dashboard/order/details/${d._id}`} <FaEye className='fa-action'/> </Link>
+                                        <Link to={`/seller/dashboard/order/details/${d._id}`}> <FaEye className='fa-action'/> </Link>
                                     </div>
                                 </td>
                             </tr>
@@ -75,6 +74,7 @@ const Orders = () => {
                         </tbody>
                     </table>
                         </div>
+                        
 
                             {
                                 totalOrder <= parPage ? "" : <Pagination
@@ -83,11 +83,12 @@ const Orders = () => {
                                                             totalItem= {totalOrder}
                                                             parPage= {parPage}
                                                             showItem= {3}/>
+                            }
                 </div>
 
             </div>
         </div>
     )
-}
 
+}
 export default Orders;

@@ -115,12 +115,12 @@ const SellerDetails = () => {
                         </div>
                     </div>
                     <div className='submit-part'>
-                        <form onSubmit={submit} action="">
+                        <form onSubmit={submit}>
                             
                                 <select value={status} onChange={(e)=>setStatus(e.target.value)} name="" id="" required>
                                     <option value="">--Select Status--</option>
-                                    <option value="">Active</option>
-                                    <option value="">Deactive</option>
+                                    <option value="active">Active</option>
+                                    <option value="deactive">Deactive</option>
                                 </select>
                                 <button>
                                     Submit

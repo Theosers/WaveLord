@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_deactive_sellers } from '../../store/Reducers/sellerReducer';
 
 
-const DeactivateSellers = () => {*
+const DeactivateSellers = () => {
 
     const dispatch = useDispatch()
 
@@ -68,7 +68,7 @@ const DeactivateSellers = () => {*
                         {
                             sellers.map((d, i) => (
                             <tr key={i}>
-                                <td scope='row'>#{d}</td>
+                                <td scope='row'>#{d.id}</td>
                                 <td scope='row'>
                                     <img src={ d.image } alt="" />
                                     

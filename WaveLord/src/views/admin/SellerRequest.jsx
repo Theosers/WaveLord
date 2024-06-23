@@ -55,26 +55,23 @@ const SellerRequest = () => {
                         </thead>
                         <tbody>
                         {
-                            [1,2,3,4,5].map((d, i) => (
-                            <tr key={i}>
-                                <td scope='row'>#{d}</td>
-                                
-                    
-                                <td>{d.payment_status}Tshirt</td>
-                                <td>SurfShop.other.email@gmail.com</td>
-                                <td>Inactive</td>
-                                <td>Pending</td>
+                            sellers.map((d, i) => <tr key={i}>
+                                <td scope='row'>{i+1}</td>
+                                <td>{d.name}</td>
+                                <td>{d.email}</td>
+                                <td>{d.payment}</td>
+                                <td> {d.status} </td>
                                
                                 
                                 <td>
                                     <div className='actions-container'>
-                                        <Link to={'/admin/dashboard/seller/details/2'}> <FaEye className='fa-action'/> </Link>
+                                        <Link to={`/admin/dashboard/seller/details/${d._id}`}> <FaEye className='fa-action'/> </Link>
                                         
                                     </div>
                                 </td>
                             </tr>
                             
-                            ))
+                            )
                         }
                         </tbody>
                     </table>

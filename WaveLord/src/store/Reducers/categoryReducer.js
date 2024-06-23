@@ -28,7 +28,7 @@ export const get_category = createAsyncThunk(
         try {
              
             const {data} = await api.get(`/category-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-            // console.log(data)
+             console.log('category data : ',data)
             return fulfillWithValue(data)
         } catch (error) {
             // console.log(error.response.data)

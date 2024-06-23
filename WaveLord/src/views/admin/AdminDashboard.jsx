@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import seller from '../../assets/seller.png'
 import { get_admin_dashboard_data } from '../../store/Reducers/dashboardReducer';
+import moment from 'moment';
 import '../../scss/admin/AdminDashboard.scss';
 
 const AdminDashboard = () => {
@@ -15,6 +16,9 @@ const AdminDashboard = () => {
     const {totalSale,totalOrder,totalProduct,totalSeller,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
     const {userInfo} = useSelector(state=> state.auth)
     
+
+
+
     useEffect(() => {
         dispatch(get_admin_dashboard_data())
     }, [])
@@ -86,6 +90,7 @@ const AdminDashboard = () => {
 
 
     return (
+
         <div className='admin-dashboard'>
           
     
@@ -127,7 +132,7 @@ const AdminDashboard = () => {
             <div className='recent-seller-messages-container'>
                 <div className="recent-seller-messages-header">
                     <h2>Recent Seller Message</h2>
-                    <Link>View All</Link>
+                    <Link to='/admin/dashboard/chat-sellers' >View All</Link>
                 </div>
                 <div className="messages">
                     <ol>
@@ -165,7 +170,7 @@ const AdminDashboard = () => {
           <div className='recent-orders'>
             <div className='recent-orders-header'>
               <h2>Recent Orders</h2>
-              <Link>View All</Link>
+              <Link to='/admin/dashboard/orders'>View All</Link>
             </div>
     
             <div className='table-container'>
@@ -198,6 +203,8 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
+
+      
       );
     };
 

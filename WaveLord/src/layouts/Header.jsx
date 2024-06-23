@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FaList } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+
 import '../scss/layouts/Header.scss';
 
 const Header = ({showSidebar, setShowSidebar}) => {

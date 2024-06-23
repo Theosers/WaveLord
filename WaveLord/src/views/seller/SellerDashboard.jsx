@@ -13,14 +13,15 @@ import '../../scss/seller/SellerDashboard.scss';
 
 const SellerDashboard = () => {
 
-    const dispatch = useDispatch()
-    const {totalSale,totalOrder,totalProduct,totalSeller,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
-    const {userInfo} = useSelector(state=> state.auth)
 
+    const dispatch = useDispatch()
+    const {totalSale,totalOrder,totalProduct,totalPendingOrder,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
+    
+    
     useEffect(() => {
         dispatch(get_seller_dashboard_data())
     }, [])
-
+    
 
     const state = {
         series : [
@@ -83,8 +84,6 @@ const SellerDashboard = () => {
             ]
         }
     }
-
-
 
 
     return (
