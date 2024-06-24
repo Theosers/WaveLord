@@ -9,14 +9,15 @@ import sellerReducer from "./Reducers/sellerReducer";
 import OrderReducer from "./Reducers/OrderReducer";
 
 const rootReducer = {
-    auth: authReducer,
-    category: categoryReducer,
-    product: productReducer,
-    seller: sellerReducer,
-    chat: chatReducer,
-    order: OrderReducer,
-    payment: PaymentReducer,
-    dashboard: dashboardReducer,
-    banner: bannerReducer
-}
+  auth: authReducer,
+  category: categoryReducer,
+  product: productReducer,
+  seller: sellerReducer,
+  chat: chatReducer,
+  order: OrderReducer,
+  payment: PaymentReducer,
+  dashboard: dashboardReducer,
+  banner: bannerReducer,
+};
+
 export default rootReducer;
