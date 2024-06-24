@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState, ForwardedRef, ChangeEvent, FormEvent } from 'react';
 import { MdCurrencyExchange } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { FixedSizeList as List } from "react-window";
+import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import toast from 'react-hot-toast';
@@ -12,18 +12,19 @@ import {
 } from '../../store/Reducers/PaymentReducer';
 import '../../scss/seller/Payments.scss';
 import '../../scss/admin/PaymentRequest.scss';
+import { RootState } from '../../store'; // Adjust the path to your store
 
-function handleOnWheel({ deltaY }) {
+function handleOnWheel({ deltaY }: { deltaY: number }) {
   console.log('handleOnWheel', deltaY);
 }
 
-const outerElementType = forwardRef((props, ref) => (
+const outerElementType = forwardRef<HTMLDivElement>((props, ref) => (
   <div ref={ref} onWheel={handleOnWheel} {...props} />
 ));
 
-const Payments = () => {
+const Payments: React.FC = () => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const {
     successMessage,
     errorMessage,
@@ -34,11 +35,11 @@ const Payments = () => {
     withdrowAmount,
     pendingAmount,
     availableAmount,
-  } = useSelector((state) => state.payment);
+  } = useSelector((state: RootState) => state.payment);
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number>(0);
 
-  const sendRequest = (e) => {
+  const sendRequest = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (availableAmount - amount > 10) {
       dispatch(send_withdrowal_request({ amount, sellerId: userInfo._id }));
@@ -48,7 +49,7 @@ const Payments = () => {
     }
   };
 
-  const Row = ({ index, style }) => (
+  const Row: React.FC<ListChildComponentProps> = ({ index, style }) => (
     <div style={style} className="row-container">
       <div>{index + 1}</div>
       <div>${pendingWithdrows[index]?.amount}</div>
@@ -59,7 +60,7 @@ const Payments = () => {
     </div>
   );
 
-  const Rows = ({ index, style }) => (
+  const Rows: React.FC<ListChildComponentProps> = ({ index, style }) => (
     <div style={style} className="row-container">
       <div>{index + 1}</div>
       <div>${successWithdrows[index]?.amount}</div>
@@ -125,7 +126,7 @@ const Payments = () => {
           <h3>Send Request</h3>
           <form onSubmit={sendRequest}>
             <input
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value))}
               value={amount}
               min="0"
               type="number"
