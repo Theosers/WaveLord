@@ -12,7 +12,7 @@ import mongoose from '../../utilities/db';
 
 const { ObjectId } = mongoose.Types;
 
-const stripe = new stripePackage('sk_test_51Oml5cGAwoXiNtjJZbPFBKav0pyrR8GSwzUaLHLhInsyeCa4HI8kKf2IcNeUXc8jc8XVzBJyqjKnDLX9MlRjohrL003UDGPZgQ', {
+const stripe = new stripePackage('sk_test_51PV8BIJf3dd1pVi4bvsQpNt4OPi0Obdf2p94k3YVLu0kPRQLDbQ1oIjDmdC5uQ2FEBy9iIOXcqyMfzpcBvB9hhTK00PaNiIES0', {
     apiVersion: '2024-04-10',
 });
 
