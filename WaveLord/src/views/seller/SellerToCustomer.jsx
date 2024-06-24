@@ -5,33 +5,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_customer_message, get_customers } from '../../store/Reducers/chatReducer';
 import { Link, useParams } from 'react-router-dom';
 
-import { FaRegFaceGrinHearts } from "react-icons/fa6";
-import toast from 'react-hot-toast';
-
+import { RootState } from '../../store/store'; // rootstate from store
 import '../../scss/seller/SellerToCustomer.scss';
-import { TRUE } from 'sass';
 
-const SellerToCustomer = () => {
-    const scrollRef = useRef();
+const SellerToCustomer: React.FC = () => {
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [show, setShow] = useState(false);
-    const sellerId = 65
-    const {userInfo } = useSelector(state => state.auth)
-    const {customers,messages,currentCustomer } = useSelector(state => state.chat)
-    const { customerId } = useParams()
-    
+    const { userInfo } = useSelector((state: RootState) => state.auth);
+    const { customers, messages, currentCustomer } = useSelector((state: RootState) => state.chat);
+    const { customerId } = useParams<{ customerId: string }>();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(get_customers(userInfo._id))
-    },[])
+        if (userInfo) {
+            dispatch(get_customers(userInfo._id));
+        }
+    }, [userInfo, dispatch]);
 
     useEffect(() => {
         if (customerId) {
-            dispatch(get_customer_message(customerId))
+            dispatch(get_customer_message(customerId));
         }
-    },[customerId])
-
+    }, [customerId, dispatch]);
 
     return (
         <div className='chat-seller-container'>
@@ -41,68 +37,35 @@ const SellerToCustomer = () => {
                     <IoMdClose className='chat-seller-close-icon' onClick={() => setShow(!show)} />
                 </div>
                 
-                {
-                    customers.map((c,i) => ( <Link key={i} to={`/seller/dashboard/chat-customer/${c.fdId} className={`chat-seller-subcontainer ${sellerId === s._id ? 'chat-seller-active' : ''}`}>
-                            <div className='chat-seller-subcontainer'>
-                                <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                            
-                                <h2 className='chat-seller-name'>{c.name}</h2>
-                            </div>
-                            
+                {customers.map((c, i) => (
+                    <Link
+                        key={i}
+                        to={`/seller/dashboard/chat-customer/${c._id}`}
+                        className={`chat-seller-subcontainer ${customerId === c._id ? 'chat-seller-active' : ''}`}
+                    >
+                        <div className='chat-seller-subcontainer'>
+                            <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="Customer" />
+                            <h2 className='chat-seller-name'>{c.name}</h2>
+                        </div>
                     </Link>
-                )}
+                ))}
             </div>
             <div className={`chat-current-seller ${show ? 'chat-current-seller-off' : ''}`}>
-
-                <div className='chat-current-seller-title-container' >
-                    <div className='chat-current-seller-title-container' >
-                        <img className='chat-seller-img' src="http://localhost:3001/src/assets/admin.jpeg" alt="" />
-                        <h2>{currentCustomer.name}</h2>
+                <div className='chat-current-seller-title-container'>
+                    <div className='chat-current-seller-title-container'>
+                        <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="Admin" />
+                        <h2>{currentCustomer?.name}</h2>
                     </div>
                     <FaList className='chat-seller-list-icon' onClick={() => setShow(!show)} />
                 </div>
                 
-                
                 <div className='chat-box'>
-                <div className='left-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, dolores eum! Hic minus, ex commodi, a incidunt obcaecati culpa sed quaerat nostrum accusantium, sint tempore autem officiis possimus repudiandae fugit?</p>
-                </div>
-                <div className='right-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-                <div className='left-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-                <div className='right-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-
-                <div className='left-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-                <div className='right-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-                <div className='left-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>How are you ?</p>
-                </div>
-                <div className='right-person'>
-                    <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="" />
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi facilis mollitia recusandae eos est repudiandae voluptate ullam, quasi ipsam vero omnis reprehenderit aliquam. Ullam tempora consequatur accusamus quasi, omnis eum.</p>
-                </div>
-
-
-
-
-
-
+                    {messages.map((message, index) => (
+                        <div key={index} className={message.senderId === userInfo._id ? 'right-person' : 'left-person'}>
+                            <img className='chat-seller-img' src="http://localhost:3000/src/assets/admin.jpeg" alt="Admin" />
+                            <p>{message.message}</p>
+                        </div>
+                    ))}
                 </div>
                 <form className='chat-form' action="">
                     <input type="text" />
