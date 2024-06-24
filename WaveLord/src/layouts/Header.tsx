@@ -1,14 +1,26 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaList } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import '../scss/layouts/Header.scss';
 
-const Header = ({showSidebar, setShowSidebar}) => {
+interface HeaderProps {
+  showSidebar: boolean;
+  setShowSidebar: (show: boolean) => void;
+}
 
+interface RootState {
+  auth: {
+    userInfo: {
+      name: string;
+      role: string;
+    };
+  };
+}
+
+const Header: React.FC<HeaderProps> = ({ showSidebar, setShowSidebar }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const {userInfo } = useSelector(state => state.auth)
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const handleScroll = () => {
