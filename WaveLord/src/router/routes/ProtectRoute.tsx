@@ -6,7 +6,7 @@ interface ProtectRouteProps {
   route: {
     role?: string;
     status?: string;
-    ability?: string;
+    ability?: string | string[];
     visibility?: string[];
   };
   children: ReactNode;

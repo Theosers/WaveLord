@@ -1,5 +1,5 @@
-import { lazy } from "react";
-import { RouteObject } from 'react-router-dom';
+import { lazy } from 'react';
+import { CustomRouteObject } from './index';  // Importez le type personnalisé
 
 const SellerDashboard = lazy(() => import('../../views/seller/SellerDashboard'));
 const AddProduct = lazy(() => import('../../views/seller/AddProduct'));
@@ -16,14 +16,7 @@ const Pending = lazy(() => import('../../views/seller/Pending'));
 const Deactive = lazy(() => import('../../views/seller/Deactive')); 
 const AddBanner = lazy(() => import('../../views/seller/AddBanner'));
 
-interface SellerRoute extends RouteObject {
-  role?: string;
-  ability?: string | string[];
-  status?: string;
-  visibility?: string[];
-}
-
-export const sellerRoutes: SellerRoute[] = [
+export const sellerRoutes: CustomRouteObject[] = [
   {
     path: '/seller/account-pending',
     element: <Pending />,

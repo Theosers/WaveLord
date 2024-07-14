@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { active_stripe_connect_account, messageClear } from '../store/Reducers/sellerReducer';
 import { FadeLoader } from 'react-spinners';
-import error from '../assets/error.png';
-import success from '../assets/success.png';
-import { RootState } from '../store';
+import errorImage from '../assets/error.png';
+import successImage from '../assets/success.png';
+import { RootState, AppDispatch } from '../store';
 
 const Success: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const { loader, successMessage, errorMessage } = useSelector((state: RootState) => state.seller);
 
@@ -33,13 +33,13 @@ const Success: React.FC = () => {
         <FadeLoader />
       ) : errorMessage ? (
         <>
-          <img src={error} alt="Error" />
+          <img src={errorImage} alt="Error" />
           <button onClick={redirect}>Back to Dashboard</button>
         </>
       ) : (
         successMessage && (
           <>
-            <img src={success} alt="Success" />
+            <img src={successImage} alt="Success" />
             <button onClick={redirect}>Back to Dashboard</button>
           </>
         )

@@ -55,11 +55,11 @@ interface ProductImageUpdateParams {
 
 export const add_product = createAsyncThunk(
   'product/add_product',
-  async (product: AddProductParams, { rejectWithValue, fulfillWithValue }) => {
+  async (product: FormData, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post('/product-add', product, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       console.log('ajout du produit échoue : ', error.response.data);
       return rejectWithValue(error.response.data);
     }
@@ -73,7 +73,7 @@ export const get_products = createAsyncThunk(
       const { data } = await api.get(`/products-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`, { withCredentials: true });
       console.log(data);
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -86,7 +86,7 @@ export const get_product = createAsyncThunk(
       const { data } = await api.get(`/product-get/${productId}`, { withCredentials: true });
       console.log(data);
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -99,7 +99,7 @@ export const update_product = createAsyncThunk(
       const { data } = await api.post('/product-update', product, { withCredentials: true });
       console.log(data);
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -116,7 +116,7 @@ export const product_image_update = createAsyncThunk(
       const { data } = await api.post('/product-image-update', formData, { withCredentials: true });
       console.log(data);
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -137,7 +137,7 @@ export const productReducer = createSlice({
       })
       .addCase(add_product.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.error;
+        state.errorMessage = (payload as any)?.error;
       })
       .addCase(add_product.fulfilled, (state, { payload }) => {
         state.loader = false;
@@ -155,7 +155,7 @@ export const productReducer = createSlice({
       })
       .addCase(update_product.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.error;
+        state.errorMessage = (payload as any)?.error;
       })
       .addCase(update_product.fulfilled, (state, { payload }) => {
         state.loader = false;

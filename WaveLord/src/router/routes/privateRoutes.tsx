@@ -1,8 +1,8 @@
 import { adminRoutes } from "./adminRoutes";
 import { sellerRoutes } from "./sellerRoutes";
-import { RouteObject } from 'react-router-dom';
+import { CustomRouteObject } from './index';
 
-export const privateRoutes: RouteObject[] = [
+export const privateRoutes: CustomRouteObject[] = [
   ...adminRoutes,
   ...sellerRoutes
 ];

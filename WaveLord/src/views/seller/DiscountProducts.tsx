@@ -52,9 +52,9 @@ const DiscountProducts: React.FC = () => {
                                             <td>20</td>
                                             <td>
                                                 <div className='actions-container'>
-                                                    <Link> <FaEdit className='fa-action' /> </Link>
-                                                    <Link> <FaEye className='fa-action' /> </Link>
-                                                    <Link> <FaTrash className='fa-action' /> </Link>
+                                                    <Link to='#'> <FaEdit className='fa-action' /> </Link>
+                                                    <Link to='#'> <FaEye className='fa-action' /> </Link>
+                                                    <Link to='#'> <FaTrash className='fa-action' /> </Link>
                                                 </div>
                                             </td>
                                         </tr>

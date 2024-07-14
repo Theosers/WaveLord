@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import api from "../../api/api";  
+import api from "../../api/api";
 
 interface OrderState {
   successMessage: string;
@@ -45,7 +45,7 @@ export const get_admin_orders = createAsyncThunk(
     try {
       const { data } = await api.get(`/admin/orders?page=${params.page}&searchValue=${params.searchValue}&parPage=${params.parPage}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -57,7 +57,7 @@ export const get_admin_order = createAsyncThunk(
     try {
       const { data } = await api.get(`/admin/order/${orderId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -69,7 +69,7 @@ export const admin_order_status_update = createAsyncThunk(
     try {
       const { data } = await api.put(`/admin/order-status/update/${params.orderId}`, params.info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -81,7 +81,7 @@ export const get_seller_orders = createAsyncThunk(
     try {
       const { data } = await api.get(`/seller/orders/${params.sellerId}?page=${params.page}&searchValue=${params.searchValue}&parPage=${params.parPage}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -93,7 +93,7 @@ export const get_seller_order = createAsyncThunk(
     try {
       const { data } = await api.get(`/seller/order/${orderId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -105,7 +105,7 @@ export const seller_order_status_update = createAsyncThunk(
     try {
       const { data } = await api.put(`/seller/order-status/update/${params.orderId}`, params.info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -130,7 +130,7 @@ export const OrderReducer = createSlice({
         state.order = payload.order;
       })
       .addCase(admin_order_status_update.rejected, (state, { payload }) => {
-        state.errorMessage = payload.message;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       })
       .addCase(admin_order_status_update.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
@@ -143,10 +143,22 @@ export const OrderReducer = createSlice({
         state.order = payload.order;
       })
       .addCase(seller_order_status_update.rejected, (state, { payload }) => {
-        state.errorMessage = payload.message;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       })
       .addCase(seller_order_status_update.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
+      })
+      .addCase(get_admin_orders.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_admin_order.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_seller_orders.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_seller_order.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       });
   }
 });

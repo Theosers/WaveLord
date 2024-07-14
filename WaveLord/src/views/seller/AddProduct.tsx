@@ -12,14 +12,14 @@ import { RootState, AppDispatch } from '../../store';
 
 const AddProduct: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { categorys } = useSelector((state: RootState) => state.category);
+    const { categories } = useSelector((state: RootState) => state.category);
     const { loader, successMessage, errorMessage } = useSelector((state: RootState) => state.product);
 
     useEffect(() => {
         dispatch(get_category({
             searchValue: '',
-            parPage: '',
-            page: ""
+            parPage: 10, // Exemple de valeur par défaut
+            page: 1 // Exemple de valeur par défaut
         }));
     }, [dispatch]);
 
@@ -42,16 +42,16 @@ const AddProduct: React.FC = () => {
     const [cateShow, setCateShow] = useState(false);
     const [category, setCategory] = useState('');
     const [searchValue, setSearchValue] = useState('');
-    const [allCategories, setAllCategories] = useState(categorys);
+    const [allCategories, setAllCategories] = useState(categories);
 
     const categorySearch = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchValue(value);
         if(value) {
-            let srcValue = allCategories.filter(c => c.name.toLowerCase().includes(value.toLowerCase()));
+            const srcValue = allCategories.filter(c => c.name.toLowerCase().includes(value.toLowerCase()));
             setAllCategories(srcValue);
         } else {
-            setAllCategories(categorys);
+            setAllCategories(categories);
         }
     };
 
@@ -160,7 +160,7 @@ const AddProduct: React.FC = () => {
                                                         setCateShow(false);
                                                         setCategory(c.name);
                                                         setSearchValue('');
-                                                        setAllCategories(categorys);
+                                                        setAllCategories(categories);
                                                     }}>{c.name}</span>
                                             ))}
                                         </div>
@@ -184,8 +184,7 @@ const AddProduct: React.FC = () => {
                     </div>
                     
                     <label htmlFor='description'>Description</label>
-                    <textarea onChange={inputHandle} value={state.description} id='description' name='description'>
-                        This product is a great product and you should buy it.
+                    <textarea onChange={inputHandle} value={state.description} id='description' name='description' placeholder='Description'>
                     </textarea>
 
                     <div className='images'>

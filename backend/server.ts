@@ -109,13 +109,19 @@ io.on('connection', (soc: Socket) => {
     }
   });
 
+
   soc.on('add_admin', (adminInfo: any) => {
-    delete adminInfo.email;
-    delete adminInfo.password;
-    admin = adminInfo;
-    //admin.socketId = soc.id;
-    io.emit('activeSeller', allSeller);
+    if (adminInfo && typeof adminInfo === 'object') {
+      delete adminInfo.email;
+      delete adminInfo.password;
+      admin = adminInfo;
+      //admin.socketId = soc.id;
+      io.emit('activeSeller', allSeller);
+    } else {
+      console.error('Received invalid adminInfo:', adminInfo);
+    }
   });
+  
 
   soc.on('disconnect', () => {
     console.log('user disconnect');

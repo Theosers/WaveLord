@@ -32,7 +32,7 @@ export const add_banner = createAsyncThunk(
     try {
       const { data } = await api.post(`/banner/add`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -44,7 +44,7 @@ export const get_banner = createAsyncThunk(
     try {
       const { data } = await api.get(`/banner/get/${productId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -56,7 +56,7 @@ export const update_banner = createAsyncThunk(
     try {
       const { data } = await api.put(`/banner/update/${bannerId}`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -78,7 +78,7 @@ export const bannerReducer = createSlice({
       })
       .addCase(add_banner.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.error;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
       })
       .addCase(add_banner.fulfilled, (state, { payload }) => {
         state.loader = false;
@@ -93,7 +93,7 @@ export const bannerReducer = createSlice({
       })
       .addCase(update_banner.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.error;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
       })
       .addCase(update_banner.fulfilled, (state, { payload }) => {
         state.loader = false;

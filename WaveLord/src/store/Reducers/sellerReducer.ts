@@ -36,7 +36,7 @@ export const get_seller_request = createAsyncThunk(
     try {
       const { data } = await api.get(`/request-seller-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -48,7 +48,7 @@ export const get_seller = createAsyncThunk(
     try {
       const { data } = await api.get(`/get-seller/${sellerId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -60,7 +60,7 @@ export const seller_status_update = createAsyncThunk(
     try {
       const { data } = await api.post(`/seller-status-update`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -72,7 +72,7 @@ export const get_active_sellers = createAsyncThunk(
     try {
       const { data } = await api.get(`/get-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -84,7 +84,7 @@ export const get_deactive_sellers = createAsyncThunk(
     try {
       const { data } = await api.get(`/get-deactive-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -108,7 +108,7 @@ export const active_stripe_connect_account = createAsyncThunk(
     try {
       const { data } = await api.put(`/payment/active-stripe-connect-account/${activeCode}`, {}, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -149,11 +149,26 @@ export const sellerReducer = createSlice({
       })
       .addCase(active_stripe_connect_account.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.message;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       })
       .addCase(active_stripe_connect_account.fulfilled, (state, { payload }) => {
         state.loader = false;
         state.successMessage = payload.message;
+      })
+      .addCase(get_seller_request.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_seller.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(seller_status_update.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_active_sellers.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_deactive_sellers.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       });
   }
 });

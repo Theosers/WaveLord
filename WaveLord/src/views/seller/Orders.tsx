@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import '../../scss/Pagination.scss'
 import '../../scss/admin/Category.scss'
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa'
+import { FaEye } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState, AppDispatch } from '../../store';
 import { get_seller_orders } from '../../store/Reducers/OrderReducer';
 import '../../scss/seller/Orders.scss';
 
 const Orders: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     
     const { myOrders, totalOrder } = useSelector((state: RootState) => state.order);
     const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -23,11 +23,11 @@ const Orders: React.FC = () => {
     useEffect(() => {
         if (userInfo?._id) {
             const obj = {
-                parPage: parseInt(parPage.toString()),
-                page: parseInt(currentPage.toString()),
+                parPage,
+                page: currentPage,
                 searchValue,
                 sellerId: userInfo._id
-            }
+            };
             dispatch(get_seller_orders(obj));
         }
     }, [searchValue, currentPage, parPage, userInfo, dispatch]);

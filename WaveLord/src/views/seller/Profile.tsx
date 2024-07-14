@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { profile_image_upload, messageClear, profile_info_add } from '../../store/Reducers/authReducer';
 import { create_stripe_connect_account } from '../../store/Reducers/sellerReducer';
 import toast from 'react-hot-toast';
-import { RootState } from '../../store'; // Adjust the path to your store
+import { RootState, AppDispatch } from '../../store';
 import { overrideStyle } from '../../utils/utils';
 
 interface State {
@@ -24,7 +24,7 @@ const Profile: React.FC = () => {
     sub_district: '',
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { userInfo, loader, successMessage } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -76,12 +76,12 @@ const Profile: React.FC = () => {
           )}
 
           <div className="usual-infos">
-            <span><em>Name : </em>{userInfo.name}</span>
-            <span><em>Email : </em>{userInfo.email}</span>
-            <span><em>Role : </em>{userInfo.role}</span>
-            <span><em>Status : </em>{userInfo.status}</span>
-            <span><em>Payment Account : </em> <button>{userInfo.payment}</button></span>
-            {userInfo.payment === 'active' ? (
+            <span><em>Name : </em>{userInfo?.name}</span>
+            <span><em>Email : </em>{userInfo?.email}</span>
+            <span><em>Role : </em>{userInfo?.role}</span>
+            <span><em>Status : </em>{userInfo?.status}</span>
+            <span><em>Payment Account : </em> <button>{userInfo?.payment}</button></span>
+            {userInfo?.payment === 'active' ? (
               <span><button>{userInfo.payment}</button></span>
             ) : (
               <span onClick={() => dispatch(create_stripe_connect_account())}><button>Click Active</button></span>

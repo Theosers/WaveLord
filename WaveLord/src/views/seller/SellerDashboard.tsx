@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import { MdCurrencyExchange, MdProductionQuantityLimits } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6"; 
+import { FaUsers, FaShoppingCart } from "react-icons/fa"; 
 import Chart from 'react-apexcharts';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_seller_dashboard_data } from '../../store/Reducers/dashboardReducer';
 import moment from 'moment';
 import customer from '../../assets/demo.jpg';
-
 import '../../scss/seller/SellerDashboard.scss';
-import { RootState } from '../../store'; // Adjust the path to your store
+import { RootState, AppDispatch } from '../../store';
 
 interface DashboardState {
   totalSale: number;
@@ -22,7 +20,7 @@ interface DashboardState {
 }
 
 const SellerDashboard: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { totalSale, totalOrder, totalProduct, totalPendingOrder, recentOrder, recentMessage } = useSelector((state: RootState) => state.dashboard);
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
@@ -46,9 +44,11 @@ const SellerDashboard: React.FC = () => {
       },
     ],
     options: {
-      color: ['#181ee8', '#181ee8'],
+      colors: ['#181ee8', '#181ee8', '#181ee8'],
       plotOptions: {
-        radius: 30
+        bar: {
+          borderRadius: 10
+        }
       },
       chart: {
         background: 'transparent',
@@ -57,19 +57,19 @@ const SellerDashboard: React.FC = () => {
       dataLabels: {
         enabled: false
       },
-      strock: {
+      stroke: {
         show: true,
-        curve: ['smooth', 'straight', 'stepline'],
+        curve: ['smooth', 'straight', 'stepline'] as ("smooth" | "straight" | "stepline")[], // Ensuring the correct type here
         lineCap: 'butt',
-        colors: '#f0f0f0',
+        colors: ['#f0f0f0'],
         width: 0.5,
         dashArray: 0
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       legend: {
-        position: 'top'
+        position: 'top' as "top" | "right" | "bottom" | "left" // Ensuring the correct type here
       },
       responsive: [
         {
@@ -84,7 +84,7 @@ const SellerDashboard: React.FC = () => {
               height: "550px"
             },
             yaxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             }
           }
         }
@@ -110,14 +110,14 @@ const SellerDashboard: React.FC = () => {
           </div>
         </div>
         <div className='stat-card un'>
-          <FaCartShopping className='icon' />
+          <FaShoppingCart className='icon' />
           <div>
             <h3>{totalOrder}</h3>
             <p>Orders</p>
           </div>
         </div>
         <div className='stat-card trois'>
-          <FaCartShopping className='icon' />
+          <FaShoppingCart className='icon' />
           <div>
             <h3>{totalPendingOrder}</h3>
             <p>Pending Orders</p>
@@ -126,23 +126,23 @@ const SellerDashboard: React.FC = () => {
       </div>
       <div className='chart-container'>
         <div className='chart'>
-          <Chart options={state.options} series={state.series} type='bar' height='350' />
+          <Chart options={state.options} series={state.series} type='bar' height='350' width='100%' />
         </div>
 
         <div className='recent-seller-messages-container'>
           <div className="recent-seller-messages-header">
             <h2>Recent Customer Message</h2>
-            <Link>View All</Link>
+            <Link to="/messages">View All</Link>
           </div>
           <div className="messages">
             <ol>
               {recentMessage.map((m, i) => (
                 <li key={i}>
                   <div>
-                    {m.senderId === userInfo._id ? <img src={userInfo.image} alt="" /> : <img src={customer} alt="" />}
+                    {m.senderId === userInfo?._id ? <img src={userInfo?.image} alt="" /> : <img src={customer} alt="" />}
                   </div>
                   <div>
-                    <Link>{m.senderName}</Link>
+                    <Link to={`/messages/${m.senderId}`}>{m.senderName}</Link>
                     <time>{moment(m.createdAt).startOf('hour').fromNow()}</time>
                   </div>
                   <div>
@@ -158,7 +158,7 @@ const SellerDashboard: React.FC = () => {
       <div className='recent-orders'>
         <div className='recent-orders-header'>
           <h2>Recent Orders</h2>
-          <Link>View All</Link>
+          <Link to="/orders">View All</Link>
         </div>
 
         <div className='table-container'>

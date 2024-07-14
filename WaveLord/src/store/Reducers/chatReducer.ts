@@ -53,7 +53,7 @@ export const get_customers = createAsyncThunk(
     try {
       const { data } = await api.get(`/chat/seller/get-customers/${sellerId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -65,7 +65,7 @@ export const get_customer_message = createAsyncThunk(
     try {
       const { data } = await api.get(`/chat/seller/get-customer-message/${customerId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -77,7 +77,7 @@ export const send_message = createAsyncThunk(
     try {
       const { data } = await api.post(`/chat/seller/send-message-to-customer`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -89,7 +89,7 @@ export const get_sellers = createAsyncThunk(
     try {
       const { data } = await api.get(`/chat/admin/get-sellers`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -101,7 +101,7 @@ export const send_message_seller_admin = createAsyncThunk(
     try {
       const { data } = await api.post(`/chat/message-send-seller-admin`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -113,7 +113,7 @@ export const get_admin_message = createAsyncThunk(
     try {
       const { data } = await api.get(`/chat/get-admin-messages/${receverId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -125,7 +125,7 @@ export const get_seller_message = createAsyncThunk(
     try {
       const { data } = await api.get(`/chat/get-seller-messages`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -190,6 +190,27 @@ export const chatReducer = createSlice({
       })
       .addCase(get_seller_message.fulfilled, (state, { payload }) => {
         state.seller_admin_message = payload.messages;
+      })
+      .addCase(get_customers.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(get_customer_message.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(send_message.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(get_sellers.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(send_message_seller_admin.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(get_admin_message.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(get_seller_message.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
       });
   }
 });

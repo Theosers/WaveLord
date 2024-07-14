@@ -14,7 +14,8 @@ import { RootState, AppDispatch } from '../../store';
 
 const Category: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { loader, successMessage, errorMessage, categorys } = useSelector((state: RootState) => state.category);
+    const { loader, successMessage, errorMessage, categories } = useSelector((state: RootState) => state.category);
+    console.log('categor', categories);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
@@ -70,82 +71,83 @@ const Category: React.FC = () => {
 
     return (
         <div className='category-container'>
-            <div className='category-second-container'>
-                <div className='gauche-container'>
-                    <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
-
-                    <div className='table-container'>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>N°</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {categorys.map((d, i) => (
-                                    <tr key={i}>
-                                        <td scope='row'>{i + 1}</td>
-                                        <td scope='row'>
-                                            <img src={d.image} alt="" />
-                                        </td>
-                                        <td>{d.name}</td>
-                                        <td>
-                                            <div className='actions-container'>
-                                                <Link to="#"> <FaEdit className='fa-action' /> </Link>
-                                                <Link to="#"> <FaTrash className='fa-action' /> </Link>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <Pagination
-                        pageNumber={currentPage}
-                        setPageNumber={setCurrentPage}
-                        totalItem={50}
-                        parPage={parPage}
-                        showItem={3}
-                    />
-                </div>
-
-                <div className='droite'>
-                    <h1>Add Category</h1>
-                    <form onSubmit={add_category} action="">
-                        <div className='form-container'>
-                            <label htmlFor="name">Category Name</label>
-                            <input
-                                value={state.name}
-                                onChange={(e) => setState({ ...state, name: e.target.value })}
-                                type="text"
-                                id='name'
-                                name='category_name'
-                                placeholder='Category Name'
-                            />
-                        </div>
-
-                        <div>
-                            <label className='image-container' htmlFor='image'>
-                                <span><FaImage /></span>
-                                <span>Select Image</span>
-                            </label>
-                            <input onChange={imageHandle} type="file" name="file" id="image" />
-
-                            <div>
-                                <button type="submit" disabled={loader}>
-                                    {loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : 'Add'}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+          <div className='category-second-container'>
+            <div className='gauche-container'>
+              <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
+      
+              <div className='table-container'>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(categories ?? []).map((d, i) => (
+                      <tr key={i}>
+                        <td scope='row'>{i + 1}</td>
+                        <td scope='row'>
+                          <img src={d.image} alt="" />
+                        </td>
+                        <td>{d.name}</td>
+                        <td>
+                          <div className='actions-container'>
+                            <Link to="#"> <FaEdit className='fa-action' /> </Link>
+                            <Link to="#"> <FaTrash className='fa-action' /> </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+      
+              <Pagination
+                pageNumber={currentPage}
+                setPageNumber={setCurrentPage}
+                totalItem={50}
+                parPage={parPage}
+                showItem={3}
+              />
             </div>
+      
+            <div className='droite'>
+              <h1>Add Category</h1>
+              <form onSubmit={add_category} action="">
+                <div className='form-container'>
+                  <label htmlFor="name">Category Name</label>
+                  <input
+                    value={state.name}
+                    onChange={(e) => setState({ ...state, name: e.target.value })}
+                    type="text"
+                    id='name'
+                    name='category_name'
+                    placeholder='Category Name'
+                  />
+                </div>
+      
+                <div>
+                  <label className='image-container' htmlFor='image'>
+                    <span><FaImage /></span>
+                    <span>Select Image</span>
+                  </label>
+                  <input onChange={imageHandle} type="file" name="file" id="image" />
+      
+                  <div>
+                    <button type="submit" disabled={loader}>
+                      {loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : 'Add'}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-    );
+      );
+      
 };
 
 export default Category;

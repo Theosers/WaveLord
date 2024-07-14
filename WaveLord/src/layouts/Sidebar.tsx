@@ -6,6 +6,7 @@ import '../scss/layouts/Sidebar.scss';
 import logo from '../assets/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/Reducers/authReducer';
+import type { AppDispatch, RootState } from '../store/index';
 
 interface SidebarProps {
   showSidebar: boolean;
@@ -18,14 +19,8 @@ interface NavItem {
   title: string;
 }
 
-interface RootState {
-  auth: {
-    role: string;
-  };
-}
-
 const Sidebar: React.FC<SidebarProps> = ({ showSidebar, setShowSidebar }) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { role } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 

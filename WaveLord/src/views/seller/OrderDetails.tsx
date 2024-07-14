@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { get_seller_order, messageClear, seller_order_status_update } from '../../store/Reducers/OrderReducer';
 import toast from 'react-hot-toast';
 import '../../scss/admin/OrderDetails.scss';
+import { RootState, AppDispatch } from '../../store';
 
 interface Product {
   images: string[];
@@ -24,10 +25,10 @@ interface Order {
 
 const OrderDetails: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [status, setStatus] = useState<string>('');
 
-  const { order, errorMessage, successMessage } = useSelector((state: any) => state.order);
+  const { order, errorMessage, successMessage } = useSelector((state: RootState) => state.order);
 
   useEffect(() => {
     if (order) {
@@ -42,8 +43,10 @@ const OrderDetails: React.FC = () => {
   }, [dispatch, orderId]);
 
   const status_update = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(seller_order_status_update({ orderId, info: { status: e.target.value } }));
-    setStatus(e.target.value);
+    if (orderId) {
+      dispatch(seller_order_status_update({ orderId, info: { status: e.target.value } }));
+      setStatus(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -87,9 +90,9 @@ const OrderDetails: React.FC = () => {
               </div>
               <span className='order-details-price'>Price: ${order?.price}</span>
             </div>
-            {order?.products?.map((p, i) => (
+            {order?.products?.map((p: Product, i: number) => (
               <div key={i} className='order-items'>
-                <img className='user-image' src={p.images[0]} alt="" />
+                <img className='user-image' src={p.images[0]} alt={p.name} />
                 <div>
                   <h2>{p.name}</h2>
                   <p>

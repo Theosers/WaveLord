@@ -43,7 +43,7 @@ export const get_seller_payment_details = createAsyncThunk(
     try {
       const { data } = await api.get(`/payment/seller-payment-details/${sellerId}`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -55,7 +55,7 @@ export const send_withdrowal_request = createAsyncThunk(
     try {
       const { data } = await api.post(`/payment/withdrowal-request`, info, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -67,7 +67,7 @@ export const get_payment_request = createAsyncThunk(
     try {
       const { data } = await api.get(`/payment/request`, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -79,7 +79,7 @@ export const confirm_payment_request = createAsyncThunk(
     try {
       const { data } = await api.post(`/payment/request-confirm`, { paymentId }, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -109,7 +109,7 @@ export const PaymentReducer = createSlice({
       })
       .addCase(send_withdrowal_request.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.message;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       })
       .addCase(send_withdrowal_request.fulfilled, (state, { payload }) => {
         state.loader = false;
@@ -126,13 +126,19 @@ export const PaymentReducer = createSlice({
       })
       .addCase(confirm_payment_request.rejected, (state, { payload }) => {
         state.loader = false;
-        state.errorMessage = payload.message;
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       })
       .addCase(confirm_payment_request.fulfilled, (state, { payload }) => {
         const temp = state.pendingWithdrows.filter(r => r._id !== payload.payment._id);
         state.loader = false;
         state.successMessage = payload.message;
         state.pendingWithdrows = temp;
+      })
+      .addCase(get_seller_payment_details.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
+      })
+      .addCase(get_payment_request.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.message;
       });
   }
 });

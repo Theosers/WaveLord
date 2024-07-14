@@ -2,17 +2,12 @@ import React, { forwardRef, useEffect, useState, ForwardedRef, ChangeEvent, Form
 import { MdCurrencyExchange } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import toast from 'react-hot-toast';
-import {
-  get_seller_payment_details,
-  messageClear,
-  send_withdrowal_request,
-} from '../../store/Reducers/PaymentReducer';
+import { get_seller_payment_details, messageClear, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
 import '../../scss/seller/Payments.scss';
 import '../../scss/admin/PaymentRequest.scss';
-import { RootState } from '../../store'; // Adjust the path to your store
+import { RootState, AppDispatch } from '../../store'; // Adjust the path to your store
 
 function handleOnWheel({ deltaY }: { deltaY: number }) {
   console.log('handleOnWheel', deltaY);
@@ -23,7 +18,7 @@ const outerElementType = forwardRef<HTMLDivElement>((props, ref) => (
 ));
 
 const Payments: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const {
     successMessage,
@@ -42,8 +37,10 @@ const Payments: React.FC = () => {
   const sendRequest = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (availableAmount - amount > 10) {
-      dispatch(send_withdrowal_request({ amount, sellerId: userInfo._id }));
-      setAmount(0);
+      if (userInfo && userInfo._id) {
+        dispatch(send_withdrowal_request({ amount, sellerId: userInfo._id }));
+        setAmount(0);
+      }
     } else {
       toast.error('Insufficient Balance');
     }
@@ -72,7 +69,7 @@ const Payments: React.FC = () => {
   );
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo._id) {
       dispatch(get_seller_payment_details(userInfo._id));
     }
   }, [userInfo, dispatch]);
@@ -147,6 +144,7 @@ const Payments: React.FC = () => {
               style={{ minWidth: '340px' }}
               className='List'
               height={350}
+              width={400} // Add the width property
               itemCount={pendingWithdrows.length}
               itemSize={35}
               outerElementType={outerElementType}
@@ -169,6 +167,7 @@ const Payments: React.FC = () => {
               style={{ minWidth: '340px' }}
               className='List'
               height={350}
+              width={400} // Add the width property
               itemCount={successWithdrows.length}
               itemSize={35}
               outerElementType={outerElementType}

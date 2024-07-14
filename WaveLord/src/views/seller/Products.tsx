@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Search from "../components/Search";
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
-import '../../scss/Pagination.scss'
-import '../../scss/admin/Category.scss'
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa'
-import '../../scss/seller/Products.scss'
+import '../../scss/Pagination.scss';
+import '../../scss/admin/Category.scss';
+import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import '../../scss/seller/Products.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_products } from '../../store/Reducers/productReducer';
 import { LuImageMinus } from "react-icons/lu";
-import { RootState } from '../../store'; // Adjust the path to your store
+import { RootState, AppDispatch } from '../../store'; // Adjust the path to your store
 
 interface Product {
   _id: string;
@@ -23,8 +23,7 @@ interface Product {
 }
 
 const Products: React.FC = () => {
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { products, totalProduct } = useSelector((state: RootState) => state.product);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,9 +32,9 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     const obj = {
-      parPage: parseInt(parPage.toString()),
-      page: parseInt(currentPage.toString()),
-      searchValue
+      parPage,
+      page: currentPage,
+      searchValue,
     };
     dispatch(get_products(obj));
   }, [searchValue, currentPage, parPage, dispatch]);
@@ -68,9 +67,9 @@ const Products: React.FC = () => {
                   <tr key={i}>
                     <td scope='row'>{i + 1}</td>
                     <td scope='row'>
-                      <img src={d.images[0]} alt="" />
+                      {d.images && d.images[0] && <img src={d.images[0]} alt="" />}
                     </td>
-                    <td>{d.name.slice(0, 15)}...</td>
+                    <td>{d.name.length > 15 ? `${d.name.slice(0, 15)}...` : d.name}</td>
                     <td>{d.category}</td>
                     <td>{d.brand}</td>
                     <td>${d.price}</td>
@@ -81,9 +80,9 @@ const Products: React.FC = () => {
                     <td>
                       <div className='actions-container'>
                         <Link to={`/seller/dashboard/edit-product/${d._id}`}> <FaEdit className='fa-action' /> </Link>
-                        <Link> <LuImageMinus className='fa-action' /> </Link>
-                        <Link> <FaEye className='fa-action' /> </Link>
-                        <Link> <FaTrash className='fa-action' /> </Link>
+                        <Link to={`/seller/dashboard/remove-image/${d._id}`}> <LuImageMinus className='fa-action' /> </Link>
+                        <Link to={`/seller/dashboard/view-product/${d._id}`}> <FaEye className='fa-action' /> </Link>
+                        <Link to={`/seller/dashboard/delete-product/${d._id}`}> <FaTrash className='fa-action' /> </Link>
                       </div>
                     </td>
                   </tr>
@@ -91,13 +90,15 @@ const Products: React.FC = () => {
               </tbody>
             </table>
           </div>
-          <Pagination
-            pageNumber={currentPage}
-            setPageNumber={setCurrentPage}
-            totalItem={totalProduct}
-            parPage={parPage}
-            showItem={3}
-          />
+          {totalProduct > parPage && (
+            <Pagination
+              pageNumber={currentPage}
+              setPageNumber={setCurrentPage}
+              totalItem={totalProduct}
+              parPage={parPage}
+              showItem={3}
+            />
+          )}
         </div>
       </div>
     </div>

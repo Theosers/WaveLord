@@ -28,7 +28,7 @@ export const get_admin_dashboard_data = createAsyncThunk(
     try {
       const { data } = await api.get('/admin/get-dashboard-data', { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -40,7 +40,7 @@ export const get_seller_dashboard_data = createAsyncThunk(
     try {
       const { data } = await api.get('/seller/get-dashboard-data', { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -71,6 +71,12 @@ export const dashboardReducer = createSlice({
         state.totalPendingOrder = payload.totalPendingOrder;
         state.recentOrder = payload.recentOrders;
         state.recentMessage = payload.messages;
+      })
+      .addCase(get_admin_dashboard_data.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
+      })
+      .addCase(get_seller_dashboard_data.rejected, (state, { payload }) => {
+        state.errorMessage = typeof payload === 'string' ? payload : (payload as any)?.error;
       });
   }
 });

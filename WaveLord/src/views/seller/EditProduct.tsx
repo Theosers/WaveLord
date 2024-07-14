@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_category } from '../../store/Reducers/categoryReducer';
 import { get_product, update_product, messageClear, product_image_update } from '../../store/Reducers/productReducer';
 import toast from 'react-hot-toast';
+import { RootState, AppDispatch } from '../../store';
 
 interface Category {
     name: string;
@@ -24,16 +25,18 @@ interface Product {
 
 const EditProduct: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
-    const dispatch = useDispatch();
-    const { categorys } = useSelector((state: any) => state.category);
-    const { product, loader, successMessage, errorMessage } = useSelector((state: any) => state.product);
+    const dispatch = useDispatch<AppDispatch>();
+    const { categories } = useSelector((state: RootState) => state.category);
+    const { product, loader, successMessage, errorMessage } = useSelector((state: RootState) => state.product);
 
     useEffect(() => {
-        dispatch(get_category({ searchValue: '', parPage: '', page: '' }));
+        dispatch(get_category({ searchValue: '', parPage: 10, page: 1 }));
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(get_product(productId!));
+        if (productId) {
+            dispatch(get_product(productId));
+        }
     }, [dispatch, productId]);
 
     const [state, setState] = useState<Product>({
@@ -80,10 +83,10 @@ const EditProduct: React.FC = () => {
         const value = e.target.value;
         setSearchValue(value);
         if (value) {
-            let srcValue = categorys.filter((c: Category) => c.name.toLowerCase().includes(value.toLowerCase()));
+            let srcValue = categories.filter((c: Category) => c.name.toLowerCase().includes(value.toLowerCase()));
             setAllCategories(srcValue);
         } else {
-            setAllCategories(categorys);
+            setAllCategories(categories);
         }
     };
 
@@ -173,7 +176,7 @@ const EditProduct: React.FC = () => {
                                                     setCateShow(false);
                                                     setCategory(c.name);
                                                     setSearchValue('');
-                                                    setAllCategories(categorys);
+                                                    setAllCategories(categories);
                                                 }}>{c.name}</span>)
                                             }
                                         </div>

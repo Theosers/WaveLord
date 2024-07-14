@@ -13,7 +13,7 @@ const initialState: CategoryState = {
   successMessage: '',
   errorMessage: '',
   loader: false,
-  categories: [],
+  categories: [],  // Ensure this is an empty array
   totalCategory: 0
 };
 
@@ -37,7 +37,7 @@ export const categoryAdd = createAsyncThunk(
       formData.append('image', image);
       const { data } = await api.post('/category-add', formData, { withCredentials: true });
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -48,18 +48,21 @@ export const get_category = createAsyncThunk(
   async ({ parPage, page, searchValue }: GetCategoryParams, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get(`/category-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`, { withCredentials: true });
+      console.log(data);
       return fulfillWithValue(data);
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const categoryReducer = createSlice({
+const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
     messageClear: (state) => {
+      state.successMessage = "";
       state.errorMessage = "";
     }
   },
@@ -68,21 +71,24 @@ export const categoryReducer = createSlice({
       .addCase(categoryAdd.pending, (state) => {
         state.loader = true;
       })
-      .addCase(categoryAdd.rejected, (state, { payload }) => {
+      .addCase(categoryAdd.rejected, (state, action) => {
         state.loader = false;
-        state.errorMessage = payload.error;
+        state.errorMessage = action.payload?.error || 'Error occurred';
       })
-      .addCase(categoryAdd.fulfilled, (state, { payload }) => {
+      .addCase(categoryAdd.fulfilled, (state, action) => {
         state.loader = false;
-        state.successMessage = payload.message;
-        state.categories = [...state.categories, payload.category];
+        state.successMessage = action.payload.message;
+        state.categories.push(action.payload.category);
       })
-      .addCase(get_category.fulfilled, (state, { payload }) => {
-        state.totalCategory = payload.totalCategory;
-        state.categories = payload.categories;
+      .addCase(get_category.fulfilled, (state, action) => {
+        state.totalCategory = action.payload.totalCategory;
+        state.categories = action.payload.categorys || [];
+      })
+      .addCase(get_category.rejected, (state, action) => {
+        state.errorMessage = action.payload?.error || 'Error occurred';
       });
   }
 });
 
-export const { messageClear } = categoryReducer.actions;
-export default categoryReducer.reducer;
+export const { messageClear } = categorySlice.actions;
+export default categorySlice.reducer;

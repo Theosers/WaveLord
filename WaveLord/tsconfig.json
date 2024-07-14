@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["dom", "esnext"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
-    "module": "esnext",
     "moduleResolution": "node",
-    "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noEmit": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/declarations.d.ts"
+    ],
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules"]
 }
+
+
