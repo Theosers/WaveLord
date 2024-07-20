@@ -28,7 +28,7 @@ const SellerRequest: React.FC = () => {
 
     return (
         <div className='largest-container'>
-            <h1 className='second-container'>Seller Request</h1>
+            <h1 className='title-seller'>Seller Request</h1>
             <div className='second-container'>
                 <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
 

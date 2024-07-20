@@ -72,7 +72,7 @@ const PaymentRequest: React.FC = () => {
         <div className="out">
             <div className="container">
                 <h2>Withdrawal Request</h2>
-                <div>
+                <div className='inner-content'>
                     <div>
                         <div className="title">
                             <div>N°</div>

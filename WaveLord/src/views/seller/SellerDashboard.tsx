@@ -44,7 +44,7 @@ const SellerDashboard: React.FC = () => {
       },
     ],
     options: {
-      colors: ['#181ee8', '#181ee8', '#181ee8'],
+      colors: ['#0099ff', '#66ff66', '#ffcc00'],
       plotOptions: {
         bar: {
           borderRadius: 10

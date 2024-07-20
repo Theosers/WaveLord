@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
             <span><em>Email : </em>{userInfo?.email}</span>
             <span><em>Role : </em>{userInfo?.role}</span>
             <span><em>Status : </em>{userInfo?.status}</span>
-            <span><em>Payment Account : </em> <button>{userInfo?.payment}</button></span>
+            <span><em>Payment Account : </em></span>
             {userInfo?.payment === 'active' ? (
               <span><button>{userInfo.payment}</button></span>
             ) : (

@@ -153,7 +153,7 @@ const Payments: React.FC = () => {
             </List>
           </div>
         </div>
-        <div className="Success Withdraw">
+        <div className="Success_Withdraw">
           <h3>Success Withdraw</h3>
           <div>
             <div className="title">

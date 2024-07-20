@@ -28,7 +28,7 @@ const DeactivateSellers: React.FC = () => {
 
     return (
         <div className='largest-container'>
-            <h1 className='second-container'>Deactivate Sellers</h1>
+            <h1 className='title-seller'>Deactivate Sellers</h1>
             <div className='second-container'>
                 <div className="gauche">
                     <select onChange={(e) => setParPage(parseInt(e.target.value))}>

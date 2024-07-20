@@ -36,7 +36,7 @@ const AdminDashboard: React.FC = () => {
             },
         ],
         options: {
-            colors: ['#181ee8', '#181ee8'],
+            colors: ['#0099ff', '#66ff66', '#ffcc00'],
             plotOptions: {
                 radius: 30
             },

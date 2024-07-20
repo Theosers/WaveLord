@@ -78,6 +78,9 @@
       width:100%;
       padding-right: 0.75rem;
   }
+  @media (max-width: 767px) {
+    margin-bottom: 2rem;
+  }
   }
   .recent-seller-messages-container {
     width: 49%;
@@ -94,7 +97,9 @@
     @media (max-width: 1250px) {
       width: 40%;
   }
-    
+  @media (max-width: 767px) {
+    margin-bottom: 2rem;
+  }
     @media (max-width: 1024px) {
         width: 100%;
         padding-left: 1rem;
@@ -201,7 +206,7 @@
   .recent-orders {
     width: 98%;
     padding: 1rem;
-    background-color: rgba(19, 14, 48, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0.5rem;
     margin-top: 1.5rem;
     box-shadow: 10px 10px 20px rgba(0, 0, 0);
@@ -219,6 +224,10 @@
       margin-left: 0;
       
   }
+  @media (max-width: 767px) {
+    width: 92%;
+  }
+  
     a {
       font-weight: 600;
       font-size: 0.875rem;

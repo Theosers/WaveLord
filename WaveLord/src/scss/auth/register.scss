@@ -36,6 +36,10 @@ body {
   border-bottom-left-radius: 20%;
   position: relative;
 
+  @media (max-width: 767px) { 
+    display: none;
+  }
+
   h1 {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
@@ -63,6 +67,12 @@ body {
   border: 5px solid rgb(231, 144, 24);
   border-left: none;
   border-top-right-radius: 20%;
+  @media (max-width: 767px) { 
+    width: 45%;
+    border: 5px solid rgb(231, 144, 24);
+    border-radius: 20px;
+    padding-top: 0;
+  }
   
   .header {
     color: rgb(255, 255, 255);

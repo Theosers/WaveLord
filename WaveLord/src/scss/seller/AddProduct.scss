@@ -6,6 +6,9 @@
     border-radius: 0.375rem;
     display: flex;
     flex-direction: column;
+    @media (max-width: 767px) {
+        width: 93%;
+    }
 }
 .add-product-header {
     
@@ -48,6 +51,20 @@
             background-color: rgb(0,0,0,0.8);
             color: #d0d2d6;
             border-radius: 0.375rem;
+            @media (max-width: 767px) {
+                width: 70%;
+            }
+        }
+
+        .category-main-container +label {
+            
+            margin-top: 2.2rem;
+           
+            
+        } 
+        .category-main-container +label + input {
+            
+            margin-top: -0.2rem;
         }
         select {
             padding: 0.5rem;
@@ -57,11 +74,13 @@
             border-radius: 0.375rem;
         }
         .category-container{
+            padding-top: 0;
             width: 38.5%;
+            height: 1%;
             display: flex;
             flex-direction: column;
             position: absolute;
-            
+
             
         }
         .select-category-show{
@@ -78,7 +97,7 @@
                     color: rgb(231, 144, 24);
                     border-radius: 0.375rem;
                     border: 2px solid rgb(231, 144, 24);
-
+                    
                 }
             }
             .roll-menu {
@@ -110,7 +129,9 @@
             background-color: rgb(0,0,0,0.8);
             color: #d0d2d6;
             border-radius: 0.375rem;
-        
+            @media (max-width: 767px) {
+                width: 80%;
+            }
         }
     }
     .form-details-container {
@@ -135,6 +156,11 @@
         width: 94%;
         height: 100%;
         border-radius: 0.375rem;
+
+        @media (max-width: 767px) {
+            width: 90%;
+            padding-right: 2rem;
+        }
                 
         overflow: auto;
             
@@ -194,6 +220,10 @@
         color: white;
         border-radius: 0.375rem;
         cursor: pointer;
+        @media (max-width: 767px) {
+            width: 30%;
+            margin-right: 2rem;
+        }
     }
 
 }

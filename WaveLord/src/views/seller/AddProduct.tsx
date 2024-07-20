@@ -143,7 +143,7 @@ const AddProduct: React.FC = () => {
                              type='text' id='name' name='name' placeholder='Product Name' />
 
                             <label htmlFor='category'>Category</label>
-                            <div>
+                            <div className='category-main-container'>
                                 <div className='category-container'>
                                     <input readOnly onClick={() => setCateShow(!cateShow)}
                                         value={category} type='text' id='category' name='category'
